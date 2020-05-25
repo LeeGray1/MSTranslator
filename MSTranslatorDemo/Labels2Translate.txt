@@ -1,0 +1,31 @@
+Invoice
+Commercial invoice
+Supplier
+Party Identification
+Tax Identification
+Technical Address
+Customer
+Identifier
+Issue Date
+Due Date
+Invoice Period
+Order Reference
+Currency
+Totals
+Tax Exclusive
+Tax Inclusive
+Prepaid
+Payable
+Delivery
+Attachments
+No attachments provided.
+Tax
+Category
+Taxable
+Total
+Charge Total
+Allowance Total
+Sellers Item Identification
+supplierPartNumber
+Price
+Line Total
