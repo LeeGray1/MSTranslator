@@ -283,6 +283,76 @@ namespace MSTranslatorDemo
                 
             }
         }
+        private async Task<string> GetTranslatedXMLfile4Names(string xmlFile, string language)
+        {
+            string toLanguageCode = languageCodesAndTitles[language];
+            
+
+            
+            string NameStartSearchTxt = "<cbc:Name>", NameEndSearchTxt = "</cbc:Name>";
+            int NameStartPtr=0, NameEndPtr=0;
+          
+            string NameOriginalText, NameTranslatedText;
+
+            int LineItemStart = xmlFile.IndexOf("<cac:Item>");
+            NameStartPtr = xmlFile.IndexOf(NameStartSearchTxt, LineItemStart);
+
+            while (NameStartPtr !=-1)
+            {
+                
+                if (NameStartPtr != -1)
+                {
+                    NameEndPtr = xmlFile.IndexOf(NameEndSearchTxt, NameStartPtr);
+                    if (NameEndPtr != -1)
+                    {
+                        NameOriginalText = xmlFile.Substring(NameStartPtr + NameStartSearchTxt.Length, NameEndPtr - NameStartPtr - NameStartSearchTxt.Length);
+                        await translate(NameOriginalText);
+                        NameTranslatedText = translation;
+
+                        xmlFile = xmlFile.Replace(NameStartSearchTxt + NameOriginalText + NameEndSearchTxt, NameStartSearchTxt + NameTranslatedText + NameEndSearchTxt);
+                    }
+                }
+                else
+                {
+                    
+                }
+                NameStartPtr = xmlFile.IndexOf(NameStartSearchTxt, NameEndPtr);
+
+
+            }
+            
+            return xmlFile;
+
+        }
+
+        private async Task<string> GetTranslatedXMLfile4Note(string xmlFile, string language)
+        {
+            string toLanguageCode = languageCodesAndTitles[language];
+            
+            string NoteStartSearchTxt = "<cbc:Note>", NoteEndSearchTxt = "</cbc:Note>";
+    
+            int NoteStartPtr, NoteEndPtr;
+            string NoteOriginalText="", NoteTranslatedText;
+           
+
+
+            NoteStartPtr = xmlFile.IndexOf(NoteStartSearchTxt);
+            if (NoteStartPtr != -1)
+            {
+                NoteEndPtr = xmlFile.IndexOf(NoteEndSearchTxt, NoteStartPtr);
+                if(NoteEndPtr!=-1)
+                {
+                    NoteOriginalText = xmlFile.Substring(NoteStartPtr + NoteStartSearchTxt.Length, NoteEndPtr - NoteStartPtr - NoteStartSearchTxt.Length);
+                    await translate(NoteOriginalText);
+                    NoteTranslatedText = translation;
+
+                    xmlFile = xmlFile.Replace(NoteStartSearchTxt + NoteOriginalText + NoteEndSearchTxt, NoteStartSearchTxt + NoteTranslatedText + NoteEndSearchTxt);
+                }
+            }
+
+            return xmlFile;
+
+        }
         private async Task<string> GetTranslatedStylesheet(string xsltFilename, string language)
         {
             string toLanguageCode = languageCodesAndTitles[language];
@@ -343,7 +413,14 @@ namespace MSTranslatorDemo
             string result = await GetTranslatedStylesheet("stylesheet-ubl v2.xslt", ToLanguageComboBox.Text);
             File.WriteAllText(ToLanguageComboBox.Text + "-stylesheet-ubl.xslt", result);
             //  string HTMLstring = XLSThelper.TransformXMLToHTML(File.ReadAllText("cleaning services.xml"), File.ReadAllText("stylesheet-ubl.xslt"));
-            string HTMLstring = XSLThelper.SaxonTransform(ToLanguageComboBox.Text + "-stylesheet-ubl.xslt", "cleaning services.xml");
+            
+            string OriginalxmlFile = File.ReadAllText("cleaning services.xml");
+            string TranslatedXmlNote = await GetTranslatedXMLfile4Note(OriginalxmlFile, ToLanguageComboBox.Text);
+            string TranslatedXmlNames = await GetTranslatedXMLfile4Names(TranslatedXmlNote, ToLanguageComboBox.Text);
+
+            File.WriteAllText(ToLanguageComboBox.Text + "-cleaning services.xml", TranslatedXmlNames);
+
+            string HTMLstring = XSLThelper.SaxonTransform(ToLanguageComboBox.Text + "-stylesheet-ubl.xslt", ToLanguageComboBox.Text + "-cleaning services.xml");
 
 
             //string Labels2Translate = File.ReadAllText("Labels2Translate.txt");
