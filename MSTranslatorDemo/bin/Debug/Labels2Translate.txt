@@ -28,7 +28,8 @@ Total
 Charge Total
 Allowance Total
 Sellers Item Identification
-supplierPartNumber
+Buyers Item Identification
+Commodity Classification
 Price
 Line Total
 TaxAmount
@@ -38,6 +39,29 @@ Metadata
 Download
 Embedded
 Address
-DeliveryDate
+Date
+Credit Note
+Origin Country
+Standard Item Identification
+Allowance
+Included allowance
+Charge
+Included charge
+Document Reference
+Order Line
+Accounting Cost
+Buyer Reference
+Contract Reference
+Despatch Reference
+Preceding Invoice Reference
+Originator Reference
+Project Reference
+Receipt Reference
+Tax Currency
+Tax Date
+Banking Reference
+Rounding Amount
+
+
 
 
