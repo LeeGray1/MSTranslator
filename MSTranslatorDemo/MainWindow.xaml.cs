@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using System.Xml.Xsl;
 using System.Xml;
 using Saxon.Api;
+using System.Threading.Tasks;
 
 namespace MSTranslatorDemo
 {
@@ -282,38 +283,93 @@ namespace MSTranslatorDemo
                 
             }
         }
-
-        private async void btnLoadXML_Click(object sender, RoutedEventArgs e)
+        private async Task<string> GetTranslatedStylesheet(string xsltFilename, string language)
         {
-      
-            //  string HTMLstring = XLSThelper.TransformXMLToHTML(File.ReadAllText("cleaning services.xml"), File.ReadAllText("stylesheet-ubl.xslt"));
-            string HTMLstring = XSLThelper.SaxonTransform("stylesheet-ubl.xslt", "cleaning services.xml");
-
-
+            string toLanguageCode = languageCodesAndTitles[language];
+            //<xsl:param name="language" select="'en'"/>
+            string xFile = File.ReadAllText(xsltFilename);
             string Labels2Translate = File.ReadAllText("Labels2Translate.txt");
-
-
             await translate(Labels2Translate);
-            
+
             string[] Translatedlines = translation.Split(
                 new[] { Environment.NewLine },
                 StringSplitOptions.None
                 );
+
             string[] originalLines = Labels2Translate.Split(
                 new[] { Environment.NewLine },
                 StringSplitOptions.None
                 );
+            int ot,st, et, intLabelStart, intCodeStart;
+            string string2replace, newstring;
+            //<t id="en">Invoice<
+            //<t id="no"> = start of replace
+            //</t> = end of replace
+            intLabelStart = xFile.IndexOf("<xsl:variable name=\"labels\">");
+            intCodeStart = xFile.IndexOf("<cl id=\"uncl1001invoice\">");
+            for (int i = 0; i < Translatedlines.Length; i++)
+            {
+                
+                ot = xFile.IndexOf("<t id=\"en\">"+ originalLines[i] +"</t>", intLabelStart);
+                if (ot==-1)
+                    ot = xFile.IndexOf("<t id=\"en\">" + originalLines[i] + "</t>", intCodeStart);
+                        if (ot == -1)
+                            ot = xFile.IndexOf("<t id=\"en\">" + originalLines[i] + "</t>", 0);
+                if (ot == -1)
+                { }
+                else
+                {
+                    st = xFile.IndexOf("<t id=\"no\">", ot);
+                    et = xFile.IndexOf("</t>", st);
+                    string2replace = xFile.Substring(st, et - st + 4);
+                    newstring = "<t id=\"" + toLanguageCode + "\">" + Translatedlines[i] + "</t>";
+                    xFile = xFile.Replace(string2replace, newstring);
+                }
+
+                 
+            }
+
+            xFile = xFile.Replace("<xsl:param name=\"language\" select=\"'en'\"/>", "<xsl:param name=\"language\" select=\"'"+ toLanguageCode + "'\"/>");
+           
+            return xFile;
+            
+
+        }
+       
+
+        private async void btnLoadXML_Click(object sender, RoutedEventArgs e)
+        {
+
+            string result = await GetTranslatedStylesheet("stylesheet-ubl v2.xslt", ToLanguageComboBox.Text);
+            File.WriteAllText(ToLanguageComboBox.Text + "-stylesheet-ubl.xslt", result);
+            //  string HTMLstring = XLSThelper.TransformXMLToHTML(File.ReadAllText("cleaning services.xml"), File.ReadAllText("stylesheet-ubl.xslt"));
+            string HTMLstring = XSLThelper.SaxonTransform(ToLanguageComboBox.Text + "-stylesheet-ubl.xslt", "cleaning services.xml");
+
+
+            //string Labels2Translate = File.ReadAllText("Labels2Translate.txt");
+
+
+            //await translate(Labels2Translate);
+            
+            //string[] Translatedlines = translation.Split(
+            //    new[] { Environment.NewLine },
+            //    StringSplitOptions.None
+            //    );
+            //string[] originalLines = Labels2Translate.Split(
+            //    new[] { Environment.NewLine },
+            //    StringSplitOptions.None
+            //    );
             //                               
             HTMLstring = HTMLstring.Replace("<div class=\"col-md-5\" />", "");
             //<div class="col-sm-4" />
             HTMLstring = HTMLstring.Replace("<div class=\"col-sm-4\" />", "");
 
-            for (int i = 0; i < Translatedlines.Length; i++)
-            {
-                if(Translatedlines[i] != "")
-                HTMLstring = HTMLstring.Replace(">" + originalLines[i] + "<", ">" + Translatedlines[i] + "<");
+            //for (int i = 0; i < Translatedlines.Length; i++)
+            //{
+            //    if(Translatedlines[i] != "")
+            //    HTMLstring = HTMLstring.Replace(">" + originalLines[i] + "<", ">" + Translatedlines[i] + "<");
                 
-            }
+            //}
 
             
             File.WriteAllText("eInvoice.html", HTMLstring);

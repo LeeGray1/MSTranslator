@@ -12,7 +12,8 @@ namespace MSTranslatorDemo
 {
     public static class XSLThelper
     {
-        public static string SaxonTransform(string xsltFilename, string inputXML)
+        
+       public static string SaxonTransform(string xsltFilename, string inputXML)
         {
             var xslt = new FileInfo(xsltFilename);
             var input = new FileInfo(inputXML);

@@ -1,3 +1,5 @@
+DeliveryDate
+Metadata
 Invoice
 Commercial invoice
 Supplier
@@ -29,3 +31,13 @@ Sellers Item Identification
 supplierPartNumber
 Price
 Line Total
+TaxAmount
+Tax
+Payment
+Metadata
+Download
+Embedded
+Address
+DeliveryDate
+
+
