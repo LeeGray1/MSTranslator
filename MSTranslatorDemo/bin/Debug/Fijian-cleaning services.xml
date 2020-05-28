@@ -7,7 +7,7 @@
 	<cbc:IssueDate>2020-03-21</cbc:IssueDate>
 	<cbc:DueDate>2020-10-07</cbc:DueDate>
 	<cbc:InvoiceTypeCode>380</cbc:InvoiceTypeCode>
-	<cbc:Note>Acme Reinigungsstunden</cbc:Note>
+	<cbc:Note>Acme na auwa ni sasamaki</cbc:Note>
 	<cbc:DocumentCurrencyCode>EUR</cbc:DocumentCurrencyCode>
 	<cac:InvoicePeriod>
 		<cbc:StartDate>2020-03-21</cbc:StartDate>
@@ -26,11 +26,11 @@
 				<cbc:Name>Acme Services Group Ltd</cbc:Name>
 			</cac:PartyName>
 			<cac:PostalAddress>
-				<cbc:StreetName>Main Street</cbc:StreetName>
+				<cbc:StreetName>Walter-Gropius-Straße 5</cbc:StreetName>
 				<cbc:AdditionalStreetName>Head Office</cbc:AdditionalStreetName>
-				<cbc:CityName>Sligo</cbc:CityName>
+				<cbc:CityName>80807 München</cbc:CityName>
 				<cac:Country>
-					<cbc:IdentificationCode>IE</cbc:IdentificationCode>
+					<cbc:IdentificationCode>DE</cbc:IdentificationCode>
 				</cac:Country>
 			</cac:PostalAddress>
 			<cac:PartyTaxScheme>
@@ -112,7 +112,7 @@
 		<cbc:InvoicedQuantity unitCode="EA" unitCodeListID="UNECERec20">60</cbc:InvoicedQuantity>
 		<cbc:LineExtensionAmount currencyID="EUR">896.4</cbc:LineExtensionAmount>
 		<cac:Item>
-			<cbc:Name>Reinigungszeiten 22 Jan bis 16 Feb 2018</cbc:Name>
+			<cbc:Name>Samaka na auwa 22 ni Janu ki na 16 ni Fepe 2018</cbc:Name>
 			<cac:SellersItemIdentification>
 				<cbc:ID>supplierPartNumber</cbc:ID>
 			</cac:SellersItemIdentification>

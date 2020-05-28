@@ -7,7 +7,7 @@
 	<cbc:IssueDate>2020-03-21</cbc:IssueDate>
 	<cbc:DueDate>2020-10-07</cbc:DueDate>
 	<cbc:InvoiceTypeCode>380</cbc:InvoiceTypeCode>
-	<cbc:Note>Acme Reinigungsstunden</cbc:Note>
+	<cbc:Note>Acme Cleaning Hours</cbc:Note>
 	<cbc:DocumentCurrencyCode>EUR</cbc:DocumentCurrencyCode>
 	<cac:InvoicePeriod>
 		<cbc:StartDate>2020-03-21</cbc:StartDate>
@@ -112,7 +112,7 @@
 		<cbc:InvoicedQuantity unitCode="EA" unitCodeListID="UNECERec20">60</cbc:InvoicedQuantity>
 		<cbc:LineExtensionAmount currencyID="EUR">896.4</cbc:LineExtensionAmount>
 		<cac:Item>
-			<cbc:Name>Reinigungszeiten 22 Jan bis 16 Feb 2018</cbc:Name>
+			<cbc:Name>Cleaning Hours 22 Jan to 16 Feb 2018</cbc:Name>
 			<cac:SellersItemIdentification>
 				<cbc:ID>supplierPartNumber</cbc:ID>
 			</cac:SellersItemIdentification>

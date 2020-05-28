@@ -11,6 +11,7 @@ using System.Xml.Xsl;
 using System.Xml;
 using Saxon.Api;
 using System.Threading.Tasks;
+using Microsoft.Win32;
 
 namespace MSTranslatorDemo
 {
@@ -475,8 +476,13 @@ namespace MSTranslatorDemo
 
         private async void btnLoadXML_Click(object sender, RoutedEventArgs e)
         {
+            if (btnLoadXML.IsEnabled == false)
+            {
+                MessageBox.Show("no xml file loaded");
+                return;
+            }
 
-            string OriginalxmlFile = File.ReadAllText("cleaning services.xml");
+            string OriginalxmlFile = File.ReadAllText(openFileDialog.FileName);//("cleaning services.xml");
             string OriginalxsltFile = File.ReadAllText("stylesheet-ubl v2.xslt");
 
             string result = await GetXsltTranslated4Labels(OriginalxsltFile,ToLanguageComboBox.Text);
@@ -530,10 +536,26 @@ namespace MSTranslatorDemo
            // invoiceDisplay.Show();
         
         }
-
-        private void FromLanguageComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        OpenFileDialog openFileDialog = new OpenFileDialog
         {
+            Filter = "xml eInvoice file (*.xml)|*.xml|All files (*.*)|*.*",
 
+        };
+
+       
+
+       
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (openFileDialog.ShowDialog() == true)
+            {
+                // do something with the filename
+                //MessageBox.Show(string.Format("eInvoice file \"{0}\" loaded", Path.GetFileName(openFileDialog.FileName)));
+                XML_File_txtbx.Text = Path.GetFileName(openFileDialog.FileName);
+                btnLoadXML.IsEnabled = true;
+            }
+            else
+                XML_File_txtbx.Text = "no file selected";
         }
     }
 }
