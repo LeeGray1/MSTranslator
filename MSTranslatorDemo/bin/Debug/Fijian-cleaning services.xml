@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="file:///C:/Users/edmun/OneDrive/Documents/GitHub/peppol-bis-invoice-3/stylesheet/stylesheet-ubl.xslt"?>
+<Invoice xmlns:ccts="urn:un:unece:uncefact:documentation:2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:qdt="urn:oasis:names:specification:ubl:schema:xsd:QualifiedDatatypes-2" xmlns:sdt="urn:oasis:names:specification:ubl:schema:xsd:SpecializedDatatypes-2" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2" xsi:schemaLocation="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2 https://docs.oasis-open.org/ubl/prd3-UBL-2.1/xsd/maindoc/UBL-Invoice-2.1.xsd">
+	<cbc:CustomizationID>urn:cen.eu:en16931:2017#compliant#urn:fdc:peppol.eu:2017:poacc:billing:3.0</cbc:CustomizationID>
+	<cbc:ProfileID>urn:fdc:peppol.eu:2017:poacc:billing:01:1.0</cbc:ProfileID>
+	<cbc:ID>123456677</cbc:ID>
+	<cbc:IssueDate>2020-03-21</cbc:IssueDate>
+	<cbc:DueDate>2020-10-07</cbc:DueDate>
+	<cbc:InvoiceTypeCode>380</cbc:InvoiceTypeCode>
+	<cbc:Note>Acme na auwa ni sasamaki</cbc:Note>
+	<cbc:DocumentCurrencyCode>EUR</cbc:DocumentCurrencyCode>
+	<cac:InvoicePeriod>
+		<cbc:StartDate>2020-03-21</cbc:StartDate>
+		<cbc:EndDate>2020-06-20</cbc:EndDate>
+	</cac:InvoicePeriod>
+	<cac:OrderReference>
+		<cbc:ID>test</cbc:ID>
+	</cac:OrderReference>
+	<cac:AccountingSupplierParty>
+		<cac:Party>
+			<cbc:EndpointID schemeID="9943">IE12345R</cbc:EndpointID>
+			<cac:PartyIdentification>
+				<cbc:ID schemeID="0001">IE12345R</cbc:ID>
+			</cac:PartyIdentification>
+			<cac:PartyName>
+				<cbc:Name>Acme Services Group Ltd</cbc:Name>
+			</cac:PartyName>
+			<cac:PostalAddress>
+				<cbc:StreetName>Walter-Gropius-Straße 5</cbc:StreetName>
+				<cbc:AdditionalStreetName>Head Office</cbc:AdditionalStreetName>
+				<cbc:CityName>80807 München</cbc:CityName>
+				<cac:Country>
+					<cbc:IdentificationCode>DE</cbc:IdentificationCode>
+				</cac:Country>
+			</cac:PostalAddress>
+			<cac:PartyTaxScheme>
+				<cbc:CompanyID>IE12345R</cbc:CompanyID>
+				<cac:TaxScheme>
+					<cbc:ID>VAT</cbc:ID>
+				</cac:TaxScheme>
+			</cac:PartyTaxScheme>
+			<cac:PartyLegalEntity>
+				<cbc:RegistrationName>Acme Services Group Ltd</cbc:RegistrationName>
+				<cbc:CompanyID>IE12345R</cbc:CompanyID>
+			</cac:PartyLegalEntity>
+		</cac:Party>
+	</cac:AccountingSupplierParty>
+	<cac:AccountingCustomerParty>
+		<cac:Party>
+			<cbc:EndpointID schemeID="9943">5392000128293</cbc:EndpointID>
+			<cac:PartyIdentification>
+				<cbc:ID schemeID="0088">test</cbc:ID>
+			</cac:PartyIdentification>
+			<cac:PartyName>
+				<cbc:Name>Test GLN</cbc:Name>
+			</cac:PartyName>
+			<cac:PostalAddress>
+				<cbc:StreetName>any street</cbc:StreetName>
+				<cbc:AdditionalStreetName>place</cbc:AdditionalStreetName>
+				<cbc:CityName>City</cbc:CityName>
+				<cbc:PostalZone>abcd</cbc:PostalZone>
+				<cbc:CountrySubentity>xyz</cbc:CountrySubentity>
+				<cac:Country>
+					<cbc:IdentificationCode>IE</cbc:IdentificationCode>
+				</cac:Country>
+			</cac:PostalAddress>
+			<cac:PartyLegalEntity>
+				<cbc:RegistrationName>Test GLN</cbc:RegistrationName>
+				<cbc:CompanyID schemeID="0088">5392000128293</cbc:CompanyID>
+			</cac:PartyLegalEntity>
+		</cac:Party>
+	</cac:AccountingCustomerParty>
+	<!--<cac:PaymentMeans>
+		<cbc:PaymentMeansCode listID="UNCL4461">31</cbc:PaymentMeansCode>
+		<cbc:PaymentDueDate>2017-04-20</cbc:PaymentDueDate>
+		<cbc:PaymentChannelCode>IBAN</cbc:PaymentChannelCode>
+		<cac:PayeeFinancialAccount>
+			<cbc:ID schemeID="IBAN">SOME_IBAN</cbc:ID>
+			<cac:FinancialInstitutionBranch>
+				<cac:FinancialInstitution>
+					<cbc:ID schemeID="BIC">SOME_BANK_ID</cbc:ID>
+					<cbc:Name>SOME_BANK_NAME</cbc:Name>
+				</cac:FinancialInstitution>
+			</cac:FinancialInstitutionBranch>
+		</cac:PayeeFinancialAccount>
+	</cac:PaymentMeans>-->
+	<cac:TaxTotal>
+		<cbc:TaxAmount currencyID="EUR">121.01</cbc:TaxAmount>
+		<cac:TaxSubtotal>
+			<cbc:TaxableAmount currencyID="EUR">896.40</cbc:TaxableAmount>
+			<cbc:TaxAmount currencyID="EUR">121.01</cbc:TaxAmount>
+			<cac:TaxCategory>
+				<cbc:ID schemeID="UNCL5305">S</cbc:ID>
+				<cbc:Percent>13.5</cbc:Percent>
+				<cac:TaxScheme>
+					<cbc:ID>VAT</cbc:ID>
+				</cac:TaxScheme>
+			</cac:TaxCategory>
+		</cac:TaxSubtotal>
+	</cac:TaxTotal>
+	<cac:LegalMonetaryTotal>
+		<cbc:LineExtensionAmount currencyID="EUR">896.4</cbc:LineExtensionAmount>
+		<cbc:TaxExclusiveAmount currencyID="EUR">896.4</cbc:TaxExclusiveAmount>
+		<cbc:TaxInclusiveAmount currencyID="EUR">1017.41</cbc:TaxInclusiveAmount>
+		<cbc:AllowanceTotalAmount currencyID="EUR">0.00</cbc:AllowanceTotalAmount>
+		<cbc:ChargeTotalAmount currencyID="EUR">0.00</cbc:ChargeTotalAmount>
+		<cbc:PrepaidAmount currencyID="EUR">0.00</cbc:PrepaidAmount>
+		<cbc:PayableAmount currencyID="EUR">1017.41</cbc:PayableAmount>
+	</cac:LegalMonetaryTotal>
+	<cac:InvoiceLine>
+		<cbc:ID>1</cbc:ID>
+		<cbc:InvoicedQuantity unitCode="EA" unitCodeListID="UNECERec20">60</cbc:InvoicedQuantity>
+		<cbc:LineExtensionAmount currencyID="EUR">896.4</cbc:LineExtensionAmount>
+		<cac:Item>
+			<cbc:Name>Samaka na auwa 22 ni Janu ki na 16 ni Fepe 2018</cbc:Name>
+			<cac:SellersItemIdentification>
+				<cbc:ID>supplierPartNumber</cbc:ID>
+			</cac:SellersItemIdentification>
+			<cac:ClassifiedTaxCategory>
+				<cbc:ID schemeID="UNCL5305">S</cbc:ID>
+				<cbc:Percent>13.5</cbc:Percent>
+				<cac:TaxScheme>
+					<cbc:ID>VAT</cbc:ID>
+				</cac:TaxScheme>
+			</cac:ClassifiedTaxCategory>
+		</cac:Item>
+		<cac:Price>
+			<cbc:PriceAmount currencyID="EUR">14.94</cbc:PriceAmount>
+		</cac:Price>
+	</cac:InvoiceLine>
+</Invoice>
