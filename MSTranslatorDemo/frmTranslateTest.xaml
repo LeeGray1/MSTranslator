@@ -16,7 +16,7 @@
         <Label x:Name="DetectedLanguageLabel" Content="" HorizontalAlignment="Left" Margin="421,152,0,0" VerticalAlignment="Top" Width="175" FontSize="14" Height="32" BorderThickness="0"/>
         <Button x:Name="Test" IsEnabled="False" Content="Test" HorizontalAlignment="Left" Margin="0,82,0,0" VerticalAlignment="Top" Width="141" Height="41" FontSize="14" Background="White" Click="Settings_Click"/>
         <TextBox x:Name="TextToTranslate" HorizontalAlignment="Left" Height="23" Margin="288,26,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="227" FontSize="14" TabIndex="3"/>
-        <Button x:Name="TranslateButton" Content="Translate" HorizontalAlignment="Left" Margin="175,177,0,0" VerticalAlignment="Top" Width="76" Height="38" Click="TranslateButton_Click" FontSize="14" TabIndex="4" IsDefault="True"/>
+        <Button x:Name="TranslateButton" Content="Translate" HorizontalAlignment="Left" Margin="175,177,0,0" VerticalAlignment="Top" Width="76" Height="35" Click="TranslateButton_Click" FontSize="14" TabIndex="4" IsDefault="True"/>
         <Label x:Name="TranslatedTextLabel" Content="Translation is displayed here." HorizontalAlignment="Left" Margin="160,262,0,0" VerticalAlignment="Top" Width="505" FontSize="14" Height="84" BorderThickness="0"/>
         <Label Content="Text to translate:" HorizontalAlignment="Left" Margin="175,23,0,0" VerticalAlignment="Top" Width="108"/>
         <ComboBox x:Name="FromLanguageComboBox"
