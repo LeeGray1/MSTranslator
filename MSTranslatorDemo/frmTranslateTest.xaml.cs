@@ -28,12 +28,12 @@ namespace MSTranslatorDemo
         {
             string textToTranslate = TextToTranslate.Text.Trim();
 
-            new translate.
+            //new translate.
 
-            await translate(textToTranslate);
+            //await translate(textToTranslate);
 
-            // Update the translation field
-            TranslatedTextLabel.Content = translation;
+            //// Update the translation field
+            //TranslatedTextLabel.Content = translation;
 
         }
     }

@@ -542,27 +542,20 @@ namespace MSTranslatorDemo
 
         };
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-           
+       
 
+       
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
             if (openFileDialog.ShowDialog() == true)
             {
                 // do something with the filename
-                MessageBox.Show(string.Format("eInvoice file \"{0}\" loaded", Path.GetFileName( openFileDialog.FileName)));
+                //MessageBox.Show(string.Format("eInvoice file \"{0}\" loaded", Path.GetFileName(openFileDialog.FileName)));
+                XML_File_txtbx.Text = Path.GetFileName(openFileDialog.FileName);
                 btnLoadXML.IsEnabled = true;
             }
-           
-        }
-
-        private void Grid_Loaded(object sender, RoutedEventArgs e)
-        {
-            btnLoadXML.IsEnabled = false;
-        }
-
-        private void FromLanguageComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-
+            else
+                XML_File_txtbx.Text = "no file selected";
         }
     }
 }
