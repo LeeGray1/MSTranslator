@@ -536,6 +536,7 @@ namespace MSTranslatorDemo
            // invoiceDisplay.Show();
         
         }
+
         OpenFileDialog openFileDialog = new OpenFileDialog
         {
             Filter = "xml eInvoice file (*.xml)|*.xml|All files (*.*)|*.*",
