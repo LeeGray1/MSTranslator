@@ -558,5 +558,19 @@ namespace MSTranslatorDemo
             else
                 XML_File_txtbx.Text = "no file selected";
         }
+
+        private void Settings_Click(object sender, RoutedEventArgs e)
+        {
+            Settings newFrm = new Settings();            
+            this.Close();
+            newFrm.Show();
+        }
+
+        private void Test_Click(object sender, RoutedEventArgs e)
+        {
+            frmTranslateTest Test = new frmTranslateTest();
+            this.Close();
+            Test.Show();
+        }
     }
 }

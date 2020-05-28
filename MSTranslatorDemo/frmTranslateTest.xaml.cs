@@ -97,5 +97,19 @@ namespace MSTranslatorDemo
 
 
         }
+
+        private void Dashboard_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow Dashboard = new MainWindow();
+            this.Close();
+            Dashboard.Show();
+        }
+
+        private void Settings_Click(object sender, RoutedEventArgs e)
+        {
+            Settings newFrm = new Settings();
+            this.Close();
+            newFrm.Show();
+        }
     }
 }
