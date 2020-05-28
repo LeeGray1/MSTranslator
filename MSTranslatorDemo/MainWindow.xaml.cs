@@ -207,14 +207,14 @@ namespace MSTranslatorDemo
         // ***** PERFORM TRANSLATION ON BUTTON CLICK
         private async void TranslateButton_Click(object sender, EventArgs e)
         {
-            string textToTranslate = TextToTranslate.Text.Trim();
+            //string textToTranslate = TextToTranslate.Text.Trim();
 
             
 
-            await translate(textToTranslate);
+            //await translate(textToTranslate);
 
             // Update the translation field
-            TranslatedTextLabel.Content = translation;
+           // TranslatedTextLabel.Content = translation;
         }
         string translation;
         private async System.Threading.Tasks.Task translate(string textToTranslate)
@@ -531,6 +531,9 @@ namespace MSTranslatorDemo
         
         }
 
-        
+        private void FromLanguageComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

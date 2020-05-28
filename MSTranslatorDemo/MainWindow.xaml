@@ -7,28 +7,28 @@
         mc:Ignorable="d"
         Title="eInvoice Translator" Height="400" Width="700" BorderThickness="0">
     <Grid>
-        <TextBox x:Name="TextToTranslate" HorizontalAlignment="Left" Height="23" Margin="42,236,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="137" FontSize="14" TabIndex="3"/>
-        <Label x:Name="toLabel" Content="Translate to:" HorizontalAlignment="Left" Margin="301,57,0,0" VerticalAlignment="Top" FontSize="14"/>
-
-        <Button x:Name="TranslateButton" Content="Translate" HorizontalAlignment="Left" Margin="203,236,0,0" VerticalAlignment="Top" Width="56" Height="19" Click="TranslateButton_Click" FontSize="14" TabIndex="4" IsDefault="True"/>
+        <Label x:Name="toLabel" Content="Translate to:" HorizontalAlignment="Left" Margin="182,53,0,0" VerticalAlignment="Top" FontSize="14" RenderTransformOrigin="0.506,0.529"/>
         <ComboBox x:Name="ToLanguageComboBox"
                 HorizontalAlignment="Left"
-                Margin="303,87,0,0"
+                Margin="182,87,0,0"
                 VerticalAlignment="Top"
                 Width="175" FontSize="14" TabIndex="2">
 
         </ComboBox>
-        <Label x:Name="fromLabel" Content="Translate from:" HorizontalAlignment="Left" Margin="37,57,0,0" VerticalAlignment="Top" FontSize="14"/>
+        <Label x:Name="fromLabel" Visibility="Hidden" Content="Translate from:" HorizontalAlignment="Left" Margin="182,249,0,0" VerticalAlignment="Top" FontSize="14"/>
         <ComboBox x:Name="FromLanguageComboBox"
             HorizontalAlignment="Left"
-            Margin="39,87,0,0"
+            Visibility="Hidden"
+            Margin="168,219,0,0"
             VerticalAlignment="Top"
-            Width="175" FontSize="14" TabIndex="1"/>
-        <Label x:Name="TranslatedTextLabel" Content="Translation is displayed here." HorizontalAlignment="Left" Margin="39,255,0,0" VerticalAlignment="Top" Width="620" FontSize="14" Height="85" BorderThickness="0"/>
-        <Label x:Name="DetectedLanguageLabel" Content="Autodetected language is displayed here." HorizontalAlignment="Left" Margin="39,288,0,0" VerticalAlignment="Top" Width="620" FontSize="14" Height="84" BorderThickness="0"/>
-        <Button x:Name="btnLoadXML" Content="Create translated Invoice" HorizontalAlignment="Left" Margin="39,137,0,0" VerticalAlignment="Top" Width="140" Height="31" Click="btnLoadXML_Click"/>
-        <Button Content="Upload XML file" HorizontalAlignment="Left" Margin="42,22,0,0" VerticalAlignment="Top" Width="137" Height="30"/>
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="153" Margin="10,207,0,0" VerticalAlignment="Top" Width="674"/>
+            Width="175" FontSize="14" TabIndex="1" SelectionChanged="FromLanguageComboBox_SelectionChanged"/>
+        <Label x:Name="DetectedLanguageLabel" Content="" HorizontalAlignment="Left" Margin="182,117,0,0" VerticalAlignment="Top" Width="175" FontSize="14" Height="32" BorderThickness="0"/>
+        <Button x:Name="btnLoadXML" Content="Create translated Invoice" HorizontalAlignment="Left" Margin="182,154,0,0" VerticalAlignment="Top" Width="140" Height="31" Click="btnLoadXML_Click"/>
+        <Button Content="Upload XML file" HorizontalAlignment="Left" Margin="182,22,0,0" VerticalAlignment="Top" Width="137" Height="30"/>
+        <Rectangle x:Name="Hotbar" Fill="#FFBAB8B8" HorizontalAlignment="Left" Height="371" Margin="0,0,0,-0.333" Stroke="Black" VerticalAlignment="Top" Width="142"/>
+        <Button x:Name="Dashboard" IsEnabled="False" Content="Dashboard" HorizontalAlignment="Left" VerticalAlignment="Top" Width="141" Height="41" FontSize="16" Background="#FFBAB8B8"/>
+        <Button x:Name="Settings" Content="Settings" HorizontalAlignment="Left" Margin="0,41,0,0" VerticalAlignment="Top" Width="141" Height="41" FontSize="16" Background="#FFBAB8B8"/>
+        <TextBox x:Name="XML_File_txtbx" HorizontalAlignment="Left" Height="30" Margin="324,22,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="172" FontSize="14"/>
 
     </Grid>
 

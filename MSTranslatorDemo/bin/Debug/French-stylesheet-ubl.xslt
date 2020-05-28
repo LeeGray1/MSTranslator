@@ -416,7 +416,7 @@
 			</c>
 			<c id="DE">
 				<t id="en">Germany</t>
-				<t id="no">Tyskland</t>
+				<t id="fr">Allemagne</t>
 			</c>
 			<c id="DJ">
 				<t id="en">Djibouti</t>
@@ -596,7 +596,7 @@
 			</c>
 			<c id="IE">
 				<t id="en">Ireland</t>
-				<t id="no">Irland</t>
+				<t id="fr">Irlande</t>
 			</c>
 			<c id="IL">
 				<t id="en">Israel</t>
@@ -1282,7 +1282,7 @@
 			</f>
 			<f id="DeliveryDate">
 				<t id="en">Date</t>
-				<t id="no">Dato</t>
+				<t id="fr">Date</t>
 			</f>
 			<f id="DeliveryID">
 				<t id="en">Location</t>
@@ -1292,7 +1292,7 @@
 		<g id="document">
 			<f id="CreditNote">
 				<t id="en">Credit Note</t>
-				<t id="no">Kreditnota</t>
+				<t id="fr">Note de crédit</t>
 			</f>
 			<f id="Invoice">
 				<t id="en">Invoice</t>
@@ -1302,15 +1302,15 @@
 		<g id="item">
 			<f id="BuyersItemIdentification">
 				<t id="en">Buyers Item Identification</t>
-				<t id="no">Kjøpers vareidentifikator</t>
+				<t id="fr">Identification de l’article des acheteurs</t>
 			</f>
 			<f id="CommodityClassification">
 				<t id="en">Commodity Classification</t>
-				<t id="no">Klassifisering</t>
+				<t id="fr">Classification des produits de base</t>
 			</f>
 			<f id="OriginCountry">
 				<t id="en">Origin Country</t>
-				<t id="no">Opprinnelseland</t>
+				<t id="fr">Pays d’origine</t>
 			</f>
 			<f id="SellersItemIdentification">
 				<t id="en">Sellers Item Identification</t>
@@ -1318,17 +1318,17 @@
 			</f>
 			<f id="StandardItemIdentification">
 				<t id="en">Standard Item Identification</t>
-				<t id="no">Registrert vareidentifikator</t>
+				<t id="fr">Identification standard de l’article</t>
 			</f>
 		</g>
 		<g id="line">
 			<f id="Allowance">
 				<t id="en">Allowance</t>
-				<t id="no">Rabatt</t>
+				<t id="fr">Allocation</t>
 			</f>
 			<f id="AllowanceIncluded">
 				<t id="en">Included allowance</t>
-				<t id="no">Inkludert rabatt</t>
+				<t id="fr">Allocation incluse</t>
 			</f>
 			<f id="AllowanceTotalAmount">
 				<t id="en">Allowance Total</t>
@@ -1336,11 +1336,11 @@
 			</f>
 			<f id="Charge">
 				<t id="en">Charge</t>
-				<t id="no">Gebyr</t>
+				<t id="fr">Charge</t>
 			</f>
 			<f id="ChargeIncluded">
 				<t id="en">Included charge</t>
-				<t id="no">Inkludert gebyr</t>
+				<t id="fr">Frais inclus</t>
 			</f>
 			<f id="ChargeTotalAmount">
 				<t id="en">Charge Total</t>
@@ -1348,7 +1348,7 @@
 			</f>
 			<f id="DocumentReference">
 				<t id="en">Document Reference</t>
-				<t id="no">Dokumentreferanse</t>
+				<t id="fr">Référence de document</t>
 			</f>
 			<f id="InvoicePeriod">
 				<t id="en">Invoice Period</t>
@@ -1360,25 +1360,25 @@
 			</f>
 			<f id="OrderLineReference">
 				<t id="en">Order Line</t>
-				<t id="no">Ordrelinje</t>
+				<t id="fr">Ligne de commande</t>
 			</f>
 		</g>
 		<g id="metadata">
 			<f id="AccountingCost">
 				<t id="en">Accounting Cost</t>
-				<t id="no">Kontering</t>
+				<t id="fr">Coût comptable</t>
 			</f>
 			<f id="BuyerReference">
 				<t id="en">Buyer Reference</t>
-				<t id="no">Kjøpers referanse</t>
+				<t id="fr">Référence de l’acheteur</t>
 			</f>
 			<f id="ContractDocumentReference">
 				<t id="en">Contract Reference</t>
-				<t id="no">Kontraktsnummer</t>
+				<t id="fr">Référence de contrat</t>
 			</f>
 			<f id="DespatchDocumentReference">
 				<t id="en">Despatch Reference</t>
-				<t id="no">Pakkseddel</t>
+				<t id="fr">Référence d’expédition</t>
 			</f>
 			<f id="DocumentCurrencyCode">
 				<t id="en">Currency</t>
@@ -1394,7 +1394,7 @@
 			</f>
 			<f id="InvoiceDocumentReference">
 				<t id="en">Preceding Invoice Reference</t>
-				<t id="no">Fakturareferanse</t>
+				<t id="fr">Référence de facture précédente</t>
 			</f>
 			<f id="InvoicePeriod">
 				<t id="en">Invoice Period</t>
@@ -1418,29 +1418,29 @@
 			</f>
 			<f id="OriginatorDocumentReference">
 				<t id="en">Originator Reference</t>
-				<t id="no">Kildeidentifikator</t>
+				<t id="fr">Référence d’origine</t>
 			</f>
 			<f id="ProjectReference">
 				<t id="en">Project Reference</t>
-				<t id="no">Prosjektreferanse</t>
+				<t id="fr">Référence du projet</t>
 			</f>
 			<f id="ReceiptDocumentReference">
 				<t id="en">Receipt Reference</t>
-				<t id="no">Kvitteringsreferanse</t>
+				<t id="fr">Référence de réception</t>
 			</f>
 			<f id="TaxCurrencyCode">
 				<t id="en">Tax Currency</t>
-				<t id="no">MVA-valuta</t>
+				<t id="fr">Monnaie fiscale</t>
 			</f>
 			<f id="TaxPointDate">
 				<t id="en">Tax Date</t>
-				<t id="no">MVA-dato</t>
+				<t id="fr">Date d’impôt</t>
 			</f>
 		</g>
 		<g id="party">
 			<f id="BankingReference">
 				<t id="en">Banking Reference</t>
-				<t id="no">Bankidentifikator</t>
+				<t id="fr">Référence bancaire</t>
 			</f>
 			<f id="Customer">
 				<t id="en">Customer</t>
@@ -1498,7 +1498,7 @@
 			</f>
 			<f id="PayableRoundingAmount">
 				<t id="en">Rounding Amount</t>
-				<t id="no">Avrunding</t>
+				<t id="fr">Montant d’arrondissement</t>
 			</f>
 			<f id="PrepaidAmount">
 				<t id="en">Prepaid</t>
