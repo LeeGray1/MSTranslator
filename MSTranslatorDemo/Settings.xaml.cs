@@ -15,40 +15,32 @@ using System.Windows.Shapes;
 namespace MSTranslatorDemo
 {
     /// <summary>
-    /// Interaction logic for frmTranslateTest.xaml
+    /// Interaction logic for Settings.xaml
     /// </summary>
-    public partial class frmTranslateTest : Window
+    public partial class Settings : Window
     {
-        public frmTranslateTest()
+        public Settings()
         {
             InitializeComponent();
         }
 
-        private void TranslateButton_Click(object sender, RoutedEventArgs e)
-        {
-            string textToTranslate = TextToTranslate.Text.Trim();
-
-            //new translate.
-
-            //await translate(textToTranslate);
-
-            //// Update the translation field
-            //TranslatedTextLabel.Content = translation;
-
-        }
-
         private void Dashboard_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow Dashboard = new MainWindow();
+            MainWindow Dashboard = new MainWindow();            
             this.Close();
             Dashboard.Show();
         }
 
-        private void Settings_Click(object sender, RoutedEventArgs e)
+        private void Test_Click(object sender, RoutedEventArgs e)
         {
-            Settings newFrm = new Settings();
+            frmTranslateTest Test = new frmTranslateTest();
             this.Close();
-            newFrm.Show();
+            Test.Show();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

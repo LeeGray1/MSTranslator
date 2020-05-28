@@ -5,21 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MSTranslatorDemo"
         mc:Ignorable="d"
-        Title="frmTranslateTest" Height="450" Width="800">
-    <Grid>
-        <TextBox x:Name="TextToTranslate" HorizontalAlignment="Left" Height="23" Margin="83,55,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="137" FontSize="14" TabIndex="3"/>
-
-        <Button x:Name="TranslateButton" Content="Translate" HorizontalAlignment="Left" Margin="101,162,0,0" VerticalAlignment="Top" Width="76" Height="38" Click="TranslateButton_Click" FontSize="14" TabIndex="4" IsDefault="True"/>
-        <Label x:Name="TranslatedTextLabel" Content="Translation is displayed here." HorizontalAlignment="Left" Margin="83,205,0,0" VerticalAlignment="Top" Width="620" FontSize="14" Height="85" BorderThickness="0"/>
-        <Label Content="Text to translate" HorizontalAlignment="Left" Margin="83,24,0,0" VerticalAlignment="Top"/>
+        Title="frmTranslateTest" Height="400" Width="700">
+    <Grid Background="#FFE5E4E4">
+        <Rectangle x:Name="Hotbar" Fill="White" HorizontalAlignment="Left" Height="371" Stroke="Black" VerticalAlignment="Top" Width="142"/>
+        <Button x:Name="Dashboard"  Content="Dashboard" HorizontalAlignment="Left" VerticalAlignment="Top" Width="141" Height="41" FontSize="14" Background="White" Click="Dashboard_Click"/>
+        <Button x:Name="Settings" Content="Settings" HorizontalAlignment="Left" Margin="0,41,0,0" VerticalAlignment="Top" Width="141" Height="41" FontSize="14" Background="White" Click="Settings_Click"/>
+        <Rectangle Fill="White" HorizontalAlignment="Left" Height="72" Margin="155,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="528"/>
+        <Rectangle Fill="White" HorizontalAlignment="Left" Height="104" Margin="155,114,0,0" Stroke="Black" VerticalAlignment="Top" Width="528"/>
+        <Rectangle Fill="White" HorizontalAlignment="Left" Height="112" Margin="155,249,0,0" Stroke="Black" VerticalAlignment="Top" Width="528"/>
+        <Label x:Name="DetectedLanguageLabel" Content="" HorizontalAlignment="Left" Margin="421,152,0,0" VerticalAlignment="Top" Width="175" FontSize="14" Height="32" BorderThickness="0"/>
+        <Button x:Name="Test" IsEnabled="False" Content="Test" HorizontalAlignment="Left" Margin="0,82,0,0" VerticalAlignment="Top" Width="141" Height="41" FontSize="14" Background="White" Click="Settings_Click"/>
+        <TextBox x:Name="TextToTranslate" HorizontalAlignment="Left" Height="23" Margin="288,26,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="227" FontSize="14" TabIndex="3"/>
+        <Button x:Name="TranslateButton" Content="Translate" HorizontalAlignment="Left" Margin="175,177,0,0" VerticalAlignment="Top" Width="76" Height="38" Click="TranslateButton_Click" FontSize="14" TabIndex="4" IsDefault="True"/>
+        <Label x:Name="TranslatedTextLabel" Content="Translation is displayed here." HorizontalAlignment="Left" Margin="160,262,0,0" VerticalAlignment="Top" Width="505" FontSize="14" Height="84" BorderThickness="0"/>
+        <Label Content="Text to translate:" HorizontalAlignment="Left" Margin="175,23,0,0" VerticalAlignment="Top" Width="108"/>
         <ComboBox x:Name="FromLanguageComboBox"
             HorizontalAlignment="Left"
-            Margin="83,102,0,0"
+            Margin="175,128,0,0"
             VerticalAlignment="Top"
             Width="175" FontSize="14" TabIndex="1"/>
         <ComboBox x:Name="ToLanguageComboBox"
             HorizontalAlignment="Left"
-            Margin="308,102,0,0"
+            Margin="456,128,0,0"
             VerticalAlignment="Top"
             Width="175" FontSize="14" TabIndex="2"/>
     </Grid>
