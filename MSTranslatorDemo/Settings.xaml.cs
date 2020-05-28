@@ -27,8 +27,9 @@ namespace MSTranslatorDemo
         private void Dashboard_Click(object sender, RoutedEventArgs e)
         {
             MainWindow Dashboard = new MainWindow();            
-            this.Close();
+            
             Dashboard.Show();
+            this.Close();
         }
 
         private void Test_Click(object sender, RoutedEventArgs e)

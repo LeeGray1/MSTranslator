@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\
+C:\Users\edmun\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\
 MSTranslatorDemo
 none
 false
 DEBUG;TRACE
-C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\App.xaml
-31122163926
+C:\Users\edmun\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\App.xaml
+4-765062880
 41629157913
-111893577387
-221229152372
-frmTranslateTest.xaml;MainWindow.xaml;Settings.xaml;
+11-1007195748
+221552710350
+PageMain.xaml;PageSettings.xaml;PageTest.xaml;WindowStart.xaml;
 
-True
+False
 

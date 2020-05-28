@@ -1452,7 +1452,7 @@
 			</f>
 			<f id="PartyIdentification">
 				<t id="en">Party Identification</t>
-				<t id="et">Osapoole ID</t>
+				<t id="et">Osapoole Identification</t>
 			</f>
 			<f id="PartyTaxScheme">
 				<t id="en">Tax Identification</t>

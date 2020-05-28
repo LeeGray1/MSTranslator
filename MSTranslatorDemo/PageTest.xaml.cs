@@ -10,14 +10,15 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace MSTranslatorDemo
 {
     /// <summary>
-    /// Interaction logic for frmTranslateTest.xaml
+    /// Interaction logic for PageTest.xaml
     /// </summary>
-    public partial class frmTranslateTest : Window
+    public partial class PageTest : Page
     {
         const string COGNITIVE_SERVICES_KEY = "7963c13bba1e4e60b4d872662401c746";
         // Endpoints for Translator and Bing Spell Check
@@ -28,15 +29,15 @@ namespace MSTranslatorDemo
         private SortedDictionary<string, string> languageCodesAndTitles =
            new SortedDictionary<string, string>(Comparer<string>.Create((a, b) => string.Compare(a, b, true)));
 
-        public frmTranslateTest()
+        public PageTest()
         {
             InitializeComponent();
-
             // Get languages for drop-downs
             GetLanguagesForTranslate();
             // Populate drop-downs with values from GetLanguagesForTranslate
             PopulateLanguageMenus();
         }
+
 
         private void PopulateLanguageMenus()
         {
@@ -58,15 +59,15 @@ namespace MSTranslatorDemo
         private void GetLanguagesForTranslate()
         {
             // Send request to get supported language codes
-            
 
-            var languages  = new MSTranslate(TEXT_TRANSLATION_API_ENDPOINT, COGNITIVE_SERVICES_KEY).GetLanguagesForTranslate();
+
+            var languages = new MSTranslate(TEXT_TRANSLATION_API_ENDPOINT, COGNITIVE_SERVICES_KEY).GetLanguagesForTranslate();
             languageCodes = languages.Keys.ToArray();
             foreach (var kv in languages)
-                {
-                    languageCodesAndTitles.Add(kv.Value["name"], kv.Key);
-                }
-            
+            {
+                languageCodesAndTitles.Add(kv.Value["name"], kv.Key);
+            }
+
         }
         private async void TranslateButton_Click(object sender, RoutedEventArgs e)
         {
@@ -96,21 +97,6 @@ namespace MSTranslatorDemo
 
 
 
-        }
-
-        private void Dashboard_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow Dashboard = new MainWindow();
-            this.Close();
-            Dashboard.Show();
-        }
-
-        private void Settings_Click(object sender, RoutedEventArgs e)
-        {
-            //Settings newFrm = new Settings();
-           
-            //newFrm.Show();
-            //this.Close();
         }
     }
 }
