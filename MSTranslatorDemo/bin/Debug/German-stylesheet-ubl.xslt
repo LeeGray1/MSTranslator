@@ -416,7 +416,7 @@
 			</c>
 			<c id="DE">
 				<t id="en">Germany</t>
-				<t id="no">Tyskland</t>
+				<t id="de">Deutschland</t>
 			</c>
 			<c id="DJ">
 				<t id="en">Djibouti</t>
@@ -600,7 +600,7 @@
 			</c>
 			<c id="IL">
 				<t id="en">Israel</t>
-				<t id="de">Irland</t>
+				<t id="no">Israel</t>
 			</c>
 			<c id="IM">
 				<t id="en">Isle of Man</t>

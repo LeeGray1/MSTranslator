@@ -1,0 +1,30 @@
+﻿<Page x:Class="MSTranslatorDemo.PageTest"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MSTranslatorDemo"
+      mc:Ignorable="d" 
+      d:DesignHeight="371" d:DesignWidth="537"
+      Title="PageTest">
+
+    <Grid>
+        <Rectangle Fill="White" HorizontalAlignment="Left" Height="72" Margin="7,7,0,0" Stroke="Black" VerticalAlignment="Top" Width="528"/>
+        <Rectangle Fill="White" HorizontalAlignment="Left" Height="112" Margin="7,246,0,0" Stroke="Black" VerticalAlignment="Top" Width="528"/>
+        <TextBox x:Name="TextToTranslate" HorizontalAlignment="Left" Height="23" Margin="140,23,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="227" FontSize="14" TabIndex="3"/>
+        <Button x:Name="TranslateButton" Content="Translate" HorizontalAlignment="Left" Margin="27,174,0,0" VerticalAlignment="Top" Width="76" Height="35" Click="TranslateButton_Click" FontSize="14" TabIndex="4" IsDefault="True"/>
+        <Label x:Name="TranslatedTextLabel" Content="Translation is displayed here." HorizontalAlignment="Left" Margin="12,259,0,0" VerticalAlignment="Top" Width="505" FontSize="14" Height="84" BorderThickness="0"/>
+        <Label Content="Text to translate:" HorizontalAlignment="Left" Margin="27,20,0,0" VerticalAlignment="Top" Width="108"/>
+        <ComboBox x:Name="FromLanguageComboBox"
+            HorizontalAlignment="Left"
+            Margin="27,125,0,0"
+            VerticalAlignment="Top"
+            Width="175" FontSize="14" TabIndex="1"/>
+        <ComboBox x:Name="ToLanguageComboBox"
+            HorizontalAlignment="Left"
+            Margin="308,125,0,0"
+            VerticalAlignment="Top"
+            Width="175" FontSize="14" TabIndex="2"/>
+
+    </Grid>
+</Page>

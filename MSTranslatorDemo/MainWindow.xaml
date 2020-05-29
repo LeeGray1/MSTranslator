@@ -26,11 +26,13 @@
             Margin="168,152,0,0"
             VerticalAlignment="Top"
             Width="175" FontSize="14" TabIndex="2"/>
-        <Label x:Name="DetectedLanguageLabel" Content="" HorizontalAlignment="Left" Margin="168,182,0,0" VerticalAlignment="Top" Width="175" FontSize="14" Height="32" BorderThickness="0"/>
+        <Label x:Name="DetectedLanguageLabel" Content="" HorizontalAlignment="Left" Margin="168,182,0,0" VerticalAlignment="Top" Width="175" FontSize="14" Height="32" BorderThickness="0" Visibility="Hidden"/>
         <Button x:Name="btnLoadXML" Content="Create translated Invoice" HorizontalAlignment="Left" Margin="168,299,0,0" VerticalAlignment="Top" Width="140" Height="31" Click="btnLoadXML_Click" IsEnabled="False"/>
         <Button Content="Upload XML file" HorizontalAlignment="Left" Margin="168,22,0,0" VerticalAlignment="Top" Width="137" Height="30" Click="Button_Click_1"/>
-        <TextBox x:Name="XML_File_txtbx" HorizontalAlignment="Left" Height="30" Margin="424,22,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="172" FontSize="14"/>
+        <TextBox x:Name="XML_File_txtbx" HorizontalAlignment="Left" Height="30" Margin="343,22,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="253" FontSize="14"/>
         <Button x:Name="Test" Content="Test" HorizontalAlignment="Left" Margin="0,82,0,0" VerticalAlignment="Top" Width="141" Height="41" FontSize="14" Background="White" Click="Test_Click"/>
+        <Button x:Name="btnSaveXSLT" Content="Download XSLT" HorizontalAlignment="Left" Margin="520,299,0,0" VerticalAlignment="Top" Width="140" Height="31" Click="btnSaveXSLT_Click" />
+        <Button x:Name="btnSave_XML" Content="Download XML" HorizontalAlignment="Left" Margin="343,299,0,0" VerticalAlignment="Top" Width="140" Height="31" Click="btnSave_XML_Click" />
 
     </Grid>
 

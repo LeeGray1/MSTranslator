@@ -416,7 +416,7 @@
 			</c>
 			<c id="DE">
 				<t id="en">Germany</t>
-				<t id="fj">Jamani</t>
+				<t id="hi">जर्मनी</t>
 			</c>
 			<c id="DJ">
 				<t id="en">Djibouti</t>
@@ -596,7 +596,7 @@
 			</c>
 			<c id="IE">
 				<t id="en">Ireland</t>
-				<t id="fj">Ireland</t>
+				<t id="hi">आयरलैंड</t>
 			</c>
 			<c id="IL">
 				<t id="en">Israel</t>
@@ -1190,7 +1190,7 @@
 		<cl id="uncl1001invoice">
 			<c id="380">
 				<t id="en">Commercial invoice</t>
-				<t id="fj">Inivosi vakabisinisi</t>
+				<t id="hi">वाणिज्यिक चालान</t>
 			</c>
 			<c id="393">
 				<t id="en">Factored invoice</t>
@@ -1260,265 +1260,265 @@
 		<g id="attachments">
 			<f id="Attachments">
 				<t id="en">Attachments</t>
-				<t id="fj">Kabi</t>
+				<t id="hi">अनुलग्नक</t>
 			</f>
 			<f id="Download">
 				<t id="en">Download</t>
-				<t id="fj">Lavetaka</t>
+				<t id="hi">डाउनलोड</t>
 			</f>
 			<f id="Embedded">
 				<t id="en">Embedded</t>
-				<t id="fj">Tu</t>
+				<t id="hi">एम्बेडेड</t>
 			</f>
 		</g>
 		<g id="delivery">
 			<f id="Address">
 				<t id="en">Address</t>
-				<t id="fj">Vosa</t>
+				<t id="hi">पता</t>
 			</f>
 			<f id="Delivery">
 				<t id="en">Delivery</t>
-				<t id="fj">Ni veivotai</t>
+				<t id="hi">वितरण</t>
 			</f>
 			<f id="DeliveryDate">
 				<t id="en">Date</t>
-				<t id="fj">Tikinisiga</t>
+				<t id="hi">दिनांक</t>
 			</f>
 			<f id="DeliveryID">
 				<t id="en">Location</t>
-				<t id="fj">Identifier</t>
+				<t id="hi">आइडेंटिफ़ायर</t>
 			</f>
 		</g>
 		<g id="document">
 			<f id="CreditNote">
 				<t id="en">Credit Note</t>
-				<t id="fj">Ivakamacala ni dinau</t>
+				<t id="hi">क्रेडिट नोट</t>
 			</f>
 			<f id="Invoice">
 				<t id="en">Invoice</t>
-				<t id="fj">Inivosi</t>
+				<t id="hi">इनवॉइस</t>
 			</f>
 		</g>
 		<g id="item">
 			<f id="BuyersItemIdentification">
 				<t id="en">Buyers Item Identification</t>
-				<t id="fj">Buyers na itukutuku</t>
+				<t id="hi">खरीदारों आइटम पहचान</t>
 			</f>
 			<f id="CommodityClassification">
 				<t id="en">Commodity Classification</t>
-				<t id="fj">Commodity Vakalasitaki</t>
+				<t id="hi">कमोडिटी वर्गीकरण</t>
 			</f>
 			<f id="OriginCountry">
 				<t id="en">Origin Country</t>
-				<t id="fj">Matanitu itekitekivu</t>
+				<t id="hi">मूल देश</t>
 			</f>
 			<f id="SellersItemIdentification">
 				<t id="en">Sellers Item Identification</t>
-				<t id="fj">Vakatalai na itukutuku</t>
+				<t id="hi">विक्रेता आइटम पहचान</t>
 			</f>
 			<f id="StandardItemIdentification">
 				<t id="en">Standard Item Identification</t>
-				<t id="fj">Ivakadinadina tudei</t>
+				<t id="hi">मानक आइटम पहचान</t>
 			</f>
 		</g>
 		<g id="line">
 			<f id="Allowance">
 				<t id="en">Allowance</t>
-				<t id="fj">Tuvanaki</t>
+				<t id="hi">भत्ता</t>
 			</f>
 			<f id="AllowanceIncluded">
 				<t id="en">Included allowance</t>
-				<t id="fj">Okati kina na ilavo</t>
+				<t id="hi">शामिल भत्ता</t>
 			</f>
 			<f id="AllowanceTotalAmount">
 				<t id="en">Allowance Total</t>
-				<t id="fj">Levu ni ilavo</t>
+				<t id="hi">भत्ता कुल</t>
 			</f>
 			<f id="Charge">
 				<t id="en">Charge</t>
-				<t id="fj">Ilesilesi</t>
+				<t id="hi">प्रभारी</t>
 			</f>
 			<f id="ChargeIncluded">
 				<t id="en">Included charge</t>
-				<t id="fj">Okati kina na itavi</t>
+				<t id="hi">शामिल आरोप</t>
 			</f>
 			<f id="ChargeTotalAmount">
 				<t id="en">Charge Total</t>
-				<t id="fj">Cicivaka na kena levu</t>
+				<t id="hi">चार्ज कुल</t>
 			</f>
 			<f id="DocumentReference">
 				<t id="en">Document Reference</t>
-				<t id="fj">IDusidusi ni itukutuku</t>
+				<t id="hi">दस्तावेज़ संदर्भ</t>
 			</f>
 			<f id="InvoicePeriod">
 				<t id="en">Invoice Period</t>
-				<t id="fj">Gauna ni inivosi</t>
+				<t id="hi">चालान अवधि</t>
 			</f>
 			<f id="LineExtensionAmount">
 				<t id="en">Line Total</t>
-				<t id="fj">Levu ni laini</t>
+				<t id="hi">लाइन कुल</t>
 			</f>
 			<f id="OrderLineReference">
 				<t id="en">Order Line</t>
-				<t id="fj">Sala ni Ota</t>
+				<t id="hi">ऑर्डर लाइन</t>
 			</f>
 		</g>
 		<g id="metadata">
 			<f id="AccountingCost">
 				<t id="en">Accounting Cost</t>
-				<t id="fj">Isau ni Akaude</t>
+				<t id="hi">लेखांकन लागत</t>
 			</f>
 			<f id="BuyerReference">
 				<t id="en">Buyer Reference</t>
-				<t id="fj">IWasewase idusidusi</t>
+				<t id="hi">क्रेता संदर्भ</t>
 			</f>
 			<f id="ContractDocumentReference">
 				<t id="en">Contract Reference</t>
-				<t id="fj">IDusidusi ni konitaraki</t>
+				<t id="hi">अनुबंध संदर्भ</t>
 			</f>
 			<f id="DespatchDocumentReference">
 				<t id="en">Despatch Reference</t>
-				<t id="fj">Despatch idusidusi</t>
+				<t id="hi">प्रेषण संदर्भ</t>
 			</f>
 			<f id="DocumentCurrencyCode">
 				<t id="en">Currency</t>
-				<t id="fj">Ilavo ni</t>
+				<t id="hi">मुद्रा</t>
 			</f>
 			<f id="DueDate">
 				<t id="en">Due Date</t>
-				<t id="fj">Tikinisiga me vakacavari kina</t>
+				<t id="hi">नियत तिथि</t>
 			</f>
 			<f id="ID">
 				<t id="en">Identifier</t>
-				<t id="fj">Identifier</t>
+				<t id="hi">आइडेंटिफ़ायर</t>
 			</f>
 			<f id="InvoiceDocumentReference">
 				<t id="en">Preceding Invoice Reference</t>
-				<t id="fj">IDusidusi ni inivosi se bera</t>
+				<t id="hi">पिछला चालान संदर्भ</t>
 			</f>
 			<f id="InvoicePeriod">
 				<t id="en">Invoice Period</t>
-				<t id="fj">Gauna ni inivosi</t>
+				<t id="hi">चालान अवधि</t>
 			</f>
 			<f id="IssueDate">
 				<t id="en">Issue Date</t>
-				<t id="fj">Tikinisiga a soli kina</t>
+				<t id="hi">अंक तिथि</t>
 			</f>
 			<f id="Metadata">
 				<t id="en">Metadata</t>
-				<t id="fj">Metadata</t>
+				<t id="hi">मेटाडेटा</t>
 			</f>
 			<f id="ObjectIdentifier">
 				<t id="en">Call for Tender/Lot</t>
-				<t id="fj">Metadata</t>
+				<t id="hi">मेटाडेटा</t>
 			</f>
 			<f id="OrderReference">
 				<t id="en">Order Reference</t>
-				<t id="fj">IDusidusi ni Ota</t>
+				<t id="hi">आदेश संदर्भ</t>
 			</f>
 			<f id="OriginatorDocumentReference">
 				<t id="en">Originator Reference</t>
-				<t id="fj">Originator idusidusi</t>
+				<t id="hi">प्रवर्तक संदर्भ</t>
 			</f>
 			<f id="ProjectReference">
 				<t id="en">Project Reference</t>
-				<t id="fj">IDusidusi ni cakacaka</t>
+				<t id="hi">परियोजना संदर्भ</t>
 			</f>
 			<f id="ReceiptDocumentReference">
 				<t id="en">Receipt Reference</t>
-				<t id="fj">IDusidusi ni risiti</t>
+				<t id="hi">रसीद संदर्भ</t>
 			</f>
 			<f id="TaxCurrencyCode">
 				<t id="en">Tax Currency</t>
-				<t id="fj">Ilavo ni ivakacavacava</t>
+				<t id="hi">कर मुद्रा</t>
 			</f>
 			<f id="TaxPointDate">
 				<t id="en">Tax Date</t>
-				<t id="fj">Tikinisiga ni ivakacavacava</t>
+				<t id="hi">टैक्स की तारीख</t>
 			</f>
 		</g>
 		<g id="party">
 			<f id="BankingReference">
 				<t id="en">Banking Reference</t>
-				<t id="fj">Veiqaravi idusidusi</t>
+				<t id="hi">बैंकिंग संदर्भ</t>
 			</f>
 			<f id="Customer">
 				<t id="en">Customer</t>
-				<t id="fj">Kasitama</t>
+				<t id="hi">ग्राहक</t>
 			</f>
 			<f id="EndpointID">
 				<t id="en">Technical Address</t>
-				<t id="fj">Itikotiko vakacakacaka</t>
+				<t id="hi">तकनीकी पता</t>
 			</f>
 			<f id="PartyIdentification">
 				<t id="en">Party Identification</t>
-				<t id="fj">Ivakadinadina ni soqo</t>
+				<t id="hi">पार्टी की पहचान</t>
 			</f>
 			<f id="PartyTaxScheme">
 				<t id="en">Tax Identification</t>
-				<t id="fj">Ivakadinadina ni ivakacavacava</t>
+				<t id="hi">कर पहचान</t>
 			</f>
 			<f id="Supplier">
 				<t id="en">Supplier</t>
-				<t id="fj">Dau volivoli</t>
+				<t id="hi">आपूर्तिकर्ता</t>
 			</f>
 		</g>
 		<g id="payment">
 			<f id="Payment">
 				<t id="en">Payment</t>
-				<t id="fj">Sausaumi</t>
+				<t id="hi">भुगतान</t>
 			</f>
 		</g>
 		<g id="tax">
 			<f id="Category">
 				<t id="en">Category</t>
-				<t id="fj">IWasewase</t>
+				<t id="hi">श्रेणी</t>
 			</f>
 			<f id="Tax">
 				<t id="en">Tax</t>
-				<t id="fj">Ivakacavacava</t>
+				<t id="hi">कर</t>
 			</f>
 			<f id="TaxableAmount">
 				<t id="en">Taxable</t>
-				<t id="fj">Taxable</t>
+				<t id="hi">कर योग्य</t>
 			</f>
 			<f id="TaxAmount">
 				<t id="en">Tax</t>
-				<t id="fj">Ivakacavacava</t>
+				<t id="hi">कर</t>
 			</f>
 			<f id="Total">
 				<t id="en">Total</t>
-				<t id="fj">Iwiliwili taucoko</t>
+				<t id="hi">कुल</t>
 			</f>
 		</g>
 		<g id="total">
 			<f id="PayableAmount">
 				<t id="en">Payable</t>
-				<t id="fj">Saumi</t>
+				<t id="hi">देय</t>
 			</f>
 			<f id="PayableRoundingAmount">
 				<t id="en">Rounding Amount</t>
-				<t id="fj">Rodu levu</t>
+				<t id="hi">गोलाई राशि</t>
 			</f>
 			<f id="PrepaidAmount">
 				<t id="en">Prepaid</t>
-				<t id="fj">Prepaid</t>
+				<t id="hi">प्रीपेड</t>
 			</f>
 			<f id="TaxExclusiveAmount">
 				<t id="en">Tax Exclusive</t>
-				<t id="fj">Vakatabakidua ivakacavacava</t>
+				<t id="hi">टैक्स एक्सक्लूसिव</t>
 			</f>
 			<f id="TaxInclusiveAmount">
 				<t id="en">Tax Inclusive</t>
-				<t id="fj">Wase ni ivakacavacava</t>
+				<t id="hi">कर समावेशी</t>
 			</f>
 			<f id="Totals">
 				<t id="en">Totals</t>
-				<t id="fj">Iwiliwili taucoko</t>
+				<t id="hi">योग</t>
 			</f>
 		</g>
 	</xsl:variable>
-	<xsl:param name="language" select="'fj'"/>
+	<xsl:param name="language" select="'hi'"/>
 	<xsl:function name="u:lang">
 		<xsl:value-of select="$language"/>
 	</xsl:function>

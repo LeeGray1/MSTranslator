@@ -12,6 +12,7 @@ using System.Xml;
 using Saxon.Api;
 using System.Threading.Tasks;
 using Microsoft.Win32;
+using System.Web.UI.WebControls;
 
 namespace MSTranslatorDemo
 {
@@ -57,6 +58,9 @@ namespace MSTranslatorDemo
             {
                 // Start GUI
                 InitializeComponent();
+                btnSaveXSLT.Visibility = Visibility.Hidden;
+                btnSave_XML.Visibility = Visibility.Hidden;
+
                 // Get languages for drop-downs
                 GetLanguagesForTranslate();
                 // Populate drop-downs with values from GetLanguagesForTranslate
@@ -482,6 +486,10 @@ namespace MSTranslatorDemo
                 return;
             }
 
+            btnSaveXSLT.Visibility = Visibility.Hidden;
+            btnSave_XML.Visibility = Visibility.Hidden;
+            
+
             string OriginalxmlFile = File.ReadAllText(openFileDialog.FileName);//("cleaning services.xml");
             string OriginalxsltFile = File.ReadAllText("stylesheet-ubl v2.xslt");
 
@@ -494,9 +502,9 @@ namespace MSTranslatorDemo
             string TranslatedXmlNote = await GetXmlTranslated4Note(OriginalxmlFile, ToLanguageComboBox.Text);
             string TranslatedXmlNames = await GetXmlTranslated4Names(TranslatedXmlNote, ToLanguageComboBox.Text);
 
-            File.WriteAllText(ToLanguageComboBox.Text + "-cleaning services.xml", TranslatedXmlNames);
+            File.WriteAllText(ToLanguageComboBox.Text + "-" + Path.GetFileName(openFileDialog.FileName), TranslatedXmlNames);
 
-            string HTMLstring = XSLThelper.SaxonTransform(ToLanguageComboBox.Text + "-stylesheet-ubl.xslt", ToLanguageComboBox.Text + "-cleaning services.xml");
+            string HTMLstring = XSLThelper.SaxonTransform(ToLanguageComboBox.Text + "-stylesheet-ubl.xslt", ToLanguageComboBox.Text + "-" + Path.GetFileName(openFileDialog.FileName));
 
 
             //string Labels2Translate = File.ReadAllText("Labels2Translate.txt");
@@ -527,6 +535,11 @@ namespace MSTranslatorDemo
             
             File.WriteAllText("eInvoice.html", HTMLstring);
             System.Diagnostics.Process.Start("eInvoice.html");
+
+            btnSaveXSLT.Visibility = Visibility.Visible;
+            btnSave_XML.Visibility = Visibility.Visible;
+
+
             // Update the translation field
             //TranslatedTextLabel.Content = translation;
 
@@ -536,6 +549,7 @@ namespace MSTranslatorDemo
            // invoiceDisplay.Show();
         
         }
+
         OpenFileDialog openFileDialog = new OpenFileDialog
         {
             Filter = "xml eInvoice file (*.xml)|*.xml|All files (*.*)|*.*",
@@ -553,6 +567,9 @@ namespace MSTranslatorDemo
                 //MessageBox.Show(string.Format("eInvoice file \"{0}\" loaded", Path.GetFileName(openFileDialog.FileName)));
                 XML_File_txtbx.Text = Path.GetFileName(openFileDialog.FileName);
                 btnLoadXML.IsEnabled = true;
+                btnSaveXSLT.Visibility = Visibility.Hidden;
+                btnSave_XML.Visibility = Visibility.Hidden;
+
             }
             else
                 XML_File_txtbx.Text = "no file selected";
@@ -560,16 +577,54 @@ namespace MSTranslatorDemo
 
         private void Settings_Click(object sender, RoutedEventArgs e)
         {
-            Settings newFrm = new Settings();            
-            this.Close();
-            newFrm.Show();
+            //Settings newFrm = new Settings();
+            //newFrm.Owner = this;
+            
+            //newFrm.ShowDialog();
+           // this.Close();
         }
 
         private void Test_Click(object sender, RoutedEventArgs e)
         {
             frmTranslateTest Test = new frmTranslateTest();
+            Test.Owner = this;
+
+            Test.ShowDialog();
             this.Close();
-            Test.Show();
+
+        }
+
+        private void btnSave_XML_Click(object sender, RoutedEventArgs e)
+        {
+            string localFolder = System.AppDomain.CurrentDomain.BaseDirectory;
+
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.FileName = ToLanguageComboBox.Text + "-" + Path.GetFileName(openFileDialog.FileName);
+            dlg.DefaultExt = ".xml";
+            dlg.Filter = "XML eInvoice (.xml)|*.xml";
+            if (dlg.ShowDialog()==true)
+            {
+                string xmlfile = File.ReadAllText(Path.Combine(localFolder, ToLanguageComboBox.Text + "-" + Path.GetFileName(openFileDialog.FileName)));
+                File.WriteAllText(dlg.FileName, xmlfile);
+            }
+           
+        }
+
+        private void btnSaveXSLT_Click(object sender, RoutedEventArgs e)
+        {
+            string localFolder = System.AppDomain.CurrentDomain.BaseDirectory;
+
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.FileName = ToLanguageComboBox.Text + "-stylesheet-ubl.xslt";
+            dlg.DefaultExt = ".xml";
+            dlg.Filter = "xslt Stylesheet (.xslt)|*.xslt";
+            if (dlg.ShowDialog() == true)
+            {
+                string xsltfile = File.ReadAllText(Path.Combine(localFolder, ToLanguageComboBox.Text + "-stylesheet-ubl.xslt"));
+                File.WriteAllText(dlg.FileName, xsltfile);
+            }
+
+
         }
     }
 }
