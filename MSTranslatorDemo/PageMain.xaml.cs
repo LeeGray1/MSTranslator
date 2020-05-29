@@ -489,7 +489,11 @@ namespace MSTranslatorDemo
             btnSave_XML.IsEnabled = false;
 
             string OriginalxmlFile = File.ReadAllText(openFileDialog.FileName);//("cleaning services.xml");
-
+            if(ToLanguageComboBox.Text=="English")
+            {
+                MessageBox.Show("Please select another language", "Translation not supported", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return;
+            }
             if (File.Exists(ToLanguageComboBox.Text + "-stylesheet-ubl.xslt"))
             { }
             else

@@ -92,7 +92,7 @@ namespace MSTranslatorDemo
 
             string textToTranslate = TextToTranslate.Text.Trim();
             string translation = await new MSTranslate(TEXT_TRANSLATION_API_ENDPOINT, COGNITIVE_SERVICES_KEY).go(textToTranslate, fromLanguageCode, toLanguageCode);
-            TranslatedTextLabel.Content = translation;
+            TranslatedTextLabel.Text = translation;
 
 
 

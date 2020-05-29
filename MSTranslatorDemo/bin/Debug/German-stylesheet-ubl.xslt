@@ -1260,7 +1260,7 @@
 		<g id="attachments">
 			<f id="Attachments">
 				<t id="en">Attachments</t>
-				<t id="de">Anlagen</t>
+				<t id="de">Anhang</t>
 			</f>
 			<f id="Download">
 				<t id="en">Download</t>

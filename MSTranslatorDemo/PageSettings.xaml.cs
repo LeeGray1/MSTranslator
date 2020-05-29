@@ -64,6 +64,8 @@ namespace MSTranslatorDemo
                 new[] { Environment.NewLine },
                 StringSplitOptions.None
                 );
+            Array.Sort(originalLines);
+
             foreach (var word in originalLines)
             {
                 if(word!="")
