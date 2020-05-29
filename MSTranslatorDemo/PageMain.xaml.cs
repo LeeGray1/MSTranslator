@@ -50,8 +50,8 @@ namespace MSTranslatorDemo
             GetLanguagesForTranslate();
             // Populate drop-downs with values from GetLanguagesForTranslate
             PopulateLanguageMenus();
-            btnSave_XML.Visibility = Visibility.Hidden;
-            btnSaveXSLT.Visibility = Visibility.Hidden;
+            btnSave_XML.IsEnabled = false;
+            btnSaveXSLT.IsEnabled = false;
           
             
         }
@@ -485,8 +485,8 @@ namespace MSTranslatorDemo
                 return;
             }
 
-            btnSaveXSLT.Visibility = Visibility.Hidden;
-            btnSave_XML.Visibility = Visibility.Hidden;
+            btnSaveXSLT.IsEnabled = false;
+            btnSave_XML.IsEnabled = false;
 
             string OriginalxmlFile = File.ReadAllText(openFileDialog.FileName);//("cleaning services.xml");
 
@@ -525,8 +525,8 @@ namespace MSTranslatorDemo
             File.WriteAllText("eInvoice.html", HTMLstring);
             System.Diagnostics.Process.Start("eInvoice.html");
 
-            btnSaveXSLT.Visibility = Visibility.Visible;
-            btnSave_XML.Visibility = Visibility.Visible;
+            btnSaveXSLT.IsEnabled =true;
+            btnSave_XML.IsEnabled = true;
 
 
             // Update the translation field
@@ -556,8 +556,8 @@ namespace MSTranslatorDemo
                 //MessageBox.Show(string.Format("eInvoice file \"{0}\" loaded", Path.GetFileName(openFileDialog.FileName)));
                 XML_File_txtbx.Text = Path.GetFileName(openFileDialog.FileName);
                 btnLoadXML.IsEnabled = true;
-                btnSaveXSLT.Visibility = Visibility.Hidden;
-                btnSave_XML.Visibility = Visibility.Hidden;
+                btnSaveXSLT.IsEnabled = false;
+                btnSave_XML.IsEnabled = false;
 
             }
             else

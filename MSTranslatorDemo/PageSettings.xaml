@@ -5,25 +5,25 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:MSTranslatorDemo"
       mc:Ignorable="d" 
-       d:DesignHeight="371" d:DesignWidth="537"
+       d:DesignHeight="371" d:DesignWidth="555"
       Title="Settings">
 
     <Grid>
-        <Rectangle Fill="#FFFFFFFF" HorizontalAlignment="Left" Height="83" Margin="10,10,-1,0" Stroke="Black" VerticalAlignment="top" Width="528"/>
+        <Rectangle Fill="#FFFFFFFF" HorizontalAlignment="Left" Height="83" Margin="10,10,0,0" Stroke="Black" VerticalAlignment="top" Width="535"/>
         <Label x:Name="LanguageLabel" Content="Language" HorizontalAlignment="Left" Margin="35,18,0,0" VerticalAlignment="Top" FontSize="14" RenderTransformOrigin="0.493,0.593"/>
         <ComboBox x:Name="cmbLanguage"
             HorizontalAlignment="Left"
             Margin="35,52,0,0"
             VerticalAlignment="Top"
             Width="175" FontSize="14" TabIndex="2"/>
-        <Rectangle Fill="#FFFFFFFF" HorizontalAlignment="Left" Height="83" Margin="10,122,-1,0" Stroke="Black" VerticalAlignment="top" Width="528"/>
+        <Rectangle Fill="#FFFFFFFF" HorizontalAlignment="Left" Height="83" Margin="10,122,0,0" Stroke="Black" VerticalAlignment="top" Width="535"/>
         <ComboBox x:Name="cmbWord"
             HorizontalAlignment="Left"
             Margin="35,164,0,0"
             VerticalAlignment="Top"
             Width="396" FontSize="14" TabIndex="2" SelectionChanged="cmbWord_SelectionChanged"/>
         <Label  Content="Select a Word to translate" HorizontalAlignment="Left" Margin="35,130,0,0" VerticalAlignment="Top" FontSize="14" RenderTransformOrigin="0.493,0.593"/>
-        <Rectangle Fill="#FFFFFFFF" HorizontalAlignment="Left" Height="137" Margin="10,224,-1,0" Stroke="Black" VerticalAlignment="top" Width="528"/>
+        <Rectangle Fill="#FFFFFFFF" HorizontalAlignment="Left" Height="137" Margin="10,224,0,0" Stroke="Black" VerticalAlignment="top" Width="535"/>
         <TextBox x:Name="txtTranslation" HorizontalAlignment="Left" Height="29" Margin="35,259,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="492" FontSize="14"/>
         <Label  Content="Translation" HorizontalAlignment="Left" Margin="35,225,0,0" VerticalAlignment="Top" FontSize="14" RenderTransformOrigin="0.493,0.593"/>
         <Button x:Name="btnSave" Content="Save" HorizontalAlignment="Left" Margin="75,306,0,0" VerticalAlignment="Top" Width="98" FontSize="14" Height="30" Click="btnSave_Click"/>
