@@ -9,6 +9,7 @@
 //------------------------------------------------------------------------------
 
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("cleaning%20services.xml")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("italianeinvoice.html")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("stylesheet-ubl.xslt")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("labels2translate.txt")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("stylesheet-ubl%20v2.xslt")]
