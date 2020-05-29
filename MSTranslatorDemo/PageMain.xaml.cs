@@ -50,6 +50,10 @@ namespace MSTranslatorDemo
             GetLanguagesForTranslate();
             // Populate drop-downs with values from GetLanguagesForTranslate
             PopulateLanguageMenus();
+            btnSave_XML.Visibility = Visibility.Hidden;
+            btnSaveXSLT.Visibility = Visibility.Hidden;
+          
+            
         }
 
         private void GetLanguagesForTranslate()
@@ -205,17 +209,17 @@ namespace MSTranslatorDemo
         // NOTE:
         // In the following sections, we'll add code below this.
         // ***** PERFORM TRANSLATION ON BUTTON CLICK
-        private async void TranslateButton_Click(object sender, EventArgs e)
-        {
-            //string textToTranslate = TextToTranslate.Text.Trim();
+        //private async void TranslateButton_Click(object sender, EventArgs e)
+        //{
+        //    //string textToTranslate = TextToTranslate.Text.Trim();
 
 
 
-            //await translate(textToTranslate);
+        //    //await translate(textToTranslate);
 
-            // Update the translation field
-            // TranslatedTextLabel.Content = translation;
-        }
+        //    // Update the translation field
+        //    // TranslatedTextLabel.Content = translation;
+        //}
         string translation;
         private async System.Threading.Tasks.Task translate(string textToTranslate)
         {
@@ -484,48 +488,36 @@ namespace MSTranslatorDemo
             btnSaveXSLT.Visibility = Visibility.Hidden;
             btnSave_XML.Visibility = Visibility.Hidden;
 
-
             string OriginalxmlFile = File.ReadAllText(openFileDialog.FileName);//("cleaning services.xml");
-            string OriginalxsltFile = File.ReadAllText("stylesheet-ubl v2.xslt");
 
-            string result = await GetXsltTranslated4Labels(OriginalxsltFile, ToLanguageComboBox.Text);
-            result = await GetXsltTranslated4CountryID(OriginalxmlFile, result, ToLanguageComboBox.Text);
-            File.WriteAllText(ToLanguageComboBox.Text + "-stylesheet-ubl.xslt", result);
-            //  string HTMLstring = XLSThelper.TransformXMLToHTML(File.ReadAllText("cleaning services.xml"), File.ReadAllText("stylesheet-ubl.xslt"));
+            if (File.Exists(ToLanguageComboBox.Text + "-stylesheet-ubl.xslt"))
+            { }
+            else
+            {
+                
+                string OriginalxsltFile = File.ReadAllText("stylesheet-ubl v2.xslt");
 
+                string result = await GetXsltTranslated4Labels(OriginalxsltFile, ToLanguageComboBox.Text);
+                result = await GetXsltTranslated4CountryID(OriginalxmlFile, result, ToLanguageComboBox.Text);
+                File.WriteAllText(ToLanguageComboBox.Text + "-stylesheet-ubl.xslt", result);
+                //  string HTMLstring = XLSThelper.TransformXMLToHTML(File.ReadAllText("cleaning services.xml"), File.ReadAllText("stylesheet-ubl.xslt"));
+            }
 
             string TranslatedXmlNote = await GetXmlTranslated4Note(OriginalxmlFile, ToLanguageComboBox.Text);
             string TranslatedXmlNames = await GetXmlTranslated4Names(TranslatedXmlNote, ToLanguageComboBox.Text);
 
             File.WriteAllText(ToLanguageComboBox.Text + "-" + Path.GetFileName(openFileDialog.FileName), TranslatedXmlNames);
+            
 
             string HTMLstring = XSLThelper.SaxonTransform(ToLanguageComboBox.Text + "-stylesheet-ubl.xslt", ToLanguageComboBox.Text + "-" + Path.GetFileName(openFileDialog.FileName));
 
 
-            //string Labels2Translate = File.ReadAllText("Labels2Translate.txt");
-
-
-            //await translate(Labels2Translate);
-
-            //string[] Translatedlines = translation.Split(
-            //    new[] { Environment.NewLine },
-            //    StringSplitOptions.None
-            //    );
-            //string[] originalLines = Labels2Translate.Split(
-            //    new[] { Environment.NewLine },
-            //    StringSplitOptions.None
-            //    );
-            //                               
+              // get rid of the xslt bugs                  
             HTMLstring = HTMLstring.Replace("<div class=\"col-md-5\" />", "");
-            //<div class="col-sm-4" />
+           
             HTMLstring = HTMLstring.Replace("<div class=\"col-sm-4\" />", "");
 
-            //for (int i = 0; i < Translatedlines.Length; i++)
-            //{
-            //    if(Translatedlines[i] != "")
-            //    HTMLstring = HTMLstring.Replace(">" + originalLines[i] + "<", ">" + Translatedlines[i] + "<");
-
-            //}
+            
 
 
             File.WriteAllText("eInvoice.html", HTMLstring);
@@ -605,5 +597,6 @@ namespace MSTranslatorDemo
 
 
         }
+
     }
 }
