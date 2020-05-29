@@ -517,8 +517,10 @@ namespace MSTranslatorDemo
            
             HTMLstring = HTMLstring.Replace("<div class=\"col-sm-4\" />", "");
 
-            
-
+            HTMLstring = HTMLstring.Replace("<div />", "");
+            HTMLstring = HTMLstring.Replace("style=\"width: 20%;\"", "class=\"text-right\"");
+            HTMLstring = HTMLstring.Replace("linesupport{background-color:#eee", "linesupport{");
+            HTMLstring = HTMLstring.Replace("<div class=\"col-sm-9\">Price</div>","");
 
             File.WriteAllText("eInvoice.html", HTMLstring);
             System.Diagnostics.Process.Start("eInvoice.html");

@@ -18,14 +18,10 @@ C:\Users\edmun\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\bin\Debug\IKV
 C:\Users\edmun\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\bin\Debug\IKVM.OpenJDK.Security.dll
 C:\Users\edmun\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\bin\Debug\Newtonsoft.Json.xml
 C:\Users\edmun\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\bin\Debug\saxon9he-api.xml
-C:\Users\edmun\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\frmTranslateTest.g.cs
-C:\Users\edmun\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\MainWindow.g.cs
 C:\Users\edmun\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\App.g.cs
 C:\Users\edmun\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\MSTranslatorDemo_Content.g.cs
 C:\Users\edmun\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\MSTranslatorDemo_MarkupCompile.cache
 C:\Users\edmun\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\MSTranslatorDemo_MarkupCompile.lref
-C:\Users\edmun\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\frmTranslateTest.baml
-C:\Users\edmun\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\MainWindow.baml
 C:\Users\edmun\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\MSTranslatorDemo.g.resources
 C:\Users\edmun\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\MSTranslatorDemo.Properties.Resources.resources
 C:\Users\edmun\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\MSTranslatorDemo.csproj.GenerateResource.cache
@@ -37,10 +33,8 @@ C:\Users\edmun\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\Pag
 C:\Users\edmun\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\WindowStart.g.cs
 C:\Users\edmun\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\PageMain.baml
 C:\Users\edmun\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\WindowStart.baml
-C:\Users\edmun\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\MSTranslatorDemo.csprojAssemblyReference.cache
 C:\Users\edmun\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\PageSettings.g.cs
 C:\Users\edmun\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\PageSettings.baml
-C:\Users\edmun\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\Settings.baml
 C:\Users\edmun\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\PageTest.g.cs
 C:\Users\edmun\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\PageTest.baml
 C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\bin\Debug\cleaning services.xml
@@ -82,3 +76,4 @@ C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\MST
 C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\MSTranslatorDemo.csproj.CopyComplete
 C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\MSTranslatorDemo.exe
 C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\MSTranslatorDemo.pdb
+C:\Users\edmun\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\MSTranslatorDemo.csprojAssemblyReference.cache

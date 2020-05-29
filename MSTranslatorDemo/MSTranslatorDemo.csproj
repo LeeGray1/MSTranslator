@@ -138,6 +138,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ItalianeInvoice.html" />
     <Content Include="stylesheet-ubl.xslt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
