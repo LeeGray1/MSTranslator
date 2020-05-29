@@ -52,7 +52,7 @@
 				<cbc:ID schemeID="0088">test</cbc:ID>
 			</cac:PartyIdentification>
 			<cac:PartyName>
-				<cbc:Name>Test GLN</cbc:Name>
+				<cbc:Name>My Company</cbc:Name>
 			</cac:PartyName>
 			<cac:PostalAddress>
 				<cbc:StreetName>any street</cbc:StreetName>
@@ -65,7 +65,7 @@
 				</cac:Country>
 			</cac:PostalAddress>
 			<cac:PartyLegalEntity>
-				<cbc:RegistrationName>Test GLN</cbc:RegistrationName>
+				<cbc:RegistrationName>My Company Ltd</cbc:RegistrationName>
 				<cbc:CompanyID schemeID="0088">5392000128293</cbc:CompanyID>
 			</cac:PartyLegalEntity>
 		</cac:Party>
