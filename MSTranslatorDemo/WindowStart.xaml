@@ -6,13 +6,13 @@
         xmlns:local="clr-namespace:MSTranslatorDemo"
         mc:Ignorable="d"
         Title="eInvoice Translator" Height="411.142" Width="728.969" BorderThickness="0">
-    <Grid>
+    <Grid Background="#FFE5E5E5">
 
-        <Rectangle x:Name="Hotbar" Fill="White" HorizontalAlignment="Left" Height="371" Stroke="Black" VerticalAlignment="Top" Width="142" Margin="0,5,0,0"/>
-        <Button x:Name="btnDashboard" IsEnabled="False" Content="Dashboard" HorizontalAlignment="Left" VerticalAlignment="Top" Width="141" Height="41" FontSize="14" Background="Transparent" Click="Dashboard_Click" Margin="0,5,0,0"/>
-        <Button x:Name="btnSettings" Content="Settings" HorizontalAlignment="Left" Margin="0,46,0,0" VerticalAlignment="Top" Width="141" Height="41" FontSize="14" Background="White" Click="Settings_Click"/>
+        <Rectangle x:Name="Hotbar" Fill="White" HorizontalAlignment="Left" Height="376" Stroke="Black" VerticalAlignment="Top" Width="142"/>
+        <Button x:Name="btnDashboard" IsEnabled="False" Content="Dashboard" HorizontalAlignment="Left" VerticalAlignment="Top" Width="141" Height="41" FontSize="14" Background="Transparent" Click="Dashboard_Click"/>
+        <Button x:Name="btnSettings" Content="Settings" HorizontalAlignment="Left" Margin="0,41,0,0" VerticalAlignment="Top" Width="141" Height="41" FontSize="14" Background="White" Click="Settings_Click"/>
         <Frame x:Name="Main" NavigationUIVisibility="Hidden" Content="Frame" HorizontalAlignment="Left" Height="366" Margin="147,5,0,0" VerticalAlignment="Top" Width="537"/>
-        <Button x:Name="btnTest" Content="Test" HorizontalAlignment="Left" Margin="0,87,0,0" VerticalAlignment="Top" Width="141" Height="41" FontSize="14" Background="White" Click="Test_Click"/>
+        <Button x:Name="btnTest" Content="Test" HorizontalAlignment="Left" Margin="0,82,0,0" VerticalAlignment="Top" Width="141" Height="41" FontSize="14" Background="White" Click="Test_Click"/>
 
     </Grid>
 </Window>
