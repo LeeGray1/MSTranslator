@@ -10,7 +10,7 @@
 
     <Grid>
         <Rectangle Fill="#FFFFFFFF" HorizontalAlignment="Left" Height="83" Margin="10,10,0,0" Stroke="Black" VerticalAlignment="top" Width="535"/>
-        <Label x:Name="LanguageLabel" Content="Language" HorizontalAlignment="Left" Margin="35,18,0,0" VerticalAlignment="Top" FontSize="14" RenderTransformOrigin="0.493,0.593"/>
+        <Label x:Name="LanguageLabel" Content="Translated Languages" HorizontalAlignment="Left" Margin="35,18,0,0" VerticalAlignment="Top" FontSize="14" RenderTransformOrigin="0.493,0.593"/>
         <ComboBox x:Name="cmbLanguage"
             HorizontalAlignment="Left"
             Margin="35,52,0,0"
@@ -22,7 +22,7 @@
             Margin="35,164,0,0"
             VerticalAlignment="Top"
             Width="396" FontSize="14" TabIndex="2" SelectionChanged="cmbWord_SelectionChanged"/>
-        <Label  Content="Select a Word to translate" HorizontalAlignment="Left" Margin="35,130,0,0" VerticalAlignment="Top" FontSize="14" RenderTransformOrigin="0.493,0.593"/>
+        <Label  Content="Select a Word to re-translate" HorizontalAlignment="Left" Margin="35,130,0,0" VerticalAlignment="Top" FontSize="14" RenderTransformOrigin="0.493,0.593"/>
         <Rectangle Fill="#FFFFFFFF" HorizontalAlignment="Left" Height="137" Margin="10,224,0,0" Stroke="Black" VerticalAlignment="top" Width="535"/>
         <TextBox x:Name="txtTranslation" HorizontalAlignment="Left" Height="29" Margin="35,259,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="492" FontSize="14"/>
         <Label  Content="Translation" HorizontalAlignment="Left" Margin="35,225,0,0" VerticalAlignment="Top" FontSize="14" RenderTransformOrigin="0.493,0.593"/>
