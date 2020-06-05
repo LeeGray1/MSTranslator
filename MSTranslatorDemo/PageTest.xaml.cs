@@ -33,7 +33,7 @@ namespace MSTranslatorDemo
         {
             InitializeComponent();
             // Get languages for drop-downs
-            GetLanguagesForTranslate();
+            //GetLanguagesForTranslate();
             // Populate drop-downs with values from GetLanguagesForTranslate
             PopulateLanguageMenus();
         }
@@ -43,32 +43,27 @@ namespace MSTranslatorDemo
         {
             // Add option to automatically detect the source language
             FromLanguageComboBox.Items.Add("Detect");
-
-            int count = languageCodesAndTitles.Count;
-            foreach (string menuItem in languageCodesAndTitles.Keys)
+            List<string> list = new LanguageClass().FillLanguages();
+            foreach (var item in list)
             {
-                FromLanguageComboBox.Items.Add(menuItem);
-                ToLanguageComboBox.Items.Add(menuItem);
+                FromLanguageComboBox.Items.Add(item);
             }
+            
+            ToLanguageComboBox.ItemsSource = list;
 
             // Set default languages
             FromLanguageComboBox.SelectedItem = "Detect";
             ToLanguageComboBox.SelectedItem = "English";
         }
 
-        private void GetLanguagesForTranslate()
-        {
-            // Send request to get supported language codes
+       // SortedDictionary<string, string> LanguageCodesAndNames =
+       //new SortedDictionary<string, string>(Comparer<string>.Create((a, b) => string.Compare(a, b, true)));
+       
 
+       
 
-            var languages = new MSTranslate(TEXT_TRANSLATION_API_ENDPOINT, COGNITIVE_SERVICES_KEY).GetLanguagesForTranslate();
-            languageCodes = languages.Keys.ToArray();
-            foreach (var kv in languages)
-            {
-                languageCodesAndTitles.Add(kv.Value["name"], kv.Key);
-            }
+       
 
-        }
         private async void TranslateButton_Click(object sender, RoutedEventArgs e)
         {
             string fromLanguage = FromLanguageComboBox.SelectedValue.ToString();

@@ -1,0 +1,405 @@
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MSTranslatorDemo
+{
+    public class LanguageClass
+    {
+        const string COGNITIVE_SERVICES_KEY = "7963c13bba1e4e60b4d872662401c746";
+        // Endpoints for Translator and Bing Spell Check
+        public static readonly string TEXT_TRANSLATION_API_ENDPOINT = "https://api.cognitive.microsofttranslator.com/{0}?api-version=3.0";
+        const string BING_SPELL_CHECK_API_ENDPOINT = "https://westus.api.cognitive.microsoft.com/bing/v7.0/spellcheck/";
+
+        private string[] languageCodes;
+
+        public List<string> GetTranslatedXsltLanguages()
+        {
+            List<string> LanguageList = new List<string>();
+
+            string localFolder = System.AppDomain.CurrentDomain.BaseDirectory;
+            DirectoryInfo dirInfo = new DirectoryInfo(localFolder);
+            FileInfo[] info = dirInfo.GetFiles("*.xslt");
+
+            int st;
+            foreach (FileInfo f in info)
+            {
+                st = f.Name.IndexOf("-stylesheet");
+                if (st != -1)
+                {
+
+                    LanguageList.Add(f.Name.Substring(0, st));
+                }
+
+
+            }
+            return LanguageList;
+
+        }
+
+        SortedDictionary<string, string> languageCodesAndTitles =
+           new SortedDictionary<string, string>(Comparer<string>.Create((a, b) => string.Compare(a, b, true)));
+        public SortedDictionary<string, string> GetLanguageCodes()
+        {
+            // Send request to get supported language codes
+
+
+
+            var languages = new MSTranslate(TEXT_TRANSLATION_API_ENDPOINT, COGNITIVE_SERVICES_KEY).GetLanguagesForTranslate();
+            languageCodes = languages.Keys.ToArray();
+            foreach (var kv in languages)
+            {
+                languageCodesAndTitles.Add(kv.Value["name"], kv.Key);
+            }
+            return languageCodesAndTitles;
+        }
+
+        public void GetLanguages()
+        {
+            // Send request to get supported language codes
+
+
+            var languages = new MSTranslate(TEXT_TRANSLATION_API_ENDPOINT, COGNITIVE_SERVICES_KEY).GetLanguagesForTranslate();
+            languageCodes = languages.Keys.ToArray();
+            foreach (var kv in languages)
+            {
+                languageCodesAndTitles.Add(kv.Value["name"], kv.Key);
+            }
+        }
+
+        public List<string> FillLanguages()
+        {
+            GetLanguages();
+            List<string> list = new List<string>();
+            int count = languageCodesAndTitles.Count;
+
+            foreach (string menuItem in languageCodesAndTitles.Keys)
+            {
+                list.Add(menuItem);
+
+            }
+
+            return list;
+        }
+
+        public List<string> DeleteXsltFile(string Language)
+        {
+            List<string> list = null;
+            // if (MessageBox.Show("are you sure you want to delete this language file", "Delete language", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
+            {
+                string FileName2Delete = Language + "-stylesheet-ubl.xslt";
+                string localFolder = System.AppDomain.CurrentDomain.BaseDirectory;
+                string File2Delete = System.IO.Path.Combine(localFolder, FileName2Delete);
+                File.Delete(File2Delete);
+                //cmbLanguage.Items.Clear();
+                //cmbLanguage.ItemsSource = null;
+
+            }
+            list = GetTranslatedXsltLanguages();
+            return list;
+        }
+
+        public string GetTranslation(string SelectedWord, string SelectedLanguage)
+        {
+            string xsltFileName = SelectedLanguage + "-stylesheet-ubl.xslt";
+            string LanguageCode = GetLanguageCode(SelectedLanguage);
+            string xsltFile = File.ReadAllText(xsltFileName);
+            int ot, st, et, intLabelStart, intCodeStart;
+
+            //<t id="en">Invoice<
+            //<t id="no"> = start of replace
+            //</t> = end of replace
+            intLabelStart = xsltFile.IndexOf("<xsl:variable name=\"labels\">");
+            intCodeStart = xsltFile.IndexOf("<cl id=\"uncl1001invoice\">");
+            ot = xsltFile.IndexOf("<t id=\"en\">" + SelectedWord + "</t>", intLabelStart);
+            if (ot == -1)
+                ot = xsltFile.IndexOf("<t id=\"en\">" + SelectedWord + "</t>", intCodeStart);
+            if (ot == -1)
+                ot = xsltFile.IndexOf("<t id=\"en\">" + SelectedWord + "</t>", 0);
+            if (ot == -1)
+            {
+                // btnSave.IsEnabled = false;
+                return "";
+            }
+            else
+            {
+                st = xsltFile.IndexOf("<t id=\"" + LanguageCode + "\">", ot);
+                et = xsltFile.IndexOf("</t>", st);
+                return xsltFile.Substring(st + 11, et - st - 11);
+                //btnSave.IsEnabled = true;
+            }
+        }
+        public string GetLanguageCode(string Language)
+        {
+            // Send request to get supported language codes
+
+           // SortedDictionary<string, string> LanguageCodesAndNames =
+           //new SortedDictionary<string, string>(Comparer<string>.Create((a, b) => string.Compare(a, b, true)));
+
+            var languages = new MSTranslate(TEXT_TRANSLATION_API_ENDPOINT, COGNITIVE_SERVICES_KEY).GetLanguagesForTranslate();
+            languageCodes = languages.Keys.ToArray();
+            foreach (var kv in languages)
+            {
+                languageCodesAndTitles.Add(kv.Value["name"], kv.Key);
+            }
+            return languageCodesAndTitles[Language];
+        }
+
+        public string UpdateTranslation(string SelectedWord, string Language, string NewTranslation)
+        {
+            string LanguageCode = GetLanguageCode(Language);
+            string xsltFileName = Language + "-stylesheet-ubl.xslt";
+            string xsltFile = File.ReadAllText(xsltFileName);
+            int ot, st, et, intLabelStart, intCodeStart;
+            string string2replace, newstring;
+            //<t id="en">Invoice<
+            //<t id="no"> = start of replace
+            //</t> = end of replace
+            intLabelStart = xsltFile.IndexOf("<xsl:variable name=\"labels\">");
+            intCodeStart = xsltFile.IndexOf("<cl id=\"uncl1001invoice\">");
+            ot = xsltFile.IndexOf("<t id=\"en\">" + SelectedWord + "</t>", intLabelStart);
+            if (ot == -1)
+                ot = xsltFile.IndexOf("<t id=\"en\">" + SelectedWord + "</t>", intCodeStart);
+            if (ot == -1)
+                ot = xsltFile.IndexOf("<t id=\"en\">" + SelectedWord + "</t>", 0);
+            if (ot == -1)
+            {
+                //btnSave.IsEnabled = false;
+                //cannot find Selected Word
+                NewTranslation = "";
+            }
+            else
+            {
+                st = xsltFile.IndexOf("<t id=\"" + LanguageCode + "\">", ot);
+                et = xsltFile.IndexOf("</t>", st);
+                string2replace = xsltFile.Substring(st, et - st + 4);
+                newstring = "<t id=\"" + LanguageCode + "\">" + NewTranslation + "</t>";
+                xsltFile = xsltFile.Replace(string2replace, newstring);
+                File.WriteAllText(xsltFileName, xsltFile);
+
+            }
+
+            return xsltFile;
+        }
+
+        public List<string> GetWords()
+        {
+            string Labels2Translate = File.ReadAllText("Labels2Translate.txt");
+            string[] originalLines = Labels2Translate.Split(
+                new[] { Environment.NewLine },
+                StringSplitOptions.None
+                );
+            Array.Sort(originalLines);
+            List<string> list = new List<string>();
+            foreach (var item in originalLines)
+            {
+                list.Add(item);
+            }
+            return list;
+        }
+
+        public string DetectLanguage(string text)
+        {
+            string detectUri = string.Format(TEXT_TRANSLATION_API_ENDPOINT, "detect");
+
+            // Create request to Detect languages with Translator
+            HttpWebRequest detectLanguageWebRequest = (HttpWebRequest)WebRequest.Create(detectUri);
+            detectLanguageWebRequest.Headers.Add("Ocp-Apim-Subscription-Key", COGNITIVE_SERVICES_KEY);
+            detectLanguageWebRequest.Headers.Add("Ocp-Apim-Subscription-Region", "westeurope");
+            detectLanguageWebRequest.ContentType = "application/json; charset=utf-8";
+            detectLanguageWebRequest.Method = "POST";
+
+            // Send request
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            string jsonText = serializer.Serialize(text);
+
+            string body = "[{ \"Text\": " + jsonText + " }]";
+            byte[] data = Encoding.UTF8.GetBytes(body);
+
+            detectLanguageWebRequest.ContentLength = data.Length;
+
+            using (var requestStream = detectLanguageWebRequest.GetRequestStream())
+                requestStream.Write(data, 0, data.Length);
+
+            HttpWebResponse response = (HttpWebResponse)detectLanguageWebRequest.GetResponse();
+
+            // Read and parse JSON response
+            var responseStream = response.GetResponseStream();
+            var jsonString = new StreamReader(responseStream, Encoding.GetEncoding("utf-8")).ReadToEnd();
+            dynamic jsonResponse = serializer.DeserializeObject(jsonString);
+
+            // Fish out the detected language code
+            var languageInfo = jsonResponse[0];
+            if (languageInfo["score"] > (decimal)0.5)
+            {
+
+                return languageInfo["language"];
+            }
+            else
+                return "Unable to confidently detect input language.";
+        }
+
+        public string CorrectSpelling(string text)
+        {
+            string uri = BING_SPELL_CHECK_API_ENDPOINT + "?mode=spell&mkt=en-US";
+
+            // Create a request to Bing Spell Check API
+            HttpWebRequest spellCheckWebRequest = (HttpWebRequest)WebRequest.Create(uri);
+            spellCheckWebRequest.Headers.Add("Ocp-Apim-Subscription-Key", COGNITIVE_SERVICES_KEY);
+            spellCheckWebRequest.Headers.Add("Ocp-Apim-Subscription-Region", "westeurope");
+            spellCheckWebRequest.Method = "POST";
+            spellCheckWebRequest.ContentType = "application/x-www-form-urlencoded"; // doesn't work without this
+
+            // Create and send the request
+            string body = "text=" + System.Web.HttpUtility.UrlEncode(text);
+            byte[] data = Encoding.UTF8.GetBytes(body);
+            spellCheckWebRequest.ContentLength = data.Length;
+            using (var requestStream = spellCheckWebRequest.GetRequestStream())
+                requestStream.Write(data, 0, data.Length);
+            HttpWebResponse response = (HttpWebResponse)spellCheckWebRequest.GetResponse();
+
+            // Read and parse the JSON response; get spelling corrections
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            var responseStream = response.GetResponseStream();
+            var jsonString = new StreamReader(responseStream, Encoding.GetEncoding("utf-8")).ReadToEnd();
+            dynamic jsonResponse = serializer.DeserializeObject(jsonString);
+            var flaggedTokens = jsonResponse["flaggedTokens"];
+
+            // Construct sorted dictionary of corrections in reverse order (right to left)
+            // This ensures that changes don't impact later indexes
+            var corrections = new SortedDictionary<int, string[]>(Comparer<int>.Create((a, b) => b.CompareTo(a)));
+            for (int i = 0; i < flaggedTokens.Length; i++)
+            {
+                var correction = flaggedTokens[i];
+                var suggestion = correction["suggestions"][0];  // Consider only first suggestion
+                if (suggestion["score"] > (decimal)0.7)         // Take it only if highly confident
+                    corrections[(int)correction["offset"]] = new string[]   // dict key   = offset
+                        { correction["token"], suggestion["suggestion"] };  // dict value = {error, correction}
+            }
+
+            // Apply spelling corrections, in order, from right to left
+            foreach (int i in corrections.Keys)
+            {
+                var oldtext = corrections[i][0];
+                var newtext = corrections[i][1];
+
+                // Apply capitalization from original text to correction - all caps or initial caps
+                if (text.Substring(i, oldtext.Length).All(char.IsUpper)) newtext = newtext.ToUpper();
+                else if (char.IsUpper(text[i])) newtext = newtext[0].ToString().ToUpper() + newtext.Substring(1);
+
+                text = text.Substring(0, i) + newtext + text.Substring(i + oldtext.Length);
+            }
+            return text;
+        }
+
+        public async System.Threading.Tasks.Task<string> translate(string textToTranslate, string ToLanguage, string FromLanguage)
+        {
+            string fromLanguage = "English"; //FromLanguageComboBox.SelectedValue.ToString();
+            string fromLanguageCode;
+            string translation;
+
+
+            // auto-detect source language if requested
+
+
+            fromLanguageCode = languageCodesAndTitles[fromLanguage];
+
+            string toLanguageCode = languageCodesAndTitles[ToLanguage];
+
+
+            if (textToTranslate == "" || fromLanguageCode == toLanguageCode)
+            {
+                translation = textToTranslate;
+                return textToTranslate;
+            }
+
+            // send HTTP request to perform the translation
+            string endpoint = string.Format(TEXT_TRANSLATION_API_ENDPOINT, "translate");
+            string uri = string.Format(endpoint + "&from={0}&to={1}", fromLanguageCode, toLanguageCode);
+
+            System.Object[] body = new System.Object[] { new { Text = textToTranslate } };
+            var requestBody = JsonConvert.SerializeObject(body);
+
+            using (var client = new HttpClient())
+            using (var request = new HttpRequestMessage())
+            {
+                request.Method = HttpMethod.Post;
+                request.RequestUri = new Uri(uri);
+                request.Content = new StringContent(requestBody, Encoding.UTF8, "application/json");
+                request.Headers.Add("Ocp-Apim-Subscription-Key", COGNITIVE_SERVICES_KEY);
+                request.Headers.Add("Ocp-Apim-Subscription-Region", "westeurope");
+                request.Headers.Add("X-ClientTraceId", Guid.NewGuid().ToString());
+
+                var response = await client.SendAsync(request);
+                var responseBody = await response.Content.ReadAsStringAsync();
+
+                var result = JsonConvert.DeserializeObject<List<Dictionary<string, List<Dictionary<string, string>>>>>(responseBody);
+                translation = result[0]["translations"][0]["text"];
+
+
+            }
+            return translation;
+        }
+
+       
+
+        public async Task<string> GetXsltTranslated4Labels(string xsltFile, string Tolanguage, string FromLanguage)
+        {
+            string toLanguageCode = GetLanguageCode(Tolanguage);
+            //<xsl:param name="language" select="'en'"/>
+            //string xsltFile = File.ReadAllText(xsltFilename);
+            string Labels2Translate = File.ReadAllText("Labels2Translate.txt");
+            string translation = await new LanguageClass().translate(Labels2Translate, Tolanguage, FromLanguage);
+
+            string[] Translatedlines = translation.Split(
+                new[] { Environment.NewLine },
+                StringSplitOptions.None
+                );
+
+            string[] originalLines = Labels2Translate.Split(
+                new[] { Environment.NewLine },
+                StringSplitOptions.None
+                );
+            int ot, st, et, intLabelStart, intCodeStart;
+            string string2replace, newstring;
+            //<t id="en">Invoice<
+            //<t id="no"> = start of replace
+            //</t> = end of replace
+            intLabelStart = xsltFile.IndexOf("<xsl:variable name=\"labels\">");
+            intCodeStart = xsltFile.IndexOf("<cl id=\"uncl1001invoice\">");
+            for (int i = 0; i < Translatedlines.Length; i++)
+            {
+
+                ot = xsltFile.IndexOf("<t id=\"en\">" + originalLines[i] + "</t>", intLabelStart);
+                if (ot == -1)
+                    ot = xsltFile.IndexOf("<t id=\"en\">" + originalLines[i] + "</t>", intCodeStart);
+                if (ot == -1)
+                    ot = xsltFile.IndexOf("<t id=\"en\">" + originalLines[i] + "</t>", 0);
+                if (ot == -1)
+                { }
+                else
+                {
+                    st = xsltFile.IndexOf("<t id=\"no\">", ot);
+                    et = xsltFile.IndexOf("</t>", st);
+                    string2replace = xsltFile.Substring(st, et - st + 4);
+                    newstring = "<t id=\"" + toLanguageCode + "\">" + Translatedlines[i] + "</t>";
+                    xsltFile = xsltFile.Replace(string2replace, newstring);
+                }
+
+
+            }
+
+            xsltFile = xsltFile.Replace("<xsl:param name=\"language\" select=\"'en'\"/>", "<xsl:param name=\"language\" select=\"'" + toLanguageCode + "'\"/>");
+
+            return xsltFile;
+
+
+        }
+    }
+}
