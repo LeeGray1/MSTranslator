@@ -40,7 +40,7 @@ namespace MSTranslatorDemo
 
             cmbLanguage.ItemsSource = list;
 
-
+            
             //foreach (var item in list)
             //{
             //    cmbLanguage.Items.Add(item);
@@ -48,7 +48,7 @@ namespace MSTranslatorDemo
             
             GetWords();
            // languageCodesAndTitles = GetLanguageCodes();
-            btnSave.IsEnabled = false;
+           // btnSave.IsEnabled = false;
 
 
         }
@@ -136,17 +136,25 @@ namespace MSTranslatorDemo
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            if(MessageBox.Show("are you sure you want to delete this language file","Delete language",MessageBoxButton.OKCancel,MessageBoxImage.Error)==MessageBoxResult.OK)
+            
+            cmbLanguage.ItemsSource = DeleteXsltFile();
+        }
+
+        private List<string> DeleteXsltFile()
+        {
+            List<string> list = null;
+            if (MessageBox.Show("are you sure you want to delete this language file", "Delete language", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
             {
                 string FileName2Delete = cmbLanguage.SelectedItem + "-stylesheet-ubl.xslt";
                 string localFolder = System.AppDomain.CurrentDomain.BaseDirectory;
                 string File2Delete = System.IO.Path.Combine(localFolder, FileName2Delete);
                 File.Delete(File2Delete);
-                cmbLanguage.Items.Clear();
-                GetTranslatedLanguages();
-
-
+                //cmbLanguage.Items.Clear();
+                //cmbLanguage.ItemsSource = null;
+               
             }
+            list = GetTranslatedLanguages();
+            return list;
         }
 
         private void cmbWord_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -245,7 +253,6 @@ namespace MSTranslatorDemo
 
         private void btnDownload_Click(object sender, RoutedEventArgs e)
         {
-            string localFolder = System.AppDomain.CurrentDomain.BaseDirectory;
 
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.FileName = cmbLanguage.Text + "-stylesheet-ubl.xslt";
@@ -253,10 +260,30 @@ namespace MSTranslatorDemo
             dlg.Filter = "xslt Stylesheet (.xslt)|*.xslt";
             if (dlg.ShowDialog() == true)
             {
-                string xsltfile = File.ReadAllText(System.IO.Path.Combine(localFolder, cmbLanguage.Text + "-stylesheet-ubl.xslt"));
+
+               string xsltfile = Readxsltfile(cmbLanguage.Text);
                 File.WriteAllText(dlg.FileName, xsltfile);
             }
+               
 
+        }
+
+        private string Readxsltfile(string Language)
+        {
+            string localFolder = System.AppDomain.CurrentDomain.BaseDirectory;
+            string FileName = Language + "-stylesheet-ubl.xslt";
+            {
+                string xsltfile = File.ReadAllText(System.IO.Path.Combine(localFolder, FileName));
+                return xsltfile;
+            }
+        }
+
+        private void cmbLanguage_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            btnSave.IsEnabled = false;
+            txtTranslation.Text = "";
+            btnDownload.IsEnabled = true;
+            btnDelete.IsEnabled = true;
         }
     }
 }

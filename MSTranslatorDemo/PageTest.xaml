@@ -5,17 +5,17 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:MSTranslatorDemo"
       mc:Ignorable="d" 
-      d:DesignHeight="371" d:DesignWidth="537"
+      d:DesignHeight="371" d:DesignWidth="555"
       Title="PageTest">
 
     <Grid>
-        <Rectangle Fill="White" HorizontalAlignment="Left" Height="72" Margin="7,7,0,0" Stroke="Black" VerticalAlignment="Top" Width="530"/>
-        <Rectangle Fill="White" HorizontalAlignment="Left" Height="112" Margin="7,246,0,0" Stroke="Black" VerticalAlignment="Top" Width="530"/>
+        <Rectangle Fill="White" HorizontalAlignment="Left" Height="72" Margin="10,7,0,0" Stroke="Black" VerticalAlignment="Top" Width="535"/>
+        <Rectangle Fill="White" HorizontalAlignment="Left" Height="112" Margin="12,246,0,0" Stroke="Black" VerticalAlignment="Top" Width="533"/>
         <TextBox x:Name="TextToTranslate" HorizontalAlignment="Left" Height="23" Margin="140,23,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="227" FontSize="14" TabIndex="3"/>
         <TextBox x:Name="TranslatedTextLabel" IsReadOnly="True" IsReadOnlyCaretVisible="True" Text="Translation is displayed here." HorizontalAlignment="Left" Margin="12,259,0,0" VerticalAlignment="Top" Width="505" FontSize="14" Height="84" BorderThickness="0"/>
         <Label Content="Text to translate:" HorizontalAlignment="Left" Margin="27,20,0,0" VerticalAlignment="Top" Width="108"/>
-        <Rectangle Fill="White" HorizontalAlignment="Left" Height="112" Margin="10,105,0,0" Stroke="Black" VerticalAlignment="Top" Width="527"/>
-        <Button x:Name="TranslateButton" Content="Translate" HorizontalAlignment="Left" Margin="27,174,0,0" VerticalAlignment="Top" Width="76" Height="35" Click="TranslateButton_Click" FontSize="14" TabIndex="4" IsDefault="True"/>
+        <Rectangle Fill="White" HorizontalAlignment="Left" Height="112" Margin="10,105,0,0" Stroke="Black" VerticalAlignment="Top" Width="535"/>
+        <Button x:Name="TranslateButton" Content="Translate" HorizontalAlignment="Left" Margin="217,163,0,0" VerticalAlignment="Top" Width="76" Height="35" Click="TranslateButton_Click" FontSize="14" TabIndex="4" IsDefault="True" Foreground="White" Background="#FF46AE57"/>
         <ComboBox x:Name="FromLanguageComboBox"
             HorizontalAlignment="Left"
             Margin="27,125,0,0"

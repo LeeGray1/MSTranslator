@@ -5,18 +5,18 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:MSTranslatorDemo"
       mc:Ignorable="d" 
-      d:DesignHeight="371" d:DesignWidth="537"
+      d:DesignHeight="371"
       
-      Title="PageMain">
+      Title="PageMain" Width="555">
 
-    <Grid>
-        <Rectangle Fill="White" HorizontalAlignment="Left" Height="72" Margin="9,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="528"/>
+    <Grid Margin="0,0,-0.333,-0.333">
+        <Rectangle Fill="White" HorizontalAlignment="Left" Height="72" Margin="9,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="536"/>
 
-        <Button Content="Upload XML file" HorizontalAlignment="Left" Margin="31,22,0,0" VerticalAlignment="Top" Width="137" Height="30" Click="Button_Click_1"/>
-        <TextBox x:Name="XML_File_txtbx" HorizontalAlignment="Left" Height="30" Margin="214,22,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="253" FontSize="14"/>
-        <Rectangle Fill="White" HorizontalAlignment="Left" Height="105" Margin="10,109,-1,0" Stroke="Black" VerticalAlignment="Top" Width="528"/>
-        <Rectangle Fill="White" HorizontalAlignment="Left" Height="112" Margin="10,249,-1,0" Stroke="Black" VerticalAlignment="Top" Width="528"/>
-        <Label x:Name="toLabel" Content="Translate to:" HorizontalAlignment="Left" Margin="29,121,0,0" VerticalAlignment="Top" FontSize="14" RenderTransformOrigin="0.506,0.529"/>
+        <Button Content="Upload XML file" HorizontalAlignment="Left" Margin="29,32,0,0" VerticalAlignment="Top" Width="137" Height="30" Click="Button_Click_1" Background="#FF46AE57" Foreground="White"/>
+        <TextBox x:Name="XML_File_txtbx" HorizontalAlignment="Left" Height="30" Margin="204,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="253" FontSize="14"/>
+        <Rectangle Fill="White" HorizontalAlignment="Left" Height="112" Margin="10,109,0,0" Stroke="Black" VerticalAlignment="Top" Width="535"/>
+        <Rectangle Fill="White" HorizontalAlignment="Left" Height="112" Margin="10,249,0,0" Stroke="Black" VerticalAlignment="Top" Width="535"/>
+        <Label x:Name="toLabel" Content="Translate to:" HorizontalAlignment="Left" Margin="29,136,0,0" VerticalAlignment="Top" FontSize="14" RenderTransformOrigin="0.506,0.529"/>
         <Label x:Name="DetectedLanguageLabel" Content="..." 
             Visibility="Hidden"/>
         <ComboBox x:Name="FromLanguageComboBox"
@@ -24,12 +24,12 @@
              />
         <ComboBox x:Name="ToLanguageComboBox"
             HorizontalAlignment="Left"
-            Margin="29,155,0,0"
+            Margin="29,165,0,0"
             VerticalAlignment="Top"
             Width="175" FontSize="14" TabIndex="2" />
-        <Button x:Name="btnLoadXML" Content="Create translated Invoice" HorizontalAlignment="Left" Margin="29,302,0,0" VerticalAlignment="Top" Width="140" Height="31" Click="btnLoadXML_Click" IsEnabled="False"/>
-        <Button x:Name="btnSaveXSLT" Content="Download XSLT" HorizontalAlignment="Left" Margin="381,302,0,0" VerticalAlignment="Top" Width="140" Height="31" Click="btnSaveXSLT_Click" />
-        <Button x:Name="btnSave_XML" Content="Download XML" HorizontalAlignment="Left" Margin="204,302,0,0" VerticalAlignment="Top" Width="140" Height="31" Click="btnSave_XML_Click" />
+        <Button x:Name="btnLoadXML" Content="Create translated Invoice" HorizontalAlignment="Left" Margin="29,292,0,0" VerticalAlignment="Top" Width="140" Height="31" Click="btnLoadXML_Click" IsEnabled="False" Foreground="White" Background="#FF4F79CE"/>
+        <Button x:Name="btnSaveXSLT" Content="Download XSLT" HorizontalAlignment="Left" Margin="382,292,0,0" VerticalAlignment="Top" Width="140" Height="31" Click="btnSaveXSLT_Click" IsEnabled="False" Background="#FF1B79CE" Foreground="White"/>
+        <Button x:Name="btnSave_XML" Content="Download XML" HorizontalAlignment="Left" Margin="204,292,0,0" VerticalAlignment="Top" Width="140" Height="31" Click="btnSave_XML_Click" IsEnabled="False" Background="#FF1B79CE" Foreground="White"/>
 
     </Grid>
 </Page>

@@ -11,7 +11,7 @@
         <Rectangle x:Name="Hotbar" Fill="White" HorizontalAlignment="Left" Height="376" Stroke="Black" VerticalAlignment="Top" Width="142"/>
         <Button x:Name="btnDashboard" IsEnabled="False" Content="Dashboard" HorizontalAlignment="Left" VerticalAlignment="Top" Width="141" Height="41" FontSize="14" Background="Transparent" Click="Dashboard_Click"/>
         <Button x:Name="btnSettings" Content="Settings" HorizontalAlignment="Left" Margin="0,41,0,0" VerticalAlignment="Top" Width="141" Height="41" FontSize="14" Background="White" Click="Settings_Click"/>
-        <Frame x:Name="Main" NavigationUIVisibility="Hidden" Content="Frame" HorizontalAlignment="Left" Height="366" Margin="147,5,0,0" VerticalAlignment="Top" Width="537"/>
+        <Frame x:Name="Main" NavigationUIVisibility="Hidden" Content="Frame" HorizontalAlignment="Left" Height="366" Margin="147,5,0,0" VerticalAlignment="Top" Width="565"/>
         <Button x:Name="btnTest" Content="Test" HorizontalAlignment="Left" Margin="0,82,0,0" VerticalAlignment="Top" Width="141" Height="41" FontSize="14" Background="White" Click="Test_Click"/>
 
     </Grid>
