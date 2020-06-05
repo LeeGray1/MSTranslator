@@ -26,8 +26,8 @@ namespace MSTranslatorDemo
 
         private string[] languageCodes;
 
-        private SortedDictionary<string, string> languageCodesAndTitles =
-           new SortedDictionary<string, string>(Comparer<string>.Create((a, b) => string.Compare(a, b, true)));
+        //private SortedDictionary<string, string> languageCodesAndTitles =
+        //   new SortedDictionary<string, string>(Comparer<string>.Create((a, b) => string.Compare(a, b, true)));
 
         public PageTest()
         {
@@ -66,14 +66,14 @@ namespace MSTranslatorDemo
 
         private async void TranslateButton_Click(object sender, RoutedEventArgs e)
         {
-            string fromLanguage = FromLanguageComboBox.SelectedValue.ToString();
-            string fromLanguageCode;
+            string fromLanguage = FromLanguageComboBox.Text;
+            
 
             if (fromLanguage == "Detect")
             {
-                fromLanguageCode = new LanguageClass().DetectLanguage(TextToTranslate.Text);
+                fromLanguage = new LanguageClass().DetectLanguage(TextToTranslate.Text);
 
-                if (!languageCodes.Contains(fromLanguageCode))
+                if (fromLanguage.Contains("Unable to confidently detect input language."))
                 {
                     MessageBox.Show("The source language could not be detected automatically " +
                         "or is not supported for translation.", "Language detection failed",
@@ -81,12 +81,11 @@ namespace MSTranslatorDemo
                     return;
                 }
             }
-            else
-                fromLanguageCode = languageCodesAndTitles[fromLanguage];
-            string toLanguageCode = languageCodesAndTitles[ToLanguageComboBox.SelectedValue.ToString()];
+            
+            string toLanguageCode = new LanguageClass().GetLanguageCode(ToLanguageComboBox.SelectedValue.ToString());
 
             string textToTranslate = TextToTranslate.Text.Trim();
-            string translation = await new LanguageClass().translate(textToTranslate, fromLanguageCode, toLanguageCode);
+            string translation = await new LanguageClass().translate(textToTranslate, ToLanguageComboBox.Text, fromLanguage);
             TranslatedTextLabel.Text = translation;
 
 

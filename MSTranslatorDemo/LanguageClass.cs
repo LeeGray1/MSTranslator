@@ -161,6 +161,7 @@ namespace MSTranslatorDemo
         }
         public string GetLanguageCode(string Language)
         {
+
             if (languageCodesAndTitles.Count == 0)
             {
                 // Send request to get supported language codes
