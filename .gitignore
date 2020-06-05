@@ -340,3 +340,10 @@ ASALocalRun/
 healthchecksdb
 .vs/MSTranslatorDemo/v16/.suo
 .vs/MSTranslatorDemo/v16/.suo
+.vs/MSTranslatorDemo/v16/.suo
+.vs/MSTranslatorDemo/v16/.suo
+*.exe
+MSTranslatorDemo/bin/Debug/MSTranslatorDemo.pdb
+*.cache
+*.pdb
+.vs/MSTranslatorDemo/v16/.suo
