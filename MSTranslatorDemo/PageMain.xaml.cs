@@ -47,7 +47,7 @@ namespace MSTranslatorDemo
         {
             InitializeComponent();
             // Get languages for drop-downs
-            GetLanguagesForTranslate();
+           // GetLanguagesForTranslate();
             // Populate drop-downs with values from GetLanguagesForTranslate
             PopulateLanguageMenus();
             btnSave_XML.IsEnabled = false;
@@ -56,19 +56,19 @@ namespace MSTranslatorDemo
             
         }
 
-        private void GetLanguagesForTranslate()
-        {
-            // Send request to get supported language codes
+        //private void GetLanguagesForTranslate()
+        //{
+        //    // Send request to get supported language codes
 
 
-            var languages = new MSTranslate(TEXT_TRANSLATION_API_ENDPOINT, COGNITIVE_SERVICES_KEY).GetLanguagesForTranslate();
-            languageCodes = languages.Keys.ToArray();
-            foreach (var kv in languages)
-            {
-                languageCodesAndTitles.Add(kv.Value["name"], kv.Key);
-            }
+        //    var languages = new LanguageClass().GetLanguagesForTranslate();
+        //    languageCodes = languages.Keys.ToArray();
+        //    foreach (var kv in languages)
+        //    {
+        //        languageCodesAndTitles.Add(kv.Value["name"], kv.Key);
+        //    }
 
-        }
+        //}
        
        
         private void PopulateLanguageMenus()
@@ -99,7 +99,7 @@ namespace MSTranslatorDemo
         
         private async Task<string> GetXmlTranslated4Names(string xmlFile, string language)
         {
-            string toLanguageCode = languageCodesAndTitles[language];
+            string toLanguageCode = new LanguageClass().GetLanguageCode(language);
 
 
 
@@ -120,7 +120,7 @@ namespace MSTranslatorDemo
                     if (NameEndPtr != -1)
                     {
                         NameOriginalText = xmlFile.Substring(NameStartPtr + NameStartSearchTxt.Length, NameEndPtr - NameStartPtr - NameStartSearchTxt.Length);
-                        NameTranslatedText = await new LanguageClass().translate(NameOriginalText, FromLanguageComboBox.SelectedItem.ToString(), "English");
+                        NameTranslatedText = await new LanguageClass().translate(NameOriginalText, ToLanguageComboBox.SelectedItem.ToString(), "English");
                          
 
                         xmlFile = xmlFile.Replace(NameStartSearchTxt + NameOriginalText + NameEndSearchTxt, NameStartSearchTxt + NameTranslatedText + NameEndSearchTxt);
@@ -141,7 +141,7 @@ namespace MSTranslatorDemo
 
         private async Task<string> GetXsltTranslated4CountryID(string xmlFile, string xsltFile, string language)
         {
-            string toLanguageCode = languageCodesAndTitles[language];
+            string toLanguageCode = new LanguageClass().GetLanguageCode(language);
 
 
 
@@ -176,7 +176,7 @@ namespace MSTranslatorDemo
                                 {
                                     CountryOriginalText = xsltFile.Substring(CountryXsltStartPtr2 + 11, CountryXsltEndPtr - CountryXsltStartPtr2 - 11);
                                     //now translate xslt
-                                    CountryTranslatedText = await new LanguageClass().translate(CountryOriginalText, FromLanguageComboBox.SelectedItem.ToString(), "English");
+                                    CountryTranslatedText = await new LanguageClass().translate(CountryOriginalText, ToLanguageComboBox.SelectedItem.ToString(), "English");
                                     
                                     CountryXsltStartPtr2 = xsltFile.IndexOf("<t id=\"no\">", CountryXsltEndPtr);
                                     if (CountryXsltStartPtr2 != -1)
@@ -207,7 +207,7 @@ namespace MSTranslatorDemo
         }
         private async Task<string> GetXmlTranslated4Note(string xmlFile, string language)
         {
-            string toLanguageCode = languageCodesAndTitles[language];
+            string toLanguageCode = new LanguageClass().GetLanguageCode(language);
 
             string NoteStartSearchTxt = "<cbc:Note>", NoteEndSearchTxt = "</cbc:Note>";
 
@@ -223,7 +223,7 @@ namespace MSTranslatorDemo
                 if (NoteEndPtr != -1)
                 {
                     NoteOriginalText = xmlFile.Substring(NoteStartPtr + NoteStartSearchTxt.Length, NoteEndPtr - NoteStartPtr - NoteStartSearchTxt.Length);
-                    NoteTranslatedText = await new LanguageClass().translate(NoteOriginalText, FromLanguageComboBox.SelectedItem.ToString(), "English");
+                    NoteTranslatedText = await new LanguageClass().translate(NoteOriginalText, ToLanguageComboBox.SelectedItem.ToString(), "English");
 
 
                     xmlFile = xmlFile.Replace(NoteStartSearchTxt + NoteOriginalText + NoteEndSearchTxt, NoteStartSearchTxt + NoteTranslatedText + NoteEndSearchTxt);

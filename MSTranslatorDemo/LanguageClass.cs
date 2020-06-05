@@ -51,7 +51,7 @@ namespace MSTranslatorDemo
 
 
 
-            var languages = new MSTranslate(TEXT_TRANSLATION_API_ENDPOINT, COGNITIVE_SERVICES_KEY).GetLanguagesForTranslate();
+            var languages =  GetLanguagesForTranslate();
             languageCodes = languages.Keys.ToArray();
             foreach (var kv in languages)
             {
@@ -60,12 +60,35 @@ namespace MSTranslatorDemo
             return languageCodesAndTitles;
         }
 
+        private Dictionary<string, Dictionary<string, string>> GetLanguagesForTranslate()
+        {
+            // Send request to get supported language codes
+            string uri = String.Format(TEXT_TRANSLATION_API_ENDPOINT, "languages") + "&scope=translation";
+            WebRequest webRequest = WebRequest.Create(uri);
+            webRequest.Headers.Add("Accept-Language", "en");
+            WebResponse response = null;
+            // Read and parse the JSON response
+            response = webRequest.GetResponse();
+            using (var reader = new StreamReader(response.GetResponseStream(), UnicodeEncoding.UTF8))
+            {
+                var result = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, Dictionary<string, string>>>>(reader.ReadToEnd());
+                Dictionary<string, Dictionary<string, string>> languages = result["translation"];
+
+
+                return languages;
+                //foreach (var kv in languages)
+                //{
+                //    languageCodesAndTitles.Add(kv.Value["name"], kv.Key);
+                //}
+            }
+        }
+
         public void GetLanguages()
         {
             // Send request to get supported language codes
 
 
-            var languages = new MSTranslate(TEXT_TRANSLATION_API_ENDPOINT, COGNITIVE_SERVICES_KEY).GetLanguagesForTranslate();
+            var languages = GetLanguagesForTranslate();
             languageCodes = languages.Keys.ToArray();
             foreach (var kv in languages)
             {
@@ -108,6 +131,7 @@ namespace MSTranslatorDemo
         public string GetTranslation(string SelectedWord, string SelectedLanguage)
         {
             string xsltFileName = SelectedLanguage + "-stylesheet-ubl.xslt";
+            
             string LanguageCode = GetLanguageCode(SelectedLanguage);
             string xsltFile = File.ReadAllText(xsltFileName);
             int ot, st, et, intLabelStart, intCodeStart;
@@ -137,16 +161,19 @@ namespace MSTranslatorDemo
         }
         public string GetLanguageCode(string Language)
         {
-            // Send request to get supported language codes
-
-           // SortedDictionary<string, string> LanguageCodesAndNames =
-           //new SortedDictionary<string, string>(Comparer<string>.Create((a, b) => string.Compare(a, b, true)));
-
-            var languages = new MSTranslate(TEXT_TRANSLATION_API_ENDPOINT, COGNITIVE_SERVICES_KEY).GetLanguagesForTranslate();
-            languageCodes = languages.Keys.ToArray();
-            foreach (var kv in languages)
+            if (languageCodesAndTitles.Count == 0)
             {
-                languageCodesAndTitles.Add(kv.Value["name"], kv.Key);
+                // Send request to get supported language codes
+
+                // SortedDictionary<string, string> LanguageCodesAndNames =
+                //new SortedDictionary<string, string>(Comparer<string>.Create((a, b) => string.Compare(a, b, true)));
+
+                var languages = GetLanguagesForTranslate();
+                languageCodes = languages.Keys.ToArray();
+                foreach (var kv in languages)
+                {
+                    languageCodesAndTitles.Add(kv.Value["name"], kv.Key);
+                }
             }
             return languageCodesAndTitles[Language];
         }
@@ -303,14 +330,17 @@ namespace MSTranslatorDemo
             string fromLanguage = "English"; //FromLanguageComboBox.SelectedValue.ToString();
             string fromLanguageCode;
             string translation;
-
+            if(languageCodesAndTitles.Count==0)
+            {
+               // GetLanguageCode()
+            }
 
             // auto-detect source language if requested
 
 
-            fromLanguageCode = languageCodesAndTitles[fromLanguage];
+            fromLanguageCode = GetLanguageCode(fromLanguage);
 
-            string toLanguageCode = languageCodesAndTitles[ToLanguage];
+            string toLanguageCode = GetLanguageCode(ToLanguage);
 
 
             if (textToTranslate == "" || fromLanguageCode == toLanguageCode)
@@ -355,7 +385,7 @@ namespace MSTranslatorDemo
             //<xsl:param name="language" select="'en'"/>
             //string xsltFile = File.ReadAllText(xsltFilename);
             string Labels2Translate = File.ReadAllText("Labels2Translate.txt");
-            string translation = await new LanguageClass().translate(Labels2Translate, Tolanguage, FromLanguage);
+            string translation = await translate(Labels2Translate, Tolanguage, FromLanguage);
 
             string[] Translatedlines = translation.Split(
                 new[] { Environment.NewLine },

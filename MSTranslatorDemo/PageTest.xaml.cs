@@ -71,7 +71,7 @@ namespace MSTranslatorDemo
 
             if (fromLanguage == "Detect")
             {
-                fromLanguageCode = new MSTranslate(TEXT_TRANSLATION_API_ENDPOINT, COGNITIVE_SERVICES_KEY).DetectLanguage(TextToTranslate.Text);
+                fromLanguageCode = new LanguageClass().DetectLanguage(TextToTranslate.Text);
 
                 if (!languageCodes.Contains(fromLanguageCode))
                 {
@@ -86,7 +86,7 @@ namespace MSTranslatorDemo
             string toLanguageCode = languageCodesAndTitles[ToLanguageComboBox.SelectedValue.ToString()];
 
             string textToTranslate = TextToTranslate.Text.Trim();
-            string translation = await new MSTranslate(TEXT_TRANSLATION_API_ENDPOINT, COGNITIVE_SERVICES_KEY).go(textToTranslate, fromLanguageCode, toLanguageCode);
+            string translation = await new LanguageClass().translate(textToTranslate, fromLanguageCode, toLanguageCode);
             TranslatedTextLabel.Text = translation;
 
 
