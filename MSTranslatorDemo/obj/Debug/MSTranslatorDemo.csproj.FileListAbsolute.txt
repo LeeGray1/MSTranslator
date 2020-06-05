@@ -57,7 +57,6 @@ C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\bin\Debug\IKV
 C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\bin\Debug\IKVM.OpenJDK.Security.dll
 C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\bin\Debug\Newtonsoft.Json.xml
 C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\bin\Debug\saxon9he-api.xml
-C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\MSTranslatorDemo.csprojAssemblyReference.cache
 C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\PageMain.g.cs
 C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\PageSettings.g.cs
 C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\PageTest.g.cs
@@ -77,3 +76,4 @@ C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\MST
 C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\MSTranslatorDemo.exe
 C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\MSTranslatorDemo.pdb
 C:\Users\edmun\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\MSTranslatorDemo.csprojAssemblyReference.cache
+C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\MSTranslatorDemo.csprojAssemblyReference.cache
