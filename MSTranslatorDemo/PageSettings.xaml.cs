@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -28,33 +29,60 @@ namespace MSTranslatorDemo
 
         private string[] languageCodes;
 
-        private SortedDictionary<string, string> languageCodesAndTitles =
-           new SortedDictionary<string, string>(Comparer<string>.Create((a, b) => string.Compare(a, b, true)));
+        //private SortedDictionary<string, string> languageCodesAndTitles =
+        //   new SortedDictionary<string, string>(Comparer<string>.Create((a, b) => string.Compare(a, b, true)));
 
         public PageSettings()
         {
             InitializeComponent();
             // Get languages for drop-downs
-            GetTranslatedLanguages();
+            List<string> list = GetTranslatedLanguages();
+
+            cmbLanguage.ItemsSource = list;
+
+
+            //foreach (var item in list)
+            //{
+            //    cmbLanguage.Items.Add(item);
+            //}
+            
             GetWords();
-            GetLanguageCodes();
+           // languageCodesAndTitles = GetLanguageCodes();
             btnSave.IsEnabled = false;
 
 
         }
 
-        private void GetLanguageCodes()
+        private SortedDictionary<string, string> GetLanguageCodes()
         {
             // Send request to get supported language codes
 
+            SortedDictionary<string, string> LanguageCodesAndNames =
+           new SortedDictionary<string, string>(Comparer<string>.Create((a, b) => string.Compare(a, b, true)));
+
+        var languages = new MSTranslate(TEXT_TRANSLATION_API_ENDPOINT, COGNITIVE_SERVICES_KEY).GetLanguagesForTranslate();
+            languageCodes = languages.Keys.ToArray();
+            foreach (var kv in languages)
+            {
+                LanguageCodesAndNames.Add(kv.Value["name"], kv.Key);
+            }
+            return LanguageCodesAndNames;
+        }
+
+        private string GetLanguageCode(string Language)
+        {
+            // Send request to get supported language codes
+
+            SortedDictionary<string, string> LanguageCodesAndNames =
+           new SortedDictionary<string, string>(Comparer<string>.Create((a, b) => string.Compare(a, b, true)));
 
             var languages = new MSTranslate(TEXT_TRANSLATION_API_ENDPOINT, COGNITIVE_SERVICES_KEY).GetLanguagesForTranslate();
             languageCodes = languages.Keys.ToArray();
             foreach (var kv in languages)
             {
-                languageCodesAndTitles.Add(kv.Value["name"], kv.Key);
+                LanguageCodesAndNames.Add(kv.Value["name"], kv.Key);
             }
-
+            return LanguageCodesAndNames[Language];
         }
 
         private void GetWords()
@@ -73,8 +101,10 @@ namespace MSTranslatorDemo
             }
         }
 
-        private void GetTranslatedLanguages()
+        private List<string> GetTranslatedLanguages()
         {
+            List<string> LanguageList = new List<string>();
+
             string localFolder = System.AppDomain.CurrentDomain.BaseDirectory;
             DirectoryInfo dirInfo = new DirectoryInfo(localFolder);
             FileInfo[] info = dirInfo.GetFiles("*.xslt");
@@ -82,14 +112,16 @@ namespace MSTranslatorDemo
             int st;
             foreach (FileInfo f in info)
             {
-                st = f.Name.IndexOf("-style");
+                st = f.Name.IndexOf("-stylesheet");
                 if (st != -1)
                 {
-                    cmbLanguage.Items.Add(f.Name.Substring(0, st));
+                    // cmbLanguage.Items.Add(f.Name.Substring(0, st));
+                    LanguageList.Add(f.Name.Substring(0, st));
                 }
 
 
             }
+            return LanguageList;
 
 
             //    var languages = new MSTranslate(TEXT_TRANSLATION_API_ENDPOINT, COGNITIVE_SERVICES_KEY).GetLanguagesForTranslate();
@@ -119,13 +151,28 @@ namespace MSTranslatorDemo
 
         private void cmbWord_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string xsltFileName = cmbLanguage.SelectedItem + "-stylesheet-ubl.xslt";
-            string xsltFile = File.ReadAllText(xsltFileName);
-            string SelectedWord = (string)cmbWord.SelectedItem;
-            string LanguageCode = languageCodesAndTitles[(string)cmbLanguage.SelectedItem];
-
-            int ot, st, et, intLabelStart, intCodeStart;
+            
            
+          //  string SelectedWord = (string)cmbWord.SelectedItem;
+
+
+            txtTranslation.Text = GetTranslation((string)cmbWord.SelectedItem, (string)cmbLanguage.SelectedItem);
+            if (txtTranslation.Text == "")
+            {
+                btnSave.IsEnabled = false;
+            }
+            else
+                btnSave.IsEnabled = true;
+
+        }
+
+        private string GetTranslation( string SelectedWord, string SelectedLanguage)
+        {
+            string xsltFileName = SelectedLanguage + "-stylesheet-ubl.xslt";
+            string LanguageCode = GetLanguageCode(SelectedLanguage);
+            string xsltFile = File.ReadAllText(xsltFileName);
+            int ot, st, et, intLabelStart, intCodeStart;
+
             //<t id="en">Invoice<
             //<t id="no"> = start of replace
             //</t> = end of replace
@@ -138,26 +185,32 @@ namespace MSTranslatorDemo
                 ot = xsltFile.IndexOf("<t id=\"en\">" + SelectedWord + "</t>", 0);
             if (ot == -1)
             {
-                btnSave.IsEnabled = false;
-                txtTranslation.Text = "";
+               // btnSave.IsEnabled = false;
+                return "";
             }
             else
             {
                 st = xsltFile.IndexOf("<t id=\"" + LanguageCode + "\">", ot);
                 et = xsltFile.IndexOf("</t>", st);
-                txtTranslation.Text = xsltFile.Substring(st+11, et - st -11);
-                btnSave.IsEnabled = true;
+                return xsltFile.Substring(st + 11, et - st - 11);
+                //btnSave.IsEnabled = true;
             }
-
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            string xsltFileName = cmbLanguage.SelectedItem + "-stylesheet-ubl.xslt";
-            string xsltFile = File.ReadAllText(xsltFileName);
+            
             string SelectedWord = (string)cmbWord.SelectedItem;
-            string LanguageCode = languageCodesAndTitles[(string)cmbLanguage.SelectedItem];
+            string LanguageCode = GetLanguageCode( (string)cmbLanguage.SelectedItem);
 
+            UpdateTranslation(SelectedWord, (string)cmbLanguage.SelectedItem, txtTranslation.Text);
+        }
+
+        private string UpdateTranslation( string SelectedWord, string Language, string NewTranslation)
+        {
+            string LanguageCode = GetLanguageCode( Language);
+            string xsltFileName = Language + "-stylesheet-ubl.xslt";
+            string xsltFile = File.ReadAllText(xsltFileName);
             int ot, st, et, intLabelStart, intCodeStart;
             string string2replace, newstring;
             //<t id="en">Invoice<
@@ -173,18 +226,21 @@ namespace MSTranslatorDemo
             if (ot == -1)
             {
                 btnSave.IsEnabled = false;
-                txtTranslation.Text = "";
+                //cannot find Selected Word
+                NewTranslation = "";
             }
             else
             {
                 st = xsltFile.IndexOf("<t id=\"" + LanguageCode + "\">", ot);
                 et = xsltFile.IndexOf("</t>", st);
                 string2replace = xsltFile.Substring(st, et - st + 4);
-                newstring = "<t id=\"" + LanguageCode + "\">" + txtTranslation.Text + "</t>";
+                newstring = "<t id=\"" + LanguageCode + "\">" + NewTranslation + "</t>";
                 xsltFile = xsltFile.Replace(string2replace, newstring);
                 File.WriteAllText(xsltFileName, xsltFile);
 
             }
+
+            return xsltFile;
         }
 
         private void btnDownload_Click(object sender, RoutedEventArgs e)
