@@ -24,16 +24,11 @@ namespace MSTranslatorDemo
         // Endpoints for Translator and Bing Spell Check
         public static readonly string TEXT_TRANSLATION_API_ENDPOINT = "https://api.cognitive.microsofttranslator.com/{0}?api-version=3.0";
 
-        private string[] languageCodes;
-
-        //private SortedDictionary<string, string> languageCodesAndTitles =
-        //   new SortedDictionary<string, string>(Comparer<string>.Create((a, b) => string.Compare(a, b, true)));
-
+       
         public PageTest()
         {
             InitializeComponent();
-            // Get languages for drop-downs
-            //GetLanguagesForTranslate();
+            
             // Populate drop-downs with values from GetLanguagesForTranslate
             PopulateLanguageMenus();
         }
@@ -56,14 +51,7 @@ namespace MSTranslatorDemo
             ToLanguageComboBox.SelectedItem = "English";
         }
 
-       // SortedDictionary<string, string> LanguageCodesAndNames =
-       //new SortedDictionary<string, string>(Comparer<string>.Create((a, b) => string.Compare(a, b, true)));
-       
-
-       
-
-       
-
+      
         private async void TranslateButton_Click(object sender, RoutedEventArgs e)
         {
             string fromLanguage = FromLanguageComboBox.Text;
