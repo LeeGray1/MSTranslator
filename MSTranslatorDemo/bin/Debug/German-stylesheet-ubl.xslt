@@ -416,7 +416,7 @@
 			</c>
 			<c id="DE">
 				<t id="en">Germany</t>
-				<t id="de">Deutschland</t>
+				<t id="no">Tyskland</t>
 			</c>
 			<c id="DJ">
 				<t id="en">Djibouti</t>
@@ -600,7 +600,7 @@
 			</c>
 			<c id="IL">
 				<t id="en">Israel</t>
-				<t id="no">Israel</t>
+				<t id="de">Irland</t>
 			</c>
 			<c id="IM">
 				<t id="en">Isle of Man</t>
@@ -1260,7 +1260,7 @@
 		<g id="attachments">
 			<f id="Attachments">
 				<t id="en">Attachments</t>
-				<t id="de">Anhang</t>
+				<t id="de">Anlagen</t>
 			</f>
 			<f id="Download">
 				<t id="en">Download</t>
@@ -1324,7 +1324,7 @@
 		<g id="line">
 			<f id="Allowance">
 				<t id="en">Allowance</t>
-				<t id="de">Zulage</t>
+				<t id="de">Zulager</t>
 			</f>
 			<f id="AllowanceIncluded">
 				<t id="en">Included allowance</t>
@@ -1514,7 +1514,7 @@
 			</f>
 			<f id="Totals">
 				<t id="en">Totals</t>
-				<t id="de">Summen</t>
+				<t id="de">Zusammenfassung</t>
 			</f>
 		</g>
 	</xsl:variable>

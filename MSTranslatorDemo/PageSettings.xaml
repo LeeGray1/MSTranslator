@@ -15,7 +15,7 @@
             HorizontalAlignment="Left"
             Margin="35,52,0,0"
             VerticalAlignment="Top"
-            Width="175" FontSize="14" TabIndex="2"/>
+            Width="175" FontSize="14" TabIndex="2" SelectionChanged="cmbLanguage_SelectionChanged"/>
         <Rectangle Fill="#FFFFFFFF" HorizontalAlignment="Left" Height="83" Margin="10,122,0,0" Stroke="Black" VerticalAlignment="top" Width="535"/>
         <ComboBox x:Name="cmbWord"
             HorizontalAlignment="Left"
@@ -26,9 +26,9 @@
         <Rectangle Fill="#FFFFFFFF" HorizontalAlignment="Left" Height="137" Margin="10,224,0,0" Stroke="Black" VerticalAlignment="top" Width="535"/>
         <TextBox x:Name="txtTranslation" HorizontalAlignment="Left" Height="29" Margin="35,259,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="492" FontSize="14"/>
         <Label  Content="Translation" HorizontalAlignment="Left" Margin="35,225,0,0" VerticalAlignment="Top" FontSize="14" RenderTransformOrigin="0.493,0.593"/>
-        <Button x:Name="btnSave" Content="Save" HorizontalAlignment="Left" Margin="75,306,0,0" VerticalAlignment="Top" Width="98" FontSize="14" Height="30" Click="btnSave_Click" Background="#FF46AE57" Foreground="White"/>
-        <Button x:Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Margin="333,47,0,0" VerticalAlignment="Top" Width="98" FontSize="14" Height="30" Click="btnDelete_Click" Background="#FFFD5155" Foreground="White"/>
-        <Button x:Name="btnDownload" Content="Download XSLT" HorizontalAlignment="Left" Height="30" Margin="317,307,0,0" VerticalAlignment="Top" Width="129" Click="btnDownload_Click" Background="#FF1B79CE" Foreground="White"/>
+        <Button IsEnabled ="False"  x:Name="btnSave" Content="Save" HorizontalAlignment="Left" Margin="75,306,0,0" VerticalAlignment="Top" Width="98" FontSize="14" Height="30" Click="btnSave_Click" Background="#FF46AE57" Foreground="White"/>
+        <Button IsEnabled="False" x:Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Margin="333,47,0,0" VerticalAlignment="Top" Width="98" FontSize="14" Height="30" Click="btnDelete_Click" Background="#FFFD5155" Foreground="White"/>
+        <Button IsEnabled="False" x:Name="btnDownload" Content="Download XSLT" HorizontalAlignment="Left" Height="30" Margin="317,307,0,0" VerticalAlignment="Top" Width="129" Click="btnDownload_Click" Background="#FF1B79CE" Foreground="White"/>
 
     </Grid>
 </Page>
