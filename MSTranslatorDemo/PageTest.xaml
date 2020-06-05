@@ -15,7 +15,7 @@
         <TextBox x:Name="TranslatedTextLabel" IsReadOnly="True" IsReadOnlyCaretVisible="True" Text="Translation is displayed here." HorizontalAlignment="Left" Margin="12,259,0,0" VerticalAlignment="Top" Width="505" FontSize="14" Height="84" BorderThickness="0"/>
         <Label Content="Text to translate:" HorizontalAlignment="Left" Margin="27,20,0,0" VerticalAlignment="Top" Width="108"/>
         <Rectangle Fill="White" HorizontalAlignment="Left" Height="112" Margin="10,105,0,0" Stroke="Black" VerticalAlignment="Top" Width="535"/>
-        <Button x:Name="TranslateButton" Content="Translate" HorizontalAlignment="Left" Margin="217,163,0,0" VerticalAlignment="Top" Width="76" Height="35" Click="TranslateButton_Click" FontSize="14" TabIndex="4" IsDefault="True"/>
+        <Button x:Name="TranslateButton" Content="Translate" HorizontalAlignment="Left" Margin="217,163,0,0" VerticalAlignment="Top" Width="76" Height="35" Click="TranslateButton_Click" FontSize="14" TabIndex="4" IsDefault="True" Foreground="White" Background="#FF46AE57"/>
         <ComboBox x:Name="FromLanguageComboBox"
             HorizontalAlignment="Left"
             Margin="27,125,0,0"
