@@ -49,17 +49,17 @@ namespace MSTranslatorDemo
 
         SortedDictionary<string, string> languageCodesAndTitles =
            new SortedDictionary<string, string>(Comparer<string>.Create((a, b) => string.Compare(a, b, true)));
-        public SortedDictionary<string, string> GetLanguageCodes()
-        {
-            // Send request to get supported language codes
-            var languages =  GetLanguagesForTranslate();
-            languageCodes = languages.Keys.ToArray();
-            foreach (var kv in languages)
-            {
-                languageCodesAndTitles.Add(kv.Value["name"], kv.Key);
-            }
-            return languageCodesAndTitles;
-        }
+        //public SortedDictionary<string, string> GetLanguageCodes()
+        //{
+        //    // Send request to get supported language codes
+        //    var languages =  GetLanguagesForTranslate();
+        //    languageCodes = languages.Keys.ToArray();
+        //    foreach (var kv in languages)
+        //    {
+        //        languageCodesAndTitles.Add(kv.Value["name"], kv.Key);
+        //    }
+        //    return languageCodesAndTitles;
+        //}
 
         private Dictionary<string, Dictionary<string, string>> GetLanguagesForTranslate()
         {
@@ -385,7 +385,7 @@ namespace MSTranslatorDemo
 
        
 
-        public async Task<string> GetXsltTranslated4Labels(string xsltFile, string Tolanguage, string FromLanguage)
+        private async Task<string> GetXsltTranslated4Labels(string xsltFile, string Tolanguage, string FromLanguage)
         {
             string toLanguageCode = GetLanguageCode(Tolanguage);
             //<xsl:param name="language" select="'en'"/>
@@ -435,15 +435,15 @@ namespace MSTranslatorDemo
 
             return xsltFile;
         }
-        public string Readxsltfile(string Language)
-        {
-            string localFolder = System.AppDomain.CurrentDomain.BaseDirectory;
-            string FileName = Language + "-stylesheet-ubl.xslt";
-            {
-                string xsltfile = File.ReadAllText(System.IO.Path.Combine(localFolder, FileName));
-                return xsltfile;
-            }
-        }
+        //public string Readxsltfile(string Language)
+        //{
+        //    string localFolder = System.AppDomain.CurrentDomain.BaseDirectory;
+        //    string FileName = Language + "-stylesheet-ubl.xslt";
+        //    {
+        //        string xsltfile = File.ReadAllText(System.IO.Path.Combine(localFolder, FileName));
+        //        return xsltfile;
+        //    }
+        //}
 
        
         public string GetTranslatedXml(string ToLanguage)
