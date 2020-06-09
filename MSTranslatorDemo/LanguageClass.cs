@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Win32;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -442,6 +443,90 @@ namespace MSTranslatorDemo
                 string xsltfile = File.ReadAllText(System.IO.Path.Combine(localFolder, FileName));
                 return xsltfile;
             }
+        }
+
+       
+        public string GetTranslatedXml(string ToLanguage)
+        {
+            string GetXmlStorageLocation = System.AppDomain.CurrentDomain.BaseDirectory;
+            return File.ReadAllText(Path.Combine(GetXmlStorageLocation, ToLanguage + "-" + "TranslatedFile.xml"));
+        }
+
+        public string GetXslt4Language(string ToLanguage)
+        {
+            string GetxsltStorageLocation = System.AppDomain.CurrentDomain.BaseDirectory;
+            return File.ReadAllText(Path.Combine(GetxsltStorageLocation, ToLanguage + "-stylesheet-ubl.xslt"));
+        }
+
+        public async Task<string> GetXmlTranslated4Note(string xmlFile, string ToLanguage, string FromLanguage)
+        {
+            string toLanguageCode = GetLanguageCode(ToLanguage);
+
+            string NoteStartSearchTxt = "<cbc:Note>", NoteEndSearchTxt = "</cbc:Note>";
+
+            int NoteStartPtr, NoteEndPtr;
+            string NoteOriginalText = "", NoteTranslatedText;
+
+
+
+            NoteStartPtr = xmlFile.IndexOf(NoteStartSearchTxt);
+            if (NoteStartPtr != -1)
+            {
+                NoteEndPtr = xmlFile.IndexOf(NoteEndSearchTxt, NoteStartPtr);
+                if (NoteEndPtr != -1)
+                {
+                    NoteOriginalText = xmlFile.Substring(NoteStartPtr + NoteStartSearchTxt.Length, NoteEndPtr - NoteStartPtr - NoteStartSearchTxt.Length);
+                    NoteTranslatedText = await translate(NoteOriginalText, ToLanguage, FromLanguage);
+
+
+                    xmlFile = xmlFile.Replace(NoteStartSearchTxt + NoteOriginalText + NoteEndSearchTxt, NoteStartSearchTxt + NoteTranslatedText + NoteEndSearchTxt);
+                }
+            }
+
+            return xmlFile;
+
+        }
+
+        public async Task<string> GetXmlTranslated4Names(string xmlFile, string ToLanguage, string FromLanguage)
+        {
+            string toLanguageCode = new LanguageClass().GetLanguageCode(ToLanguage);
+
+
+
+            string NameStartSearchTxt = "<cbc:Name>", NameEndSearchTxt = "</cbc:Name>";
+            int NameStartPtr = 0, NameEndPtr = 0;
+
+            string NameOriginalText, NameTranslatedText;
+
+            int LineItemStart = xmlFile.IndexOf("<cac:Item>");
+            NameStartPtr = xmlFile.IndexOf(NameStartSearchTxt, LineItemStart);
+
+            while (NameStartPtr != -1)
+            {
+
+                if (NameStartPtr != -1)
+                {
+                    NameEndPtr = xmlFile.IndexOf(NameEndSearchTxt, NameStartPtr);
+                    if (NameEndPtr != -1)
+                    {
+                        NameOriginalText = xmlFile.Substring(NameStartPtr + NameStartSearchTxt.Length, NameEndPtr - NameStartPtr - NameStartSearchTxt.Length);
+                        NameTranslatedText = await new LanguageClass().translate(NameOriginalText, ToLanguage, FromLanguage);
+
+
+                        xmlFile = xmlFile.Replace(NameStartSearchTxt + NameOriginalText + NameEndSearchTxt, NameStartSearchTxt + NameTranslatedText + NameEndSearchTxt);
+                    }
+                }
+                else
+                {
+
+                }
+                NameStartPtr = xmlFile.IndexOf(NameStartSearchTxt, NameEndPtr);
+
+
+            }
+
+            return xmlFile;
+
         }
     }
 }
