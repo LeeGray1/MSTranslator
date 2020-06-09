@@ -19,6 +19,7 @@ namespace MSTranslatorDemo
 
         private string[] languageCodes;
 
+        //Gets current translated xslt files for page settings
         public List<string> GetTranslatedXsltLanguages()
         {
             List<string> LanguageList = new List<string>();
@@ -28,6 +29,7 @@ namespace MSTranslatorDemo
             FileInfo[] info = dirInfo.GetFiles("*.xslt");
 
             int st;
+            //collects a list of languages
             foreach (FileInfo f in info)
             {
                 st = f.Name.IndexOf("-stylesheet");
@@ -39,6 +41,7 @@ namespace MSTranslatorDemo
 
 
             }
+            //Returns a list of languages
             return LanguageList;
 
         }
@@ -48,9 +51,6 @@ namespace MSTranslatorDemo
         public SortedDictionary<string, string> GetLanguageCodes()
         {
             // Send request to get supported language codes
-
-
-
             var languages =  GetLanguagesForTranslate();
             languageCodes = languages.Keys.ToArray();
             foreach (var kv in languages)
@@ -83,11 +83,10 @@ namespace MSTranslatorDemo
             }
         }
 
+        //Shows translatable languages
         public void GetLanguages()
         {
             // Send request to get supported language codes
-
-
             var languages = GetLanguagesForTranslate();
             languageCodes = languages.Keys.ToArray();
             foreach (var kv in languages)
@@ -96,21 +95,23 @@ namespace MSTranslatorDemo
             }
         }
 
+        //Get languages for combo boxes on page test
         public List<string> FillLanguages()
         {
             GetLanguages();
             List<string> list = new List<string>();
             int count = languageCodesAndTitles.Count;
-
+            //get language codes to make up a language list
             foreach (string menuItem in languageCodesAndTitles.Keys)
             {
                 list.Add(menuItem);
 
             }
-
+            //returns a list of languages
             return list;
         }
 
+        //Allows user to delete the chosen xslt file on settings page
         public List<string> DeleteXsltFile(string Language)
         {
             List<string> list = null;
@@ -125,9 +126,11 @@ namespace MSTranslatorDemo
 
             }
             list = GetTranslatedXsltLanguages();
+            //returns a list of translated xslt files after deleting the chosen file 
             return list;
         }
 
+        //Gets translation for chosen word in the page settings
         public string GetTranslation(string SelectedWord, string SelectedLanguage)
         {
             string xsltFileName = SelectedLanguage + "-stylesheet-ubl.xslt";
@@ -159,6 +162,7 @@ namespace MSTranslatorDemo
                 //btnSave.IsEnabled = true;
             }
         }
+
         public string GetLanguageCode(string Language)
         {
 
@@ -429,8 +433,15 @@ namespace MSTranslatorDemo
             xsltFile = xsltFile.Replace("<xsl:param name=\"language\" select=\"'en'\"/>", "<xsl:param name=\"language\" select=\"'" + toLanguageCode + "'\"/>");
 
             return xsltFile;
-
-
+        }
+        public string Readxsltfile(string Language)
+        {
+            string localFolder = System.AppDomain.CurrentDomain.BaseDirectory;
+            string FileName = Language + "-stylesheet-ubl.xslt";
+            {
+                string xsltfile = File.ReadAllText(System.IO.Path.Combine(localFolder, FileName));
+                return xsltfile;
+            }
         }
     }
 }

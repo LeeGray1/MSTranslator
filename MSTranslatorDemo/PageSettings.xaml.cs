@@ -133,10 +133,16 @@ namespace MSTranslatorDemo
             //string LanguageCode = new LanguageClass().GetLanguageCode( (string)cmbLanguage.SelectedItem);
 
            string result = new LanguageClass().UpdateTranslation(SelectedWord, (string)cmbLanguage.SelectedItem, txtTranslation.Text);
+            //Below code is a Messagebox to inform user that translation has been saved
+            //if (MessageBox.Show("Translation saved"), MessageBoxButton.OK, MessageBoxImage.Information)
+            //{
+               
+            //}
             if (result == "")
             {
                 MessageBox.Show("Missing word to translate", "Not saved", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
         }
 
        
@@ -151,22 +157,14 @@ namespace MSTranslatorDemo
             if (dlg.ShowDialog() == true)
             {
 
-               string xsltfile = Readxsltfile(cmbLanguage.Text);
+               string xsltfile = new LanguageClass().Readxsltfile(cmbLanguage.Text);
                 File.WriteAllText(dlg.FileName, xsltfile);
             }
                
 
         }
 
-        private string Readxsltfile(string Language)
-        {
-            string localFolder = System.AppDomain.CurrentDomain.BaseDirectory;
-            string FileName = Language + "-stylesheet-ubl.xslt";
-            {
-                string xsltfile = File.ReadAllText(System.IO.Path.Combine(localFolder, FileName));
-                return xsltfile;
-            }
-        }
+       
 
         private void cmbLanguage_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

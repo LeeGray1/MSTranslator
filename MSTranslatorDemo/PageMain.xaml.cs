@@ -151,7 +151,7 @@ namespace MSTranslatorDemo
             int CountryXsltStartPtr = 0, CountryXsltStartPtr2, CountryXsltEndPtr = 0;
 
             string CountryOriginalText, CountryTranslatedText;
-            string XsltCountrySearchText;
+            string XsltCountrySearchText; 
 
             CountryXmlStartPtr = xmlFile.IndexOf(CountryXmlStartSearchTxt);
 
