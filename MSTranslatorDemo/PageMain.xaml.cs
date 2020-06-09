@@ -30,24 +30,10 @@ namespace MSTranslatorDemo
     /// </summary>
     public partial class PageMain : Page
     {
-        // This sample uses the Cognitive Services subscription key for all services. To learn more about
-        // authentication options, see: https://docs.microsoft.com/azure/cognitive-services/authentication.
-        const string COGNITIVE_SERVICES_KEY = "7963c13bba1e4e60b4d872662401c746";
-        // Endpoints for Translator and Bing Spell Check
-        public static readonly string TEXT_TRANSLATION_API_ENDPOINT = "https://api.cognitive.microsofttranslator.com/{0}?api-version=3.0";
-        const string BING_SPELL_CHECK_API_ENDPOINT = "https://westus.api.cognitive.microsoft.com/bing/v7.0/spellcheck/";
-        // An array of language codes
-        private string[] languageCodes;
-
-        // Dictionary to map language codes from friendly name (sorted case-insensitively on language name)
-        private SortedDictionary<string, string> languageCodesAndTitles =
-            new SortedDictionary<string, string>(Comparer<string>.Create((a, b) => string.Compare(a, b, true)));
-
+        
         public PageMain()
         {
             InitializeComponent();
-            // Get languages for drop-downs
-           // GetLanguagesForTranslate();
             // Populate drop-downs with values from GetLanguagesForTranslate
             PopulateLanguageMenus();
             btnSave_XML.IsEnabled = false;
@@ -55,21 +41,6 @@ namespace MSTranslatorDemo
           
             
         }
-
-        //private void GetLanguagesForTranslate()
-        //{
-        //    // Send request to get supported language codes
-
-
-        //    var languages = new LanguageClass().GetLanguagesForTranslate();
-        //    languageCodes = languages.Keys.ToArray();
-        //    foreach (var kv in languages)
-        //    {
-        //        languageCodesAndTitles.Add(kv.Value["name"], kv.Key);
-        //    }
-
-        //}
-       
        
         private void PopulateLanguageMenus()
         {
@@ -82,92 +53,7 @@ namespace MSTranslatorDemo
             // Set default languages
             
             ToLanguageComboBox.SelectedItem = "English";
-        }
-        // NOTE:
-        // In the following sections, we'll add code below this.
-        // ***** DETECT LANGUAGE OF TEXT TO BE TRANSLATED
-        
-        // NOTE:
-        // In the following sections, we'll add code below this.
-        // ***** CORRECT SPELLING OF TEXT TO BE TRANSLATED
-        
-        // NOTE:
-        // In the following sections, we'll add code below this.
-        // ***** PERFORM TRANSLATION ON BUTTON CLICK
-       
-        
-        
-        
-
-        private async Task<string> GetXsltTranslated4CountryID(string xmlFile, string xsltFile, string language)
-        {
-            string toLanguageCode = new LanguageClass().GetLanguageCode(language);
-
-
-
-            string CountryXmlStartSearchTxt = "<cbc:IdentificationCode>", CountryXmlEndSearchTxt = "</cbc:IdentificationCode>";
-            //string CountryXsltStartSearchTxt = "<cbc:IdentificationCode>", CountryXsltEndSearchTxt = "</cbc:IdentificationCode>";
-            int CountryXmlStartPtr = 0, CountryXmlEndPtr = 0;
-            int CountryXsltStartPtr = 0, CountryXsltStartPtr2, CountryXsltEndPtr = 0;
-
-            string CountryOriginalText, CountryTranslatedText;
-            string XsltCountrySearchText; 
-
-            CountryXmlStartPtr = xmlFile.IndexOf(CountryXmlStartSearchTxt);
-
-            while (CountryXmlStartPtr != -1)
-            {
-
-                if (CountryXmlStartPtr != -1)
-                {
-                    CountryXmlEndPtr = xmlFile.IndexOf(CountryXmlEndSearchTxt, CountryXmlStartPtr);
-                    if (CountryXmlEndPtr != -1)
-                    {
-                        XsltCountrySearchText = xmlFile.Substring(CountryXmlStartPtr + CountryXmlStartSearchTxt.Length, CountryXmlEndPtr - CountryXmlStartPtr - CountryXmlStartSearchTxt.Length);
-
-                        CountryXsltStartPtr = xsltFile.IndexOf("<c id=\"" + XsltCountrySearchText + "\">");
-                        if (CountryXsltStartPtr != -1)
-                        {
-                            CountryXsltStartPtr2 = xsltFile.IndexOf("<t id=\"en\">", CountryXsltStartPtr);
-                            if (CountryXsltStartPtr2 != -1)
-                            {
-                                CountryXsltEndPtr = xsltFile.IndexOf("</t>", CountryXsltStartPtr2);
-                                if (CountryXsltEndPtr != -1)
-                                {
-                                    CountryOriginalText = xsltFile.Substring(CountryXsltStartPtr2 + 11, CountryXsltEndPtr - CountryXsltStartPtr2 - 11);
-                                    //now translate xslt
-                                    CountryTranslatedText = await new LanguageClass().translate(CountryOriginalText, language, "English");
-                                    
-                                    CountryXsltStartPtr2 = xsltFile.IndexOf("<t id=\"no\">", CountryXsltEndPtr);
-                                    if (CountryXsltStartPtr2 != -1)
-                                    {
-                                        CountryXsltEndPtr = xsltFile.IndexOf("</t>", CountryXsltStartPtr2);
-                                        if (CountryXsltEndPtr != -1)
-                                        {
-                                            CountryOriginalText = xsltFile.Substring(CountryXsltStartPtr2 + 11, CountryXsltEndPtr - CountryXsltStartPtr2 - 11);
-                                            xsltFile = xsltFile.Replace("<t id=\"no\">" + CountryOriginalText + "</t>", "<t id=\"" + toLanguageCode + "\">" + CountryTranslatedText + "</t>");
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                else
-                {
-
-                }
-                CountryXmlStartPtr = xmlFile.IndexOf(CountryXmlStartSearchTxt, CountryXmlEndPtr);
-
-
-            }
-
-            return xsltFile;
-
-        }
-        
-        
-
+        }       
 
         private async void btnLoadXML_Click(object sender, RoutedEventArgs e)
         {
@@ -180,13 +66,13 @@ namespace MSTranslatorDemo
             btnSaveXSLT.IsEnabled = false;
             btnSave_XML.IsEnabled = false;
 
-            string OriginalxmlFile = File.ReadAllText(openFileDialog.FileName);//("cleaning services.xml");
+            string OriginalxmlFile = File.ReadAllText(openFileDialog.FileName);
             if (ToLanguageComboBox.Text == "English")
             {
                 MessageBox.Show("Please select another language", "Translation not supported", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return;
             }
-            string HTMLstring = await ConvertXml2Html(OriginalxmlFile);
+            string HTMLstring = await new LanguageClass().ConvertXml2Html(OriginalxmlFile, ToLanguageComboBox.Text, Path.GetFileName(openFileDialog.FileName));
 
             File.WriteAllText("eInvoice.html", HTMLstring);
             System.Diagnostics.Process.Start("eInvoice.html");
@@ -195,50 +81,6 @@ namespace MSTranslatorDemo
             btnSave_XML.IsEnabled = true;
 
 
-            // Update the translation field
-            //TranslatedTextLabel.Content = translation;
-
-            //InvoiceDisplay invoiceDisplay = new InvoiceDisplay();
-
-            // invoiceDisplay.wbInvoice.NavigateToString(HTMLstring);
-            // invoiceDisplay.Show();
-
-        }
-
-        private async Task<string> ConvertXml2Html(string OriginalxmlFile)
-        {
-            if (File.Exists(ToLanguageComboBox.Text + "-stylesheet-ubl.xslt"))
-            { }
-            else
-            {
-
-                string OriginalxsltFile = File.ReadAllText("stylesheet-ubl v2.xslt");
-
-                string result = await new LanguageClass().GetXsltTranslated4Labels(OriginalxsltFile, ToLanguageComboBox.Text, "English");
-                result = await GetXsltTranslated4CountryID(OriginalxmlFile, result, ToLanguageComboBox.Text);
-                File.WriteAllText(ToLanguageComboBox.Text + "-stylesheet-ubl.xslt", result);
-                //  string HTMLstring = XLSThelper.TransformXMLToHTML(File.ReadAllText("cleaning services.xml"), File.ReadAllText("stylesheet-ubl.xslt"));
-            }
-
-            string TranslatedXmlNote = await new LanguageClass().GetXmlTranslated4Note(OriginalxmlFile, ToLanguageComboBox.Text, "English");
-            string TranslatedXmlNames = await new LanguageClass().GetXmlTranslated4Names(TranslatedXmlNote, ToLanguageComboBox.Text, "English");
-
-            File.WriteAllText(ToLanguageComboBox.Text + "-" + "TranslatedFile.xml", TranslatedXmlNames);
-
-
-            string HTMLstring = XSLThelper.SaxonTransform(ToLanguageComboBox.Text + "-stylesheet-ubl.xslt", ToLanguageComboBox.Text + "-" + Path.GetFileName(openFileDialog.FileName));
-
-
-            // get rid of the xslt bugs                  
-            HTMLstring = HTMLstring.Replace("<div class=\"col-md-5\" />", "");
-
-            HTMLstring = HTMLstring.Replace("<div class=\"col-sm-4\" />", "");
-
-            HTMLstring = HTMLstring.Replace("<div />", "");
-            HTMLstring = HTMLstring.Replace("style=\"width: 20%;\"", "class=\"text-right\"");
-            HTMLstring = HTMLstring.Replace("linesupport{background-color:#eee", "linesupport{");
-            HTMLstring = HTMLstring.Replace("<div class=\"col-sm-9\">Price</div>", "");
-            return HTMLstring;
         }
 
         OpenFileDialog openFileDialog = new OpenFileDialog
@@ -247,15 +89,10 @@ namespace MSTranslatorDemo
 
         };
 
-
-
-
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             if (openFileDialog.ShowDialog() == true)
             {
-                // do something with the filename
-                //MessageBox.Show(string.Format("eInvoice file \"{0}\" loaded", Path.GetFileName(openFileDialog.FileName)));
                 XML_File_txtbx.Text = Path.GetFileName(openFileDialog.FileName);
                 btnLoadXML.IsEnabled = true;
                 btnSaveXSLT.IsEnabled = false;
@@ -265,9 +102,6 @@ namespace MSTranslatorDemo
             else
                 XML_File_txtbx.Text = "no file selected";
         }
-
-       
-        
 
         private void btnSave_XML_Click(object sender, RoutedEventArgs e)
         {
@@ -285,8 +119,6 @@ namespace MSTranslatorDemo
 
         }
 
-        
-
         private void btnSaveXSLT_Click(object sender, RoutedEventArgs e)
         {
             
@@ -300,8 +132,6 @@ namespace MSTranslatorDemo
                 string xsltfile = new LanguageClass().GetXslt4Language(ToLanguageComboBox.Text);
                 File.WriteAllText(dlg.FileName, xsltfile);
             }
-
-
         }       
     }
 }
