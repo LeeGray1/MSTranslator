@@ -77,10 +77,6 @@ namespace MSTranslatorDemo
 
 
                 return languages;
-                //foreach (var kv in languages)
-                //{
-                //    languageCodesAndTitles.Add(kv.Value["name"], kv.Key);
-                //}
             }
         }
 
@@ -117,10 +113,10 @@ namespace MSTranslatorDemo
         {
             List<string> list = null;
             {
-                string FileName2Delete = Language + "-stylesheet-ubl.xslt";
+                string fileName2Delete = Language + "-stylesheet-ubl.xslt";
                 string localFolder = System.AppDomain.CurrentDomain.BaseDirectory;
-                string File2Delete = System.IO.Path.Combine(localFolder, FileName2Delete);
-                File.Delete(File2Delete);
+                string file2Delete = System.IO.Path.Combine(localFolder, fileName2Delete);
+                File.Delete(file2Delete);
                
 
             }
@@ -134,7 +130,7 @@ namespace MSTranslatorDemo
         {
             string xsltFileName = SelectedLanguage + "-stylesheet-ubl.xslt";
             
-            string LanguageCode = GetLanguageCode(SelectedLanguage);
+            string languageCode = GetLanguageCode(SelectedLanguage);
             string xsltFile = File.ReadAllText(xsltFileName);
             int ot, st, et, intLabelStart, intCodeStart;
 
@@ -152,16 +148,14 @@ namespace MSTranslatorDemo
             }
             else
             {
-                st = xsltFile.IndexOf("<t id=\"" + LanguageCode + "\">", ot);
+                st = xsltFile.IndexOf("<t id=\"" + languageCode + "\">", ot);
                 et = xsltFile.IndexOf("</t>", st);
-                return xsltFile.Substring(st + 11, et - st - 11);
-               
+                return xsltFile.Substring(st + 11, et - st - 11);               
             }
         }
 
         public string GetLanguageCode(string Language)
         {
-
             if (languageCodesAndTitles.Count == 0)
             {
                 // Send request to get supported language codes
@@ -178,7 +172,7 @@ namespace MSTranslatorDemo
 
         public string UpdateTranslation(string SelectedWord, string Language, string NewTranslation)
         {
-            string LanguageCode = GetLanguageCode(Language);
+            string languageCode = GetLanguageCode(Language);
             string xsltFileName = Language + "-stylesheet-ubl.xslt";
             string xsltFile = File.ReadAllText(xsltFileName);
             int ot, st, et, intLabelStart, intCodeStart;
@@ -198,10 +192,10 @@ namespace MSTranslatorDemo
             }
             else
             {
-                st = xsltFile.IndexOf("<t id=\"" + LanguageCode + "\">", ot);
+                st = xsltFile.IndexOf("<t id=\"" + languageCode + "\">", ot);
                 et = xsltFile.IndexOf("</t>", st);
                 string2replace = xsltFile.Substring(st, et - st + 4);
-                newstring = "<t id=\"" + LanguageCode + "\">" + NewTranslation + "</t>";
+                newstring = "<t id=\"" + languageCode + "\">" + NewTranslation + "</t>";
                 xsltFile = xsltFile.Replace(string2replace, newstring);
                 File.WriteAllText(xsltFileName, xsltFile);
 
@@ -212,8 +206,8 @@ namespace MSTranslatorDemo
 
         public List<string> GetWords()
         {
-            string Labels2Translate = File.ReadAllText("Labels2Translate.txt");
-            string[] originalLines = Labels2Translate.Split(
+            string labels2Translate = File.ReadAllText("Labels2Translate.txt");
+            string[] originalLines = labels2Translate.Split(
                 new[] { Environment.NewLine },
                 StringSplitOptions.None
                 );
@@ -378,15 +372,15 @@ namespace MSTranslatorDemo
         {
             string toLanguageCode = GetLanguageCode(Tolanguage);
             
-            string Labels2Translate = File.ReadAllText("Labels2Translate.txt");
-            string translation = await translate(Labels2Translate, Tolanguage, FromLanguage);
+            string labels2Translate = File.ReadAllText("Labels2Translate.txt");
+            string translation = await translate(labels2Translate, Tolanguage, FromLanguage);
 
             string[] Translatedlines = translation.Split(
                 new[] { Environment.NewLine },
                 StringSplitOptions.None
                 );
 
-            string[] originalLines = Labels2Translate.Split(
+            string[] originalLines = labels2Translate.Split(
                 new[] { Environment.NewLine },
                 StringSplitOptions.None
                 );
@@ -432,38 +426,38 @@ namespace MSTranslatorDemo
         //}       
         public string GetTranslatedXml(string ToLanguage)
         {
-            string GetXmlStorageLocation = System.AppDomain.CurrentDomain.BaseDirectory;
-            return File.ReadAllText(Path.Combine(GetXmlStorageLocation, ToLanguage + "-" + "TranslatedFile.xml"));
+            string getXmlStorageLocation = System.AppDomain.CurrentDomain.BaseDirectory;
+            return File.ReadAllText(Path.Combine(getXmlStorageLocation, ToLanguage + "-" + "TranslatedFile.xml"));
         }
 
         public string GetXslt4Language(string ToLanguage)
         {
-            string GetxsltStorageLocation = System.AppDomain.CurrentDomain.BaseDirectory;
-            return File.ReadAllText(Path.Combine(GetxsltStorageLocation, ToLanguage + "-stylesheet-ubl.xslt"));
+            string getxsltStorageLocation = System.AppDomain.CurrentDomain.BaseDirectory;
+            return File.ReadAllText(Path.Combine(getxsltStorageLocation, ToLanguage + "-stylesheet-ubl.xslt"));
         }
 
         private async Task<string> GetXmlTranslated4Note(string xmlFile, string ToLanguage, string FromLanguage)
         {
             string toLanguageCode = GetLanguageCode(ToLanguage);
 
-            string NoteStartSearchTxt = "<cbc:Note>", NoteEndSearchTxt = "</cbc:Note>";
+            string noteStartSearchTxt = "<cbc:Note>", noteEndSearchTxt = "</cbc:Note>";
 
-            int NoteStartPtr, NoteEndPtr;
-            string NoteOriginalText = "", NoteTranslatedText;
+            int noteStartPtr, noteEndPtr;
+            string noteOriginalText = "", noteTranslatedText;
 
 
 
-            NoteStartPtr = xmlFile.IndexOf(NoteStartSearchTxt);
-            if (NoteStartPtr != -1)
+            noteStartPtr = xmlFile.IndexOf(noteStartSearchTxt);
+            if (noteStartPtr != -1)
             {
-                NoteEndPtr = xmlFile.IndexOf(NoteEndSearchTxt, NoteStartPtr);
-                if (NoteEndPtr != -1)
+                noteEndPtr = xmlFile.IndexOf(noteEndSearchTxt, noteStartPtr);
+                if (noteEndPtr != -1)
                 {
-                    NoteOriginalText = xmlFile.Substring(NoteStartPtr + NoteStartSearchTxt.Length, NoteEndPtr - NoteStartPtr - NoteStartSearchTxt.Length);
-                    NoteTranslatedText = await translate(NoteOriginalText, ToLanguage, FromLanguage);
+                    noteOriginalText = xmlFile.Substring(noteStartPtr + noteStartSearchTxt.Length, noteEndPtr - noteStartPtr - noteStartSearchTxt.Length);
+                    noteTranslatedText = await translate(noteOriginalText, ToLanguage, FromLanguage);
 
 
-                    xmlFile = xmlFile.Replace(NoteStartSearchTxt + NoteOriginalText + NoteEndSearchTxt, NoteStartSearchTxt + NoteTranslatedText + NoteEndSearchTxt);
+                    xmlFile = xmlFile.Replace(noteStartSearchTxt + noteOriginalText + noteEndSearchTxt, noteStartSearchTxt + noteTranslatedText + noteEndSearchTxt);
                 }
             }
 
@@ -477,34 +471,34 @@ namespace MSTranslatorDemo
 
 
 
-            string NameStartSearchTxt = "<cbc:Name>", NameEndSearchTxt = "</cbc:Name>";
-            int NameStartPtr = 0, NameEndPtr = 0;
+            string nameStartSearchTxt = "<cbc:Name>", nameEndSearchTxt = "</cbc:Name>";
+            int nameStartPtr = 0, nameEndPtr = 0;
 
             string NameOriginalText, NameTranslatedText;
 
-            int LineItemStart = xmlFile.IndexOf("<cac:Item>");
-            NameStartPtr = xmlFile.IndexOf(NameStartSearchTxt, LineItemStart);
+            int lineItemStart = xmlFile.IndexOf("<cac:Item>");
+            nameStartPtr = xmlFile.IndexOf(nameStartSearchTxt, lineItemStart);
 
-            while (NameStartPtr != -1)
+            while (nameStartPtr != -1)
             {
 
-                if (NameStartPtr != -1)
+                if (nameStartPtr != -1)
                 {
-                    NameEndPtr = xmlFile.IndexOf(NameEndSearchTxt, NameStartPtr);
-                    if (NameEndPtr != -1)
+                    nameEndPtr = xmlFile.IndexOf(nameEndSearchTxt, nameStartPtr);
+                    if (nameEndPtr != -1)
                     {
-                        NameOriginalText = xmlFile.Substring(NameStartPtr + NameStartSearchTxt.Length, NameEndPtr - NameStartPtr - NameStartSearchTxt.Length);
+                        NameOriginalText = xmlFile.Substring(nameStartPtr + nameStartSearchTxt.Length, nameEndPtr - nameStartPtr - nameStartSearchTxt.Length);
                         NameTranslatedText = await new LanguageClass().translate(NameOriginalText, ToLanguage, FromLanguage);
 
 
-                        xmlFile = xmlFile.Replace(NameStartSearchTxt + NameOriginalText + NameEndSearchTxt, NameStartSearchTxt + NameTranslatedText + NameEndSearchTxt);
+                        xmlFile = xmlFile.Replace(nameStartSearchTxt + NameOriginalText + nameEndSearchTxt, nameStartSearchTxt + NameTranslatedText + nameEndSearchTxt);
                     }
                 }
                 else
                 {
 
                 }
-                NameStartPtr = xmlFile.IndexOf(NameStartSearchTxt, NameEndPtr);
+                nameStartPtr = xmlFile.IndexOf(nameStartSearchTxt, nameEndPtr);
 
 
             }
@@ -520,17 +514,17 @@ namespace MSTranslatorDemo
             else
             {
 
-                string OriginalxsltFile = File.ReadAllText("stylesheet-ubl v2.xslt");
+                string originalxsltFile = File.ReadAllText("stylesheet-ubl v2.xslt");
 
-                string result = await GetXsltTranslated4Labels(OriginalxsltFile, ToLanguage, "English");
+                string result = await GetXsltTranslated4Labels(originalxsltFile, ToLanguage, "English");
                 result = await GetXsltTranslated4CountryID(OriginalxmlFile, result, ToLanguage);
                 File.WriteAllText(ToLanguage + "-stylesheet-ubl.xslt", result);
             }
 
-            string TranslatedXmlNote = await GetXmlTranslated4Note(OriginalxmlFile, ToLanguage, "English");
-            string TranslatedXmlNames = await GetXmlTranslated4Names(TranslatedXmlNote, ToLanguage, "English");
+            string translatedXmlNote = await GetXmlTranslated4Note(OriginalxmlFile, ToLanguage, "English");
+            string translatedXmlNames = await GetXmlTranslated4Names(translatedXmlNote, ToLanguage, "English");
 
-            File.WriteAllText(ToLanguage + "-" + "TranslatedFile.xml", TranslatedXmlNames);
+            File.WriteAllText(ToLanguage + "-" + "TranslatedFile.xml", translatedXmlNames);
 
 
             string HTMLstring = XSLThelper.SaxonTransform(ToLanguage + "-stylesheet-ubl.xslt", ToLanguage + "-" + FileName);
@@ -554,46 +548,46 @@ namespace MSTranslatorDemo
 
 
 
-            string CountryXmlStartSearchTxt = "<cbc:IdentificationCode>", CountryXmlEndSearchTxt = "</cbc:IdentificationCode>";
-            int CountryXmlStartPtr = 0, CountryXmlEndPtr = 0;
-            int CountryXsltStartPtr = 0, CountryXsltStartPtr2, CountryXsltEndPtr = 0;
+            string countryXmlStartSearchTxt = "<cbc:IdentificationCode>", countryXmlEndSearchTxt = "</cbc:IdentificationCode>";
+            int countryXmlStartPtr = 0, countryXmlEndPtr = 0;
+            int countryXsltStartPtr = 0, countryXsltStartPtr2, countryXsltEndPtr = 0;
 
-            string CountryOriginalText, CountryTranslatedText;
-            string XsltCountrySearchText;
+            string countryOriginalText, countryTranslatedText;
+            string xsltCountrySearchText;
 
-            CountryXmlStartPtr = xmlFile.IndexOf(CountryXmlStartSearchTxt);
+            countryXmlStartPtr = xmlFile.IndexOf(countryXmlStartSearchTxt);
 
-            while (CountryXmlStartPtr != -1)
+            while (countryXmlStartPtr != -1)
             {
 
-                if (CountryXmlStartPtr != -1)
+                if (countryXmlStartPtr != -1)
                 {
-                    CountryXmlEndPtr = xmlFile.IndexOf(CountryXmlEndSearchTxt, CountryXmlStartPtr);
-                    if (CountryXmlEndPtr != -1)
+                    countryXmlEndPtr = xmlFile.IndexOf(countryXmlEndSearchTxt, countryXmlStartPtr);
+                    if (countryXmlEndPtr != -1)
                     {
-                        XsltCountrySearchText = xmlFile.Substring(CountryXmlStartPtr + CountryXmlStartSearchTxt.Length, CountryXmlEndPtr - CountryXmlStartPtr - CountryXmlStartSearchTxt.Length);
+                        xsltCountrySearchText = xmlFile.Substring(countryXmlStartPtr + countryXmlStartSearchTxt.Length, countryXmlEndPtr - countryXmlStartPtr - countryXmlStartSearchTxt.Length);
 
-                        CountryXsltStartPtr = xsltFile.IndexOf("<c id=\"" + XsltCountrySearchText + "\">");
-                        if (CountryXsltStartPtr != -1)
+                        countryXsltStartPtr = xsltFile.IndexOf("<c id=\"" + xsltCountrySearchText + "\">");
+                        if (countryXsltStartPtr != -1)
                         {
-                            CountryXsltStartPtr2 = xsltFile.IndexOf("<t id=\"en\">", CountryXsltStartPtr);
-                            if (CountryXsltStartPtr2 != -1)
+                            countryXsltStartPtr2 = xsltFile.IndexOf("<t id=\"en\">", countryXsltStartPtr);
+                            if (countryXsltStartPtr2 != -1)
                             {
-                                CountryXsltEndPtr = xsltFile.IndexOf("</t>", CountryXsltStartPtr2);
-                                if (CountryXsltEndPtr != -1)
+                                countryXsltEndPtr = xsltFile.IndexOf("</t>", countryXsltStartPtr2);
+                                if (countryXsltEndPtr != -1)
                                 {
-                                    CountryOriginalText = xsltFile.Substring(CountryXsltStartPtr2 + 11, CountryXsltEndPtr - CountryXsltStartPtr2 - 11);
+                                    countryOriginalText = xsltFile.Substring(countryXsltStartPtr2 + 11, countryXsltEndPtr - countryXsltStartPtr2 - 11);
                                     //now translate xslt
-                                    CountryTranslatedText = await new LanguageClass().translate(CountryOriginalText, language, "English");
+                                    countryTranslatedText = await new LanguageClass().translate(countryOriginalText, language, "English");
 
-                                    CountryXsltStartPtr2 = xsltFile.IndexOf("<t id=\"no\">", CountryXsltEndPtr);
-                                    if (CountryXsltStartPtr2 != -1)
+                                    countryXsltStartPtr2 = xsltFile.IndexOf("<t id=\"no\">", countryXsltEndPtr);
+                                    if (countryXsltStartPtr2 != -1)
                                     {
-                                        CountryXsltEndPtr = xsltFile.IndexOf("</t>", CountryXsltStartPtr2);
-                                        if (CountryXsltEndPtr != -1)
+                                        countryXsltEndPtr = xsltFile.IndexOf("</t>", countryXsltStartPtr2);
+                                        if (countryXsltEndPtr != -1)
                                         {
-                                            CountryOriginalText = xsltFile.Substring(CountryXsltStartPtr2 + 11, CountryXsltEndPtr - CountryXsltStartPtr2 - 11);
-                                            xsltFile = xsltFile.Replace("<t id=\"no\">" + CountryOriginalText + "</t>", "<t id=\"" + toLanguageCode + "\">" + CountryTranslatedText + "</t>");
+                                            countryOriginalText = xsltFile.Substring(countryXsltStartPtr2 + 11, countryXsltEndPtr - countryXsltStartPtr2 - 11);
+                                            xsltFile = xsltFile.Replace("<t id=\"no\">" + countryOriginalText + "</t>", "<t id=\"" + toLanguageCode + "\">" + countryTranslatedText + "</t>");
                                         }
                                     }
                                 }
@@ -605,7 +599,7 @@ namespace MSTranslatorDemo
                 {
 
                 }
-                CountryXmlStartPtr = xmlFile.IndexOf(CountryXmlStartSearchTxt, CountryXmlEndPtr);
+                countryXmlStartPtr = xmlFile.IndexOf(countryXmlStartSearchTxt, countryXmlEndPtr);
 
 
             }

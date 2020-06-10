@@ -29,20 +29,17 @@ namespace MSTranslatorDemo
     /// Interaction logic for PageMain.xaml
     /// </summary>
     public partial class PageMain : Page
-    {
-        
+    {        
         public PageMain()
         {
             InitializeComponent();
             // Populate drop-downs with values from GetLanguagesForTranslate
-            PopulateLanguageMenus();
+            PopulateLanguageCombos();
             btnSave_XML.IsEnabled = false;
-            btnSaveXSLT.IsEnabled = false;
-          
-            
+            btnSaveXSLT.IsEnabled = false;           
         }
        
-        private void PopulateLanguageMenus()
+        private void PopulateLanguageCombos()
         {
             // Add option to automatically detect the source language
             FromLanguageComboBox.Items.Add("Detect");
@@ -55,9 +52,9 @@ namespace MSTranslatorDemo
             ToLanguageComboBox.SelectedItem = "English";
         }       
 
-        private async void btnLoadXML_Click(object sender, RoutedEventArgs e)
+        private async void btnCreateInvoice_Click(object sender, RoutedEventArgs e)
         {
-            if (btnLoadXML.IsEnabled == false)
+            if (btnCreateInvoice.IsEnabled == false)
             {
                 MessageBox.Show("no xml file loaded");
                 return;
@@ -79,8 +76,6 @@ namespace MSTranslatorDemo
 
             btnSaveXSLT.IsEnabled = true;
             btnSave_XML.IsEnabled = true;
-
-
         }
 
         OpenFileDialog openFileDialog = new OpenFileDialog
@@ -89,12 +84,12 @@ namespace MSTranslatorDemo
 
         };
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void UploadXml_Click(object sender, RoutedEventArgs e)
         {
             if (openFileDialog.ShowDialog() == true)
             {
                 XML_File_txtbx.Text = Path.GetFileName(openFileDialog.FileName);
-                btnLoadXML.IsEnabled = true;
+                btnCreateInvoice.IsEnabled = true;
                 btnSaveXSLT.IsEnabled = false;
                 btnSave_XML.IsEnabled = false;
 
@@ -104,9 +99,7 @@ namespace MSTranslatorDemo
         }
 
         private void btnSave_XML_Click(object sender, RoutedEventArgs e)
-        {
-            
-
+        {          
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.FileName = ToLanguageComboBox.Text + "-" + Path.GetFileName(openFileDialog.FileName);
             dlg.DefaultExt = ".xml";
@@ -116,13 +109,10 @@ namespace MSTranslatorDemo
                 string xmlfile = new LanguageClass().GetTranslatedXml(ToLanguageComboBox.Text);
                 File.WriteAllText(dlg.FileName, xmlfile);
             }
-
         }
 
         private void btnSaveXSLT_Click(object sender, RoutedEventArgs e)
         {
-            
-
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.FileName = ToLanguageComboBox.Text + "-stylesheet-ubl.xslt";
             dlg.DefaultExt = ".xml";
@@ -132,6 +122,6 @@ namespace MSTranslatorDemo
                 string xsltfile = new LanguageClass().GetXslt4Language(ToLanguageComboBox.Text);
                 File.WriteAllText(dlg.FileName, xsltfile);
             }
-        }       
+        }
     }
 }

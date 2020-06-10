@@ -60,10 +60,10 @@ namespace MSTranslatorDemo
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             
-            string SelectedWord = (string)cmbWord.SelectedItem;
+            string selectedWord = (string)cmbWord.SelectedItem;
             //string LanguageCode = new LanguageClass().GetLanguageCode( (string)cmbLanguage.SelectedItem);
 
-           string result = new LanguageClass().UpdateTranslation(SelectedWord, (string)cmbLanguage.SelectedItem, txtTranslation.Text);
+           string result = new LanguageClass().UpdateTranslation(selectedWord, (string)cmbLanguage.SelectedItem, txtTranslation.Text);
             
             if (result == "")
             {

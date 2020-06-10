@@ -77,3 +77,4 @@ C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\MST
 C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\MSTranslatorDemo.pdb
 C:\Users\edmun\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\MSTranslatorDemo.csprojAssemblyReference.cache
 C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\MSTranslatorDemo.csprojAssemblyReference.cache
+C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\MSTranslatorDemo.csproj.CoreCompileInputs.cache
