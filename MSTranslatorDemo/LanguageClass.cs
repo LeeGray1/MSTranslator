@@ -85,7 +85,7 @@ namespace MSTranslatorDemo
         }
 
         //Shows translatable languages
-        public void GetLanguages()
+        private void GetLanguages()
         {
             // Send request to get supported language codes
             var languages = GetLanguagesForTranslate();
@@ -116,14 +116,12 @@ namespace MSTranslatorDemo
         public List<string> DeleteXsltFile(string Language)
         {
             List<string> list = null;
-            // if (MessageBox.Show("are you sure you want to delete this language file", "Delete language", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
             {
                 string FileName2Delete = Language + "-stylesheet-ubl.xslt";
                 string localFolder = System.AppDomain.CurrentDomain.BaseDirectory;
                 string File2Delete = System.IO.Path.Combine(localFolder, FileName2Delete);
                 File.Delete(File2Delete);
-                //cmbLanguage.Items.Clear();
-                //cmbLanguage.ItemsSource = null;
+               
 
             }
             list = GetTranslatedXsltLanguages();
@@ -140,9 +138,6 @@ namespace MSTranslatorDemo
             string xsltFile = File.ReadAllText(xsltFileName);
             int ot, st, et, intLabelStart, intCodeStart;
 
-            //<t id="en">Invoice<
-            //<t id="no"> = start of replace
-            //</t> = end of replace
             intLabelStart = xsltFile.IndexOf("<xsl:variable name=\"labels\">");
             intCodeStart = xsltFile.IndexOf("<cl id=\"uncl1001invoice\">");
             ot = xsltFile.IndexOf("<t id=\"en\">" + SelectedWord + "</t>", intLabelStart);
@@ -152,7 +147,7 @@ namespace MSTranslatorDemo
                 ot = xsltFile.IndexOf("<t id=\"en\">" + SelectedWord + "</t>", 0);
             if (ot == -1)
             {
-                // btnSave.IsEnabled = false;
+            
                 return "";
             }
             else
@@ -160,7 +155,7 @@ namespace MSTranslatorDemo
                 st = xsltFile.IndexOf("<t id=\"" + LanguageCode + "\">", ot);
                 et = xsltFile.IndexOf("</t>", st);
                 return xsltFile.Substring(st + 11, et - st - 11);
-                //btnSave.IsEnabled = true;
+               
             }
         }
 
@@ -170,10 +165,7 @@ namespace MSTranslatorDemo
             if (languageCodesAndTitles.Count == 0)
             {
                 // Send request to get supported language codes
-
-                // SortedDictionary<string, string> LanguageCodesAndNames =
-                //new SortedDictionary<string, string>(Comparer<string>.Create((a, b) => string.Compare(a, b, true)));
-
+                               
                 var languages = GetLanguagesForTranslate();
                 languageCodes = languages.Keys.ToArray();
                 foreach (var kv in languages)
@@ -191,9 +183,7 @@ namespace MSTranslatorDemo
             string xsltFile = File.ReadAllText(xsltFileName);
             int ot, st, et, intLabelStart, intCodeStart;
             string string2replace, newstring;
-            //<t id="en">Invoice<
-            //<t id="no"> = start of replace
-            //</t> = end of replace
+            
             intLabelStart = xsltFile.IndexOf("<xsl:variable name=\"labels\">");
             intCodeStart = xsltFile.IndexOf("<cl id=\"uncl1001invoice\">");
             ot = xsltFile.IndexOf("<t id=\"en\">" + SelectedWord + "</t>", intLabelStart);
@@ -202,8 +192,7 @@ namespace MSTranslatorDemo
             if (ot == -1)
                 ot = xsltFile.IndexOf("<t id=\"en\">" + SelectedWord + "</t>", 0);
             if (ot == -1)
-            {
-                //btnSave.IsEnabled = false;
+            {              
                 //cannot find Selected Word
                 NewTranslation = "";
             }
@@ -277,7 +266,7 @@ namespace MSTranslatorDemo
             else
                 return "Unable to confidently detect input language.";
         }
-
+        //keep CorrectSpelling for future needs
         public string CorrectSpelling(string text)
         {
             string uri = BING_SPELL_CHECK_API_ENDPOINT + "?mode=spell&mkt=en-US";
@@ -333,7 +322,7 @@ namespace MSTranslatorDemo
 
         public async System.Threading.Tasks.Task<string> translate(string textToTranslate, string ToLanguage, string FromLanguage)
         {
-            string fromLanguage = "English"; //FromLanguageComboBox.SelectedValue.ToString();
+            string fromLanguage = "English"; 
             string fromLanguageCode;
             string translation;
             if(languageCodesAndTitles.Count==0)
@@ -388,8 +377,7 @@ namespace MSTranslatorDemo
         private async Task<string> GetXsltTranslated4Labels(string xsltFile, string Tolanguage, string FromLanguage)
         {
             string toLanguageCode = GetLanguageCode(Tolanguage);
-            //<xsl:param name="language" select="'en'"/>
-            //string xsltFile = File.ReadAllText(xsltFilename);
+            
             string Labels2Translate = File.ReadAllText("Labels2Translate.txt");
             string translation = await translate(Labels2Translate, Tolanguage, FromLanguage);
 
@@ -404,9 +392,7 @@ namespace MSTranslatorDemo
                 );
             int ot, st, et, intLabelStart, intCodeStart;
             string string2replace, newstring;
-            //<t id="en">Invoice<
-            //<t id="no"> = start of replace
-            //</t> = end of replace
+           
             intLabelStart = xsltFile.IndexOf("<xsl:variable name=\"labels\">");
             intCodeStart = xsltFile.IndexOf("<cl id=\"uncl1001invoice\">");
             for (int i = 0; i < Translatedlines.Length; i++)
@@ -443,9 +429,7 @@ namespace MSTranslatorDemo
         //        string xsltfile = File.ReadAllText(System.IO.Path.Combine(localFolder, FileName));
         //        return xsltfile;
         //    }
-        //}
-
-       
+        //}       
         public string GetTranslatedXml(string ToLanguage)
         {
             string GetXmlStorageLocation = System.AppDomain.CurrentDomain.BaseDirectory;
@@ -458,7 +442,7 @@ namespace MSTranslatorDemo
             return File.ReadAllText(Path.Combine(GetxsltStorageLocation, ToLanguage + "-stylesheet-ubl.xslt"));
         }
 
-        public async Task<string> GetXmlTranslated4Note(string xmlFile, string ToLanguage, string FromLanguage)
+        private async Task<string> GetXmlTranslated4Note(string xmlFile, string ToLanguage, string FromLanguage)
         {
             string toLanguageCode = GetLanguageCode(ToLanguage);
 
@@ -487,7 +471,7 @@ namespace MSTranslatorDemo
 
         }
 
-        public async Task<string> GetXmlTranslated4Names(string xmlFile, string ToLanguage, string FromLanguage)
+        private async Task<string> GetXmlTranslated4Names(string xmlFile, string ToLanguage, string FromLanguage)
         {
             string toLanguageCode = new LanguageClass().GetLanguageCode(ToLanguage);
 
@@ -541,7 +525,6 @@ namespace MSTranslatorDemo
                 string result = await GetXsltTranslated4Labels(OriginalxsltFile, ToLanguage, "English");
                 result = await GetXsltTranslated4CountryID(OriginalxmlFile, result, ToLanguage);
                 File.WriteAllText(ToLanguage + "-stylesheet-ubl.xslt", result);
-                //  string HTMLstring = XLSThelper.TransformXMLToHTML(File.ReadAllText("cleaning services.xml"), File.ReadAllText("stylesheet-ubl.xslt"));
             }
 
             string TranslatedXmlNote = await GetXmlTranslated4Note(OriginalxmlFile, ToLanguage, "English");
@@ -550,7 +533,7 @@ namespace MSTranslatorDemo
             File.WriteAllText(ToLanguage + "-" + "TranslatedFile.xml", TranslatedXmlNames);
 
 
-            string HTMLstring = XSLThelper.SaxonTransform(ToLanguage + "-stylesheet-ubl.xslt", ToLanguage + "-" + FileName /*Path.GetFileName(openFileDialog.FileName)*/);
+            string HTMLstring = XSLThelper.SaxonTransform(ToLanguage + "-stylesheet-ubl.xslt", ToLanguage + "-" + FileName);
 
 
             // get rid of the xslt bugs                  
@@ -572,7 +555,6 @@ namespace MSTranslatorDemo
 
 
             string CountryXmlStartSearchTxt = "<cbc:IdentificationCode>", CountryXmlEndSearchTxt = "</cbc:IdentificationCode>";
-            //string CountryXsltStartSearchTxt = "<cbc:IdentificationCode>", CountryXsltEndSearchTxt = "</cbc:IdentificationCode>";
             int CountryXmlStartPtr = 0, CountryXmlEndPtr = 0;
             int CountryXsltStartPtr = 0, CountryXsltStartPtr2, CountryXsltEndPtr = 0;
 

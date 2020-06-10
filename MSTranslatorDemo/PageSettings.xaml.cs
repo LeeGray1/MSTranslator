@@ -38,8 +38,6 @@ namespace MSTranslatorDemo
                 if (word != "")
                     cmbWord.Items.Add(word);
             };
-
-
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -49,9 +47,6 @@ namespace MSTranslatorDemo
                 cmbLanguage.ItemsSource = new LanguageClass().DeleteXsltFile(cmbLanguage.SelectedItem.ToString());
             }
         }
-
-       
-
         private void cmbWord_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             txtTranslation.Text = new LanguageClass().GetTranslation((string)cmbWord.SelectedItem, (string)cmbLanguage.SelectedItem);
@@ -61,9 +56,7 @@ namespace MSTranslatorDemo
             }
             else
                 btnSave.IsEnabled = true;
-
         }
-
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             
@@ -76,9 +69,7 @@ namespace MSTranslatorDemo
             {
                 MessageBox.Show("Missing word to translate", "Not saved", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
         }
-
         private void btnDownload_Click(object sender, RoutedEventArgs e)
         {
 
@@ -91,10 +82,7 @@ namespace MSTranslatorDemo
                 string xsltfile = new LanguageClass().GetXslt4Language(cmbLanguage.Text);
                 File.WriteAllText(dlg.FileName, xsltfile);
             }
-
-
         }
-
         private void cmbLanguage_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             btnSave.IsEnabled = false;
