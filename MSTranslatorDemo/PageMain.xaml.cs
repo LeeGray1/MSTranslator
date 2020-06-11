@@ -81,7 +81,6 @@ namespace MSTranslatorDemo
         OpenFileDialog openFileDialog = new OpenFileDialog
         {
             Filter = "xml eInvoice file (*.xml)|*.xml|All files (*.*)|*.*",
-
         };
 
         private void UploadXml_Click(object sender, RoutedEventArgs e)
