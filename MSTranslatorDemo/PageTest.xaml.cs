@@ -30,11 +30,9 @@ namespace MSTranslatorDemo
             InitializeComponent();
             
             // Populate drop-downs with values from GetLanguagesForTranslate
-            PopulateLanguageMenus();
+            PopulateLanguageCombos();
         }
-
-
-        private void PopulateLanguageMenus()
+        private void PopulateLanguageCombos()
         {
             // Add option to automatically detect the source language
             FromLanguageComboBox.Items.Add("Detect");
@@ -50,8 +48,6 @@ namespace MSTranslatorDemo
             FromLanguageComboBox.SelectedItem = "Detect";
             ToLanguageComboBox.SelectedItem = "English";
         }
-
-      
         private async void TranslateButton_Click(object sender, RoutedEventArgs e)
         {
             string fromLanguage = FromLanguageComboBox.Text;
@@ -70,15 +66,11 @@ namespace MSTranslatorDemo
                 }
             }
             
-            string toLanguageCode = new LanguageClass().GetLanguageCode(ToLanguageComboBox.SelectedValue.ToString());
+            var toLanguageCode = new LanguageClass().GetLanguageCode(ToLanguageComboBox.SelectedValue.ToString());
 
-            string textToTranslate = TextToTranslate.Text.Trim();
-            string translation = await new LanguageClass().translate(textToTranslate, ToLanguageComboBox.Text, fromLanguage);
+            var textToTranslate = TextToTranslate.Text.Trim();
+            var translation = await new LanguageClass().translate(textToTranslate, ToLanguageComboBox.Text, fromLanguage);
             TranslatedTextLabel.Text = translation;
-
-
-
-
         }
     }
 }
