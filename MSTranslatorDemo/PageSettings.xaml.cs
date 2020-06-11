@@ -61,8 +61,6 @@ namespace MSTranslatorDemo
         {
             
             string selectedWord = (string)cmbWord.SelectedItem;
-            //string LanguageCode = new LanguageClass().GetLanguageCode( (string)cmbLanguage.SelectedItem);
-
            string result = new LanguageClass().UpdateTranslation(selectedWord, (string)cmbLanguage.SelectedItem, txtTranslation.Text);
             
             if (result == "")
