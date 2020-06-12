@@ -35,21 +35,31 @@ namespace UnitTestProject1
         }
 
         [TestMethod]
-        public  void TestAzure()
+        public  void TestDownloadAzure()
         {
-            string downloadFilePath = "c:\test.txt";
-            BlobServiceClient blobServiceClient = new BlobServiceClient("DefaultEndpointsProtocol=https;AccountName=mstranslation;AccountKey=DhlfSrT66vg/I5CwpD0WrpeviWp5jrv/eyPaSTt7Pe8I0rv1PJnD3j8I7gGyc8oP0Jxs1+OpaL0U8Ku7kjFlFQ==;EndpointSuffix=core.windows.net");
-            BlobContainerClient containerClient = blobServiceClient.CreateBlobContainer("xsltstorage");
-            BlobClient blobClient = containerClient.GetBlobClient("mstranslation");
+            string connectionString = "DefaultEndpointsProtocol=https;AccountName=translation;AccountKey=89/llb7VuT1vV2XHTQbusAOeau/rFvzilR+REqnMLtMsnqRw7VLc9eSpt3fXRBRxRAyRnLdQ31H7VcsZgmu2zg==;EndpointSuffix=core.windows.net";
+            BlobContainerClient container = new BlobContainerClient(connectionString, "xsltstorage");
+            var blockBlob = container.GetBlobClient("stylesheet-ubl v2.xslt");
+            System.IO.MemoryStream ms = new System.IO.MemoryStream();
+            ms.Position = 0;
+            blockBlob.DownloadTo(ms);
+            string file = System.Text.Encoding.ASCII.GetString(ms.ToArray());           
 
-            BlobDownloadInfo download =  blobClient.Download();
+            Assert.IsTrue(true);
+        }
 
-            using (FileStream downloadFileStream = File.OpenWrite(downloadFilePath))
-            {
-                download.Content.CopyTo(downloadFileStream);
-                downloadFileStream.Close();
-            }
-
+        [TestMethod]
+        public void TestUploadAzure()
+        {
+            string connectionString = "DefaultEndpointsProtocol=https;AccountName=translation;AccountKey=89/llb7VuT1vV2XHTQbusAOeau/rFvzilR+REqnMLtMsnqRw7VLc9eSpt3fXRBRxRAyRnLdQ31H7VcsZgmu2zg==;EndpointSuffix=core.windows.net";
+            BlobContainerClient container = new BlobContainerClient(connectionString, "xsltstorage");
+            var blockBlob = container.GetBlobClient("stylesheet-ubl v2.xslt");
+            System.IO.MemoryStream ms = new System.IO.MemoryStream();
+            string file = System.Text.Encoding.ASCII.GetString(ms.ToArray());
+            byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(file);
+            //byte[] byteArray = Encoding.ASCII.GetBytes(contents);
+            System.IO.MemoryStream stream = new System.IO.MemoryStream(byteArray);
+            blockBlob.Upload(ms);
             Assert.IsTrue(true);
         }
     }
