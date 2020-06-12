@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using Azure.Storage.Blobs;
+using Microsoft.Win32;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -563,6 +564,14 @@ namespace LanguageTranslation
                 }
             }
             return xsltFile;
+        }
+        public void UploadFileToBlob(string fileContents, string fileName, string connectionString, string containerName)
+        {
+            BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
+            var blockBlob = container.GetBlobClient(fileName);
+            byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(fileContents);
+            System.IO.MemoryStream stream = new System.IO.MemoryStream(byteArray);
+            blockBlob.Upload(stream, true);
         }
     }
 }
