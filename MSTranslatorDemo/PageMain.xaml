@@ -17,11 +17,7 @@
         <Rectangle Fill="White" HorizontalAlignment="Left" Height="112" Margin="10,109,0,0" Stroke="Black" VerticalAlignment="Top" Width="535"/>
         <Rectangle Fill="White" HorizontalAlignment="Left" Height="112" Margin="10,249,0,0" Stroke="Black" VerticalAlignment="Top" Width="535"/>
         <Label x:Name="toLabel" Content="Translate to:" HorizontalAlignment="Left" Margin="29,136,0,0" VerticalAlignment="Top" FontSize="14" RenderTransformOrigin="0.506,0.529"/>
-        <Label x:Name="DetectedLanguageLabel" Content="..." 
-            Visibility="Hidden"/>
-        <ComboBox x:Name="FromLanguageComboBox"
-             Visibility="Hidden"
-             />
+               
         <ComboBox x:Name="ToLanguageComboBox"
             HorizontalAlignment="Left"
             Margin="29,165,0,0"

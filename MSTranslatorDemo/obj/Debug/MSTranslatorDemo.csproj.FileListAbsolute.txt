@@ -76,5 +76,11 @@ C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\MST
 C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\MSTranslatorDemo.exe
 C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\MSTranslatorDemo.pdb
 C:\Users\edmun\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\MSTranslatorDemo.csprojAssemblyReference.cache
-C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\MSTranslatorDemo.csprojAssemblyReference.cache
 C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\MSTranslatorDemo.csproj.CoreCompileInputs.cache
+C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\obj\Debug\MSTranslatorDemo.csprojAssemblyReference.cache
+C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\bin\Debug\Antlr3.Runtime.dll
+C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\bin\Debug\Microsoft.Web.Infrastructure.dll
+C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\bin\Debug\System.Web.Optimization.dll
+C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\bin\Debug\WebGrease.dll
+C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\bin\Debug\Antlr3.Runtime.pdb
+C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\bin\Debug\System.Web.Optimization.xml

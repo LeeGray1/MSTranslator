@@ -13,7 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 //using System.Windows.Shapes;
 using Saxon.Api;
-using System.Threading.Tasks;
 using Microsoft.Win32;
 using System.Web.UI.WebControls;
 using Newtonsoft.Json;
@@ -40,15 +39,9 @@ namespace MSTranslatorDemo
         }
        
         private void PopulateLanguageCombos()
-        {
-            // Add option to automatically detect the source language
-            FromLanguageComboBox.Items.Add("Detect");
-            List<string> list = new LanguageClass().FillLanguages();            
-
-            ToLanguageComboBox.ItemsSource = list;
-
-            // Set default languages
-            
+        {           
+            ToLanguageComboBox.ItemsSource = new LanguageClass().FillLanguages();
+            // Set default languages           
             ToLanguageComboBox.SelectedItem = "English";
         }       
 

@@ -1,0 +1,135 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="stylesheet-ubl v2.xslt" />
+    <None Remove="stylesheet-ubl.xslt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="obj\Debug\netstandard2.0\.NETStandard,Version=v2.0.AssemblyAttributes.cs" />
+    <Compile Include="obj\Debug\netstandard2.0\LanguageTranslation.AssemblyInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="bin\Debug\netstandard2.0\Accessibility.xml" />
+    <Content Include="bin\Debug\netstandard2.0\LanguageTranslation.deps.json" />
+    <Content Include="bin\Debug\netstandard2.0\Microsoft.CSharp.xml" />
+    <Content Include="bin\Debug\netstandard2.0\Microsoft.JScript.xml" />
+    <Content Include="bin\Debug\netstandard2.0\Microsoft.VisualBasic.xml" />
+    <Content Include="bin\Debug\netstandard2.0\System.Activities.DurableInstancing.xml" />
+    <Content Include="bin\Debug\netstandard2.0\System.Activities.xml" />
+    <Content Include="bin\Debug\netstandard2.0\System.ComponentModel.DataAnnotations.xml" />
+    <Content Include="bin\Debug\netstandard2.0\System.Configuration.Install.xml" />
+    <Content Include="bin\Debug\netstandard2.0\System.Configuration.xml" />
+    <Content Include="bin\Debug\netstandard2.0\System.Data.Entity.xml" />
+    <Content Include="bin\Debug\netstandard2.0\System.Data.Linq.xml" />
+    <Content Include="bin\Debug\netstandard2.0\System.Data.OracleClient.xml" />
+    <Content Include="bin\Debug\netstandard2.0\System.Data.Services.Client.xml" />
+    <Content Include="bin\Debug\netstandard2.0\System.Data.Services.Design.xml" />
+    <Content Include="bin\Debug\netstandard2.0\System.Deployment.xml" />
+    <Content Include="bin\Debug\netstandard2.0\System.Design.xml" />
+    <Content Include="bin\Debug\netstandard2.0\System.DirectoryServices.xml" />
+    <Content Include="bin\Debug\netstandard2.0\System.Drawing.Design.xml" />
+    <Content Include="bin\Debug\netstandard2.0\System.EnterpriseServices.xml" />
+    <Content Include="bin\Debug\netstandard2.0\System.IdentityModel.Selectors.xml" />
+    <Content Include="bin\Debug\netstandard2.0\System.IdentityModel.xml" />
+    <Content Include="bin\Debug\netstandard2.0\System.Management.xml" />
+    <Content Include="bin\Debug\netstandard2.0\System.Messaging.xml" />
+    <Content Include="bin\Debug\netstandard2.0\System.Runtime.DurableInstancing.xml" />
+    <Content Include="bin\Debug\netstandard2.0\System.Runtime.Remoting.xml" />
+    <Content Include="bin\Debug\netstandard2.0\System.Runtime.Serialization.Formatters.Soap.xml" />
+    <Content Include="bin\Debug\netstandard2.0\System.Security.xml" />
+    <Content Include="bin\Debug\netstandard2.0\System.ServiceModel.Activation.xml" />
+    <Content Include="bin\Debug\netstandard2.0\System.ServiceModel.Activities.xml" />
+    <Content Include="bin\Debug\netstandard2.0\System.ServiceModel.xml" />
+    <Content Include="bin\Debug\netstandard2.0\System.ServiceProcess.xml" />
+    <Content Include="bin\Debug\netstandard2.0\System.Web.ApplicationServices.xml" />
+    <Content Include="bin\Debug\netstandard2.0\System.Web.Extensions.xml" />
+    <Content Include="bin\Debug\netstandard2.0\System.Web.RegularExpressions.xml" />
+    <Content Include="bin\Debug\netstandard2.0\System.Web.Services.xml" />
+    <Content Include="bin\Debug\netstandard2.0\System.Windows.Forms.xml" />
+    <Content Include="bin\Debug\netstandard2.0\System.Xaml.xml" />
+    <Content Include="obj\Debug\netstandard2.0\LanguageTranslation.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\LanguageTranslation.csproj.nuget.dgspec.json" />
+    <Content Include="obj\project.assets.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="bin\Debug\netstandard2.0\Accessibility.dll" />
+    <None Include="bin\Debug\netstandard2.0\LanguageTranslation.dll" />
+    <None Include="bin\Debug\netstandard2.0\LanguageTranslation.pdb" />
+    <None Include="bin\Debug\netstandard2.0\Microsoft.CSharp.dll" />
+    <None Include="bin\Debug\netstandard2.0\Microsoft.JScript.dll" />
+    <None Include="bin\Debug\netstandard2.0\Microsoft.VisualBasic.dll" />
+    <None Include="bin\Debug\netstandard2.0\System.Activities.dll" />
+    <None Include="bin\Debug\netstandard2.0\System.Activities.DurableInstancing.dll" />
+    <None Include="bin\Debug\netstandard2.0\System.ComponentModel.DataAnnotations.dll" />
+    <None Include="bin\Debug\netstandard2.0\System.Configuration.dll" />
+    <None Include="bin\Debug\netstandard2.0\System.Configuration.Install.dll" />
+    <None Include="bin\Debug\netstandard2.0\System.Data.Entity.dll" />
+    <None Include="bin\Debug\netstandard2.0\System.Data.Linq.dll" />
+    <None Include="bin\Debug\netstandard2.0\System.Data.OracleClient.dll" />
+    <None Include="bin\Debug\netstandard2.0\System.Data.Services.Client.dll" />
+    <None Include="bin\Debug\netstandard2.0\System.Data.Services.Design.dll" />
+    <None Include="bin\Debug\netstandard2.0\System.Deployment.dll" />
+    <None Include="bin\Debug\netstandard2.0\System.Design.dll" />
+    <None Include="bin\Debug\netstandard2.0\System.DirectoryServices.dll" />
+    <None Include="bin\Debug\netstandard2.0\System.Drawing.Design.dll" />
+    <None Include="bin\Debug\netstandard2.0\System.Dynamic.dll" />
+    <None Include="bin\Debug\netstandard2.0\System.EnterpriseServices.dll" />
+    <None Include="bin\Debug\netstandard2.0\System.EnterpriseServices.Wrapper.dll" />
+    <None Include="bin\Debug\netstandard2.0\System.IdentityModel.dll" />
+    <None Include="bin\Debug\netstandard2.0\System.IdentityModel.Selectors.dll" />
+    <None Include="bin\Debug\netstandard2.0\System.Management.dll" />
+    <None Include="bin\Debug\netstandard2.0\System.Messaging.dll" />
+    <None Include="bin\Debug\netstandard2.0\System.Runtime.DurableInstancing.dll" />
+    <None Include="bin\Debug\netstandard2.0\System.Runtime.Remoting.dll" />
+    <None Include="bin\Debug\netstandard2.0\System.Runtime.Serialization.Formatters.Soap.dll" />
+    <None Include="bin\Debug\netstandard2.0\System.Security.dll" />
+    <None Include="bin\Debug\netstandard2.0\System.ServiceModel.Activation.dll" />
+    <None Include="bin\Debug\netstandard2.0\System.ServiceModel.Activities.dll" />
+    <None Include="bin\Debug\netstandard2.0\System.ServiceModel.dll" />
+    <None Include="bin\Debug\netstandard2.0\System.ServiceProcess.dll" />
+    <None Include="bin\Debug\netstandard2.0\System.Web.ApplicationServices.dll" />
+    <None Include="bin\Debug\netstandard2.0\System.Web.Extensions.dll" />
+    <None Include="bin\Debug\netstandard2.0\System.Web.RegularExpressions.dll" />
+    <None Include="bin\Debug\netstandard2.0\System.Web.Services.dll" />
+    <None Include="bin\Debug\netstandard2.0\System.Windows.Forms.dll" />
+    <None Include="bin\Debug\netstandard2.0\System.Xaml.dll" />
+    <None Include="obj\Debug\netstandard2.0\LanguageTranslation.AssemblyInfoInputs.cache" />
+    <None Include="obj\Debug\netstandard2.0\LanguageTranslation.assets.cache" />
+    <None Include="obj\Debug\netstandard2.0\LanguageTranslation.csproj.CopyComplete" />
+    <None Include="obj\Debug\netstandard2.0\LanguageTranslation.csproj.CoreCompileInputs.cache" />
+    <None Include="obj\Debug\netstandard2.0\LanguageTranslation.csprojAssemblyReference.cache" />
+    <None Include="obj\Debug\netstandard2.0\LanguageTranslation.dll" />
+    <None Include="obj\Debug\netstandard2.0\LanguageTranslation.pdb" />
+    <None Include="obj\LanguageTranslation.csproj.nuget.g.props" />
+    <None Include="obj\LanguageTranslation.csproj.nuget.g.targets" />
+    <None Include="obj\project.nuget.cache" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.Web.Optimization" Version="1.1.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Saxon-HE" Version="9.9.1.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\Microsoft.CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Extensions">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Web.Extensions.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="stylesheet-ubl v2.xslt" />
+    <Resource Include="stylesheet-ubl.xslt" />
+  </ItemGroup>
+
+</Project>

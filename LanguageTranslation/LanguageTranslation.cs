@@ -9,7 +9,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MSTranslatorDemo
+namespace LanguageTranslation
 {
     public class LanguageClass
     {
@@ -49,7 +49,7 @@ namespace MSTranslatorDemo
 
         SortedDictionary<string, string> languageCodesAndTitles =
            new SortedDictionary<string, string>(Comparer<string>.Create((a, b) => string.Compare(a, b, true)));
-        
+
         private Dictionary<string, Dictionary<string, string>> GetLanguagesForTranslate()
         {
             // Send request to get supported language codes
@@ -106,7 +106,7 @@ namespace MSTranslatorDemo
                 string localFolder = System.AppDomain.CurrentDomain.BaseDirectory;
                 string file2Delete = System.IO.Path.Combine(localFolder, fileName2Delete);
                 File.Delete(file2Delete);
-               
+
 
             }
             list = GetTranslatedXsltLanguages();
@@ -118,7 +118,7 @@ namespace MSTranslatorDemo
         public string GetTranslation(string SelectedWord, string SelectedLanguage)
         {
             string xsltFileName = SelectedLanguage + "-stylesheet-ubl.xslt";
-            
+
             string languageCode = GetLanguageCode(SelectedLanguage);
             string xsltFile = File.ReadAllText(xsltFileName);
             int ot, st, et, intLabelStart, intCodeStart;
@@ -132,14 +132,14 @@ namespace MSTranslatorDemo
                 ot = xsltFile.IndexOf("<t id=\"en\">" + SelectedWord + "</t>", 0);
             if (ot == -1)
             {
-            
+
                 return "";
             }
             else
             {
                 st = xsltFile.IndexOf("<t id=\"" + languageCode + "\">", ot);
                 et = xsltFile.IndexOf("</t>", st);
-                return xsltFile.Substring(st + 11, et - st - 11);               
+                return xsltFile.Substring(st + 11, et - st - 11);
             }
         }
 
@@ -148,7 +148,7 @@ namespace MSTranslatorDemo
             if (languageCodesAndTitles.Count == 0)
             {
                 // Send request to get supported language codes
-                               
+
                 var languages = GetLanguagesForTranslate();
                 languageCodes = languages.Keys.ToArray();
                 foreach (var kv in languages)
@@ -166,7 +166,7 @@ namespace MSTranslatorDemo
             string xsltFile = File.ReadAllText(xsltFileName);
             int ot, st, et, intLabelStart, intCodeStart;
             string string2replace, newstring;
-            
+
             intLabelStart = xsltFile.IndexOf("<xsl:variable name=\"labels\">");
             intCodeStart = xsltFile.IndexOf("<cl id=\"uncl1001invoice\">");
             ot = xsltFile.IndexOf("<t id=\"en\">" + SelectedWord + "</t>", intLabelStart);
@@ -175,7 +175,7 @@ namespace MSTranslatorDemo
             if (ot == -1)
                 ot = xsltFile.IndexOf("<t id=\"en\">" + SelectedWord + "</t>", 0);
             if (ot == -1)
-            {              
+            {
                 //cannot find Selected Word
                 NewTranslation = "";
             }
@@ -305,9 +305,9 @@ namespace MSTranslatorDemo
         }
 
         public async System.Threading.Tasks.Task<string> translate(string textToTranslate, string toLanguage, string fromLanguage)
-        {            
+        {
             string fromLanguageCode;
-            string translation;          
+            string translation;
 
             if (textToTranslate == "" || fromLanguage == toLanguage)
             {
@@ -344,12 +344,12 @@ namespace MSTranslatorDemo
             return translation;
         }
 
-       
+
 
         private async Task<string> GetXsltTranslated4Labels(string xsltFile, string Tolanguage, string FromLanguage)
         {
             string toLanguageCode = GetLanguageCode(Tolanguage);
-            
+
             string labels2Translate = File.ReadAllText("Labels2Translate.txt");
             string translation = await translate(labels2Translate, Tolanguage, FromLanguage);
 
@@ -364,7 +364,7 @@ namespace MSTranslatorDemo
                 );
             int ot, st, et, intLabelStart, intCodeStart;
             string string2replace, newstring;
-           
+
             intLabelStart = xsltFile.IndexOf("<xsl:variable name=\"labels\">");
             intCodeStart = xsltFile.IndexOf("<cl id=\"uncl1001invoice\">");
             for (int i = 0; i < Translatedlines.Length; i++)
@@ -393,7 +393,7 @@ namespace MSTranslatorDemo
 
             return xsltFile;
         }
-       
+
         public string GetTranslatedXml(string ToLanguage)
         {
             string getXmlStorageLocation = System.AppDomain.CurrentDomain.BaseDirectory;
