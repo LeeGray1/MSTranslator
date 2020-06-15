@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject1", "UnitTestProject1\UnitTestProject1.csproj", "{C3C11723-33AE-49FE-A882-2A119D277DCB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LanguageTranslation", "LanguageTranslation\LanguageTranslation.csproj", "{3CF98C94-5A50-49D9-9296-B83F8093D1FD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanguageService", "LanguageService\LanguageService.csproj", "{B7690533-0ECD-4F24-A88A-BE1AB4EFE8FE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +25,10 @@ Global
 		{C3C11723-33AE-49FE-A882-2A119D277DCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3C11723-33AE-49FE-A882-2A119D277DCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3C11723-33AE-49FE-A882-2A119D277DCB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3CF98C94-5A50-49D9-9296-B83F8093D1FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3CF98C94-5A50-49D9-9296-B83F8093D1FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3CF98C94-5A50-49D9-9296-B83F8093D1FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3CF98C94-5A50-49D9-9296-B83F8093D1FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7690533-0ECD-4F24-A88A-BE1AB4EFE8FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7690533-0ECD-4F24-A88A-BE1AB4EFE8FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7690533-0ECD-4F24-A88A-BE1AB4EFE8FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7690533-0ECD-4F24-A88A-BE1AB4EFE8FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

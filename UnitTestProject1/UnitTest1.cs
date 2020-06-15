@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
+using LanguageService;
 
 namespace UnitTestProject1
 {
@@ -10,7 +11,7 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestUpdateTranslation()
         {
-            string result = new LanguageTranslation.LanguageClass().UpdateTranslation("Address", "German","Adresse");
+            string result = new LanguageClass().UpdateTranslation("Address", "German","Adresse");
             Assert.AreNotEqual(result, "");
         }
 
@@ -32,12 +33,12 @@ namespace UnitTestProject1
         public void TestUploadAzure()
         {
             string fileName = "Hindi-stylesheet-ubl.xslt";
-            string filePath = @"C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo";
+            string filePath = @"C:\Users\edmun\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo";
             string file = File.ReadAllText(Path.Combine(filePath, fileName));
             string connectionString = "DefaultEndpointsProtocol=https;AccountName=translation;AccountKey=89/llb7VuT1vV2XHTQbusAOeau/rFvzilR+REqnMLtMsnqRw7VLc9eSpt3fXRBRxRAyRnLdQ31H7VcsZgmu2zg==;EndpointSuffix=core.windows.net";
             string containerName = "xsltstorage";
             
-            new LanguageTranslation.LanguageClass().UploadFileToBlob(file, fileName, connectionString, containerName);
+            new LanguageClass().UploadFileToBlob(file, fileName, connectionString, containerName);
             Assert.IsTrue(true);
         }
        
