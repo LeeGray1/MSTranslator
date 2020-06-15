@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using LanguageService;
+using System.Collections.Generic;
 
 namespace UnitTestProject1
 {
@@ -11,12 +12,12 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestUpdateTranslation()
         {
-            string result = new LanguageClass().UpdateTranslation("Address", "German","Adresse");
+            string result = new LanguageClass().UpdateTranslation("Address", "German", "Adresse");
             Assert.AreNotEqual(result, "");
         }
 
         [TestMethod]
-        public  void TestDownloadAzure()
+        public void TestDownloadAzure()
         {
             //string connectionString = "DefaultEndpointsProtocol=https;AccountName=translation;AccountKey=89/llb7VuT1vV2XHTQbusAOeau/rFvzilR+REqnMLtMsnqRw7VLc9eSpt3fXRBRxRAyRnLdQ31H7VcsZgmu2zg==;EndpointSuffix=core.windows.net";
             //BlobContainerClient container = new BlobContainerClient(connectionString, "xsltstorage");
@@ -37,10 +38,44 @@ namespace UnitTestProject1
             string file = File.ReadAllText(Path.Combine(filePath, fileName));
             string connectionString = "DefaultEndpointsProtocol=https;AccountName=translation;AccountKey=89/llb7VuT1vV2XHTQbusAOeau/rFvzilR+REqnMLtMsnqRw7VLc9eSpt3fXRBRxRAyRnLdQ31H7VcsZgmu2zg==;EndpointSuffix=core.windows.net";
             string containerName = "xsltstorage";
-            
+
             new LanguageClass().UploadFileToBlob(file, fileName, connectionString, containerName);
             Assert.IsTrue(true);
         }
+
+        [TestMethod]
+        public void TestFillLangauges()
+        {
+            List<string> result = new LanguageClass().FillLanguages();
+            Assert.AreNotEqual(result, "");
+        }
+
+        [TestMethod]
+        public  void TestTranslate2Html()
+        {
+            try
+            {
+                string filePath = @"C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\cleaning services.xml";
+                string OriginalxmlFile = File.ReadAllText(filePath);
+                System.Threading.Tasks.Task<string> result =  new LanguageClass().ConvertXml2Html(OriginalxmlFile, "french", filePath);
+                result.Wait();
+                Assert.IsTrue(false);
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+            
+        }
+
+        [TestMethod]
+        public void TestGetTranslation()
+        {
+            string result = new LanguageClass().GetTranslation("Hello", "french");
+            Assert.AreNotEqual(result, "");
+        }
+
        
     }
 }
