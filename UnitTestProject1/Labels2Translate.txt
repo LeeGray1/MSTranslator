@@ -1,0 +1,67 @@
+DeliveryDate
+Metadata
+Invoice
+Commercial invoice
+Supplier
+Party Identification
+Tax Identification
+Technical Address
+Customer
+Identifier
+Issue Date
+Due Date
+Invoice Period
+Order Reference
+Currency
+Totals
+Tax Exclusive
+Tax Inclusive
+Prepaid
+Payable
+Delivery
+Attachments
+No attachments provided.
+Tax
+Category
+Taxable
+Total
+Charge Total
+Allowance Total
+Sellers Item Identification
+Buyers Item Identification
+Commodity Classification
+Price
+Line Total
+TaxAmount
+Tax
+Payment
+Metadata
+Download
+Embedded
+Address
+Date
+Credit Note
+Origin Country
+Standard Item Identification
+Allowance
+Included allowance
+Charge
+Included charge
+Document Reference
+Order Line
+Accounting Cost
+Buyer Reference
+Contract Reference
+Despatch Reference
+Preceding Invoice Reference
+Originator Reference
+Project Reference
+Receipt Reference
+Tax Currency
+Tax Date
+Banking Reference
+Rounding Amount
+
+
+
+
