@@ -129,3 +129,4 @@ C:\Users\edmun\source\repos\LeeGray1\MsTranslator2\MSTranslator\MSTranslatorDemo
 C:\Users\edmun\source\repos\LeeGray1\MsTranslator2\MSTranslator\MSTranslatorDemo\obj\Debug\MSTranslatorDemo.csproj.CopyComplete
 C:\Users\edmun\source\repos\LeeGray1\MsTranslator2\MSTranslator\MSTranslatorDemo\obj\Debug\MSTranslatorDemo.exe
 C:\Users\edmun\source\repos\LeeGray1\MsTranslator2\MSTranslator\MSTranslatorDemo\obj\Debug\MSTranslatorDemo.pdb
+C:\Users\edmun\source\repos\LeeGray1\MsTranslator2\MSTranslator\MSTranslatorDemo\obj\Debug\MSTranslatorDemo.csprojAssemblyReference.cache

@@ -1,20 +1,12 @@
-﻿using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
-using Newtonsoft.Json;
-//using Saxon.Api;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using System.Xml;
-using System.Xml.Xsl;
 
-namespace LanguageService
+namespace LanguageLibrary
 {
     public class LanguageClass
     {
@@ -351,11 +343,11 @@ namespace LanguageService
 
 
 
-        private async Task<string> GetXsltTranslated4Labels(string xsltFile, string Tolanguage, string FromLanguage, string labels2Translate)
+        private async Task<string> GetXsltTranslated4Labels(string xsltFile, string Tolanguage, string FromLanguage)
         {
             string toLanguageCode = GetLanguageCode(Tolanguage);
 
-            
+            string labels2Translate = File.ReadAllText("Labels2Translate.txt");
             string translation = await translate(labels2Translate, Tolanguage, FromLanguage);
 
             string[] Translatedlines = translation.Split(
@@ -482,32 +474,27 @@ namespace LanguageService
 
         }
 
-        public async Task<string> ConvertXml2Html(string OriginalxmlFile, string ToLanguage, string FileName, string connectionString, string containerName)
+        public async Task<string> ConvertXml2Html(string OriginalxmlFile, string ToLanguage, string FileName)
         {
-            string translatedXSLT = "";
-            if (FileExistsInBlob(ToLanguage + "-stylesheet-ubl.xslt", connectionString, containerName))
-            {
-                translatedXSLT = DownloadFileFromBlob(ToLanguage + "-stylesheet-ubl.xslt", connectionString, containerName);
-            }
+            if (File.Exists(ToLanguage + "-stylesheet-ubl.xslt"))
+            { }
             else
             {
 
-                string originalxsltFile = DownloadFileFromBlob("stylesheet-ubl v2.xslt", connectionString, containerName);
-                string labels2Translate = DownloadFileFromBlob("Labels2Translate.txt", connectionString, containerName);
+                string originalxsltFile = File.ReadAllText("stylesheet-ubl v2.xslt");
 
-                translatedXSLT = await GetXsltTranslated4Labels(originalxsltFile, ToLanguage, "English", labels2Translate);
-                translatedXSLT = await GetXsltTranslated4CountryID(OriginalxmlFile, translatedXSLT, ToLanguage);
-                UploadFileToBlob(translatedXSLT, ToLanguage + "-stylesheet-ubl.xslt", connectionString, containerName);
-                //File.WriteAllText(ToLanguage + "-stylesheet-ubl.xslt", result);
+                string result = await GetXsltTranslated4Labels(originalxsltFile, ToLanguage, "English");
+                result = await GetXsltTranslated4CountryID(OriginalxmlFile, result, ToLanguage);
+                File.WriteAllText(ToLanguage + "-stylesheet-ubl.xslt", result);
             }
 
             string translatedXmlNote = await GetXmlTranslated4Note(OriginalxmlFile, ToLanguage, "English");
             string translatedXmlNames = await GetXmlTranslated4Names(translatedXmlNote, ToLanguage, "English");
-            UploadFileToBlob(translatedXmlNames, ToLanguage + "TranslatedFile.xml", connectionString, containerName);
-            // File.WriteAllText(ToLanguage + "-" + "TranslatedFile.xml", translatedXmlNames);
 
-            
-            string HTMLstring = new XSLTLibrary.SaxonUtils().Transform(GenerateStreamFromString(translatedXmlNames), GenerateStreamFromString(translatedXSLT));// "";// XSLThelper.SaxonTransform(ToLanguage + "-stylesheet-ubl.xslt", ToLanguage + "-" + FileName);
+            File.WriteAllText(ToLanguage + "-" + "TranslatedFile.xml", translatedXmlNames);
+
+
+            string HTMLstring = XSLThelper.SaxonTransform(ToLanguage + "-stylesheet-ubl.xslt", ToLanguage + "-" + FileName);
 
 
             // get rid of the xslt bugs                  
@@ -522,21 +509,11 @@ namespace LanguageService
             return HTMLstring;
         }
 
-        public Stream GenerateStreamFromString(string s)
-        {
-            var stream = new MemoryStream();
-            var writer = new StreamWriter(stream);
-            writer.Write(s);
-            writer.Flush();
-            stream.Position = 0;
-            return stream;
-        }
-
         private async Task<string> GetXsltTranslated4CountryID(string xmlFile, string xsltFile, string language)
         {
             string toLanguageCode = GetLanguageCode(language);
             string countryXmlStartSearchTxt = "<cbc:IdentificationCode>", countryXmlEndSearchTxt = "</cbc:IdentificationCode>";
-            int countryXmlStartPtr, countryXmlEndPtr=0;
+            int countryXmlStartPtr, countryXmlEndPtr;
             int countryXsltStartPtr, countryXsltStartPtr2, countryXsltEndPtr;
             string countryOriginalText, countryTranslatedText;
             string xsltCountrySearchText;
@@ -581,8 +558,6 @@ namespace LanguageService
                         }
                     }
                 }
-                countryXmlStartPtr = xmlFile.IndexOf(countryXmlStartSearchTxt, countryXmlEndPtr + 1);
-                
             }
             return xsltFile;
         }
@@ -590,126 +565,9 @@ namespace LanguageService
         {
             BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
             var blockBlob = container.GetBlobClient(fileName);
-            BlobClient blobClient = container.GetBlobClient(fileName);
             byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(fileContents);
             System.IO.MemoryStream stream = new System.IO.MemoryStream(byteArray);
             blockBlob.Upload(stream, true);
         }
-
-        public string  DownloadFileFromBlob( string fileName, string connectionString, string containerName)
-        {
-            BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
-            var blobClient = container.GetBlobClient(fileName);
-            
-            System.IO.MemoryStream stream = new System.IO.MemoryStream();
-          
-            BlobDownloadInfo download = blobClient.Download();
-          
-            download.Content.CopyTo(stream);
-            byte[] byteArray=stream.ToArray();
-            return System.Text.Encoding.UTF8.GetString(byteArray);
-       
-        }
-
-        public bool FileExistsInBlob(string fileName, string connectionString, string containerName)
-        {
-            bool foundIt = false;
-
-            BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
-            var blobClient = container.GetBlobClient(fileName);
-             foreach (BlobItem blobItem in container.GetBlobs())
-            {
-                if (blobItem.Name == fileName)
-                {
-                    foundIt = true;
-                    break;
-                }
-      
-            }
-
-            return foundIt;
-            
-
-        }
-       
-}
-    //public class XSLThelper
-    //{
-    //    //public static string SaxonTransform(string xsltFilename, string inputXML)
-    //    //{
-    //    //    var xslt = new FileInfo(xsltFilename);
-    //    //    var input = new FileInfo(inputXML);
-    //    //    var output = new FileInfo(@"test.html");
-
-    //    //    // Compile stylesheet
-
-    //    //    var processor = new Saxon.Api.Processor();
-    //    //    var compiler = processor.NewXsltCompiler();
-    //    //    var executable = compiler.Compile(new Uri(xslt.FullName));
-
-    //    //    // Do transformation to a destination
-    //    //    var destination = new Saxon.Api.DomDestination();
-    //    //    using (var inputStream = input.OpenRead())
-    //    //    {
-    //    //        var transformer = executable.Load();
-    //    //        transformer.SetInputStream(inputStream, new Uri(input.DirectoryName));
-    //    //        transformer.Run(destination);
-    //    //    }
-
-    //    //    // Save result to a file (or whatever else you wanna do)
-    //    //    // destination.XmlDocument.Save(output.FullName);
-    //    //    return destination.XmlDocument.OuterXml;
-
-    //    //}
-    //    public string SaxonTransform(Stream XMLStream, Stream xsltStream)
-    //    {
-
-    //        // Compile stylesheet
-
-    //        var processor = new Saxon.Api.Processor();
-    //        var compiler = processor.NewXsltCompiler();
-    //        var executable = compiler.Compile(xsltStream);
-
-    //        // Do transformation to a destination
-    //        var destination = new Saxon.Api.DomDestination();
-    //        // using (var inputStream = input.OpenRead())
-    //        {
-    //            var transformer = executable.Load();
-    //            transformer.SetInputStream(XMLStream, new Uri("http://www.w3.org/"));
-    //            transformer.Run(destination);
-    //        }
-
-    //        // Save result to a file (or whatever else you wanna do)
-    //        // destination.XmlDocument.Save(output.FullName);
-    //        return destination.XmlDocument.OuterXml;
-
-    //    }
-
-    //    public static string TransformXMLToHTML(string inputXml, string xsltString)
-    //    {
-    //        XslCompiledTransform transform = GetAndCacheTransform(xsltString);
-    //        StringWriter results = new StringWriter();
-    //        using (XmlReader reader = XmlReader.Create(new StringReader(inputXml)))
-    //        {
-    //            transform.Transform(reader, null, results);
-    //        }
-    //        return results.ToString();
-    //    }
-
-    //    private static Dictionary<String, XslCompiledTransform> cachedTransforms = new Dictionary<string, XslCompiledTransform>();
-    //    private static XslCompiledTransform GetAndCacheTransform(String xslt)
-    //    {
-    //        XslCompiledTransform transform;
-    //        if (!cachedTransforms.TryGetValue(xslt, out transform))
-    //        {
-    //            transform = new XslCompiledTransform();
-    //            using (XmlReader reader = XmlReader.Create(new StringReader(xslt)))
-    //            {
-    //                transform.Load(reader);
-    //            }
-    //            cachedTransforms.Add(xslt, transform);
-    //        }
-    //        return transform;
-    //    }
-    //}
+    }
 }
