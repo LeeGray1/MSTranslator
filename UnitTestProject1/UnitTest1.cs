@@ -74,9 +74,7 @@ namespace UnitTestProject1
         public void TestDownLoadFileFromBlob()
         {
             string fileName = "Hindi-stylesheet-ubl.xslt";
-            //string filePath = @"..\..\..\..\MSTranslatordemo\";
-            //string file = File.ReadAllText(Path.Combine(filePath, fileName));
-            string fileContents = new LanguageService.LanguageClass(blobConnectionString, containerName).DownloadFileFromBlob(fileName, blobConnectionString, containerName);
+            string fileContents = new LanguageService.LanguageClass(blobConnectionString, containerName).DownloadFileFromBlob(fileName);
             Assert.IsTrue(fileContents.Substring(0, 5) == "<?xml");
 
         }
@@ -87,11 +85,9 @@ namespace UnitTestProject1
             string OriginalFullPathName = @"..\..\..\MSTranslatordemo\cleaning services.xml";
             string ToLanguage = "german";
 
-            string connectionString = "DefaultEndpointsProtocol=https;AccountName=translation;AccountKey=89/llb7VuT1vV2XHTQbusAOeau/rFvzilR+REqnMLtMsnqRw7VLc9eSpt3fXRBRxRAyRnLdQ31H7VcsZgmu2zg==;EndpointSuffix=core.windows.net";
-            string containerName = "xsltstorage";
             string filePath = Path.GetFullPath(OriginalFullPathName);
             string OriginalxmlFile = File.ReadAllText(filePath);
-            Task<string> task = new LanguageService.LanguageClass(blobConnectionString, containerName).ConvertXml2Html(OriginalxmlFile, ToLanguage, filePath, connectionString, containerName);
+            Task<string> task = new LanguageService.LanguageClass(blobConnectionString, containerName).ConvertXml2Html(OriginalxmlFile, ToLanguage, filePath);
             task.Wait();
             string HTMLstring = task.Result;
             File.WriteAllText("eInvoice.html", HTMLstring);
@@ -107,6 +103,13 @@ namespace UnitTestProject1
             string result = new LanguageClass(blobConnectionString, containerName).DetectLanguage("Hallo");
             Assert.AreNotEqual(result, "");
 
+        }
+
+        [TestMethod]
+        public void TestGetXslt4Language()
+        {
+            string result = new LanguageClass(blobConnectionString, containerName).GetXslt4Language("Hindi");
+            Assert.IsTrue(result.Substring(0, 5) == "<?xml");
         }
     }
 }

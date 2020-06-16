@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LanguageService;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,8 @@ namespace MSTranslatorDemo
     /// </summary>
     public partial class PageTest : Page
     {
+        const string blobConnectionString = "DefaultEndpointsProtocol=https;AccountName=mstranslation;AccountKey=DhlfSrT66vg/I5CwpD0WrpeviWp5jrv/eyPaSTt7Pe8I0rv1PJnD3j8I7gGyc8oP0Jxs1+OpaL0U8Ku7kjFlFQ==;EndpointSuffix=core.windows.net";
+        const string containerName = "xsltstorage";
         const string COGNITIVE_SERVICES_KEY = "7963c13bba1e4e60b4d872662401c746";
         // Endpoints for Translator and Bing Spell Check
         public static readonly string TEXT_TRANSLATION_API_ENDPOINT = "https://api.cognitive.microsofttranslator.com/{0}?api-version=3.0";
@@ -36,7 +39,7 @@ namespace MSTranslatorDemo
         {
             // Add option to automatically detect the source language
             FromLanguageComboBox.Items.Add("Detect");
-            List<string> list = new LanguageClass().FillLanguages();
+            List<string> list = new LanguageClass(blobConnectionString, containerName).FillLanguages();
             foreach (var item in list)
             {
                 FromLanguageComboBox.Items.Add(item);
@@ -55,7 +58,7 @@ namespace MSTranslatorDemo
 
             if (fromLanguage == "Detect")
             {
-                fromLanguage = new LanguageClass().DetectLanguage(TextToTranslate.Text);
+                fromLanguage = new LanguageClass(blobConnectionString, containerName).DetectLanguage(TextToTranslate.Text);
 
                 if (fromLanguage.Contains("Unable to confidently detect input language."))
                 {
@@ -66,10 +69,10 @@ namespace MSTranslatorDemo
                 }
             }
             
-            var toLanguageCode = new LanguageClass().GetLanguageCode(ToLanguageComboBox.SelectedValue.ToString());
+            var toLanguageCode = new LanguageClass(blobConnectionString, containerName).GetLanguageCode(ToLanguageComboBox.SelectedValue.ToString());
 
             var textToTranslate = TextToTranslate.Text.Trim();
-            var translation = await new LanguageClass().translate(textToTranslate, ToLanguageComboBox.Text, fromLanguage);
+            var translation = await new LanguageClass(blobConnectionString, containerName).translate(textToTranslate, ToLanguageComboBox.Text, fromLanguage);
             TranslatedTextLabel.Text = translation;
         }
     }

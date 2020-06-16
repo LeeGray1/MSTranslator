@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using LanguageService;
+using Microsoft.Win32;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -23,16 +24,18 @@ namespace MSTranslatorDemo
     /// </summary>
     public partial class PageSettings : Page
     {
+        const string blobConnectionString = "DefaultEndpointsProtocol=https;AccountName=mstranslation;AccountKey=DhlfSrT66vg/I5CwpD0WrpeviWp5jrv/eyPaSTt7Pe8I0rv1PJnD3j8I7gGyc8oP0Jxs1+OpaL0U8Ku7kjFlFQ==;EndpointSuffix=core.windows.net";
+        const string containerName = "xsltstorage";
         public PageSettings()
         {
             InitializeComponent();
             // Get languages for drop-downs
-            List<string> list = new LanguageClass().GetTranslatedXsltLanguages();
+            List<string> list = new LanguageClass(blobConnectionString, containerName).GetTranslatedXsltLanguages();
 
             cmbLanguage.ItemsSource = list;
 
             
-            List<string> originalList= new LanguageClass().GetWords();
+            List<string> originalList= new LanguageClass(blobConnectionString, containerName).GetWords();
             foreach (var word in originalList)
             {
                 if (word != "")
@@ -44,12 +47,12 @@ namespace MSTranslatorDemo
         {
             if (MessageBox.Show("are you sure you want to delete this language file", "Delete language", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
             {
-                cmbLanguage.ItemsSource = new LanguageClass().DeleteXsltFile(cmbLanguage.SelectedItem.ToString());
+                cmbLanguage.ItemsSource = new LanguageClass(blobConnectionString, containerName).DeleteXsltFile(cmbLanguage.SelectedItem.ToString());
             }
         }
         private void cmbWord_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            txtTranslation.Text = new LanguageClass().GetTranslation((string)cmbWord.SelectedItem, (string)cmbLanguage.SelectedItem);
+            txtTranslation.Text = new LanguageClass(blobConnectionString, containerName).GetTranslation((string)cmbWord.SelectedItem, (string)cmbLanguage.SelectedItem);
             if (txtTranslation.Text == "")
             {
                 btnSave.IsEnabled = false;
@@ -61,7 +64,7 @@ namespace MSTranslatorDemo
         {
             
             string selectedWord = (string)cmbWord.SelectedItem;
-           string result = new LanguageClass().UpdateTranslation(selectedWord, (string)cmbLanguage.SelectedItem, txtTranslation.Text);
+           string result = new LanguageClass(blobConnectionString, containerName).UpdateTranslation(selectedWord, (string)cmbLanguage.SelectedItem, txtTranslation.Text);
             
             if (result == "")
             {
@@ -77,7 +80,7 @@ namespace MSTranslatorDemo
             dlg.Filter = "xslt Stylesheet (.xslt)|*.xslt";
             if (dlg.ShowDialog() == true)
             {
-                string xsltfile = new LanguageClass().GetXslt4Language(cmbLanguage.Text);
+                string xsltfile = new LanguageClass(blobConnectionString, containerName).GetXslt4Language(cmbLanguage.Text);
                 File.WriteAllText(dlg.FileName, xsltfile);
             }
         }

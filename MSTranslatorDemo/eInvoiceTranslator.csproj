@@ -99,7 +99,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="LanguageClass.cs" />
     <Compile Include="PageMain.xaml.cs">
       <DependentUpon>PageMain.xaml</DependentUpon>
     </Compile>
@@ -112,9 +111,6 @@
     <Compile Include="translate.cs" />
     <Compile Include="WindowStart.xaml.cs">
       <DependentUpon>WindowStart.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="XSLThelper.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -197,6 +193,16 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LanguageService\LanguageService.csproj">
+      <Project>{b7690533-0ecd-4f24-a88a-be1ab4efe8fe}</Project>
+      <Name>LanguageService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XSLTLibrary\XSLTLibrary.csproj">
+      <Project>{2052dff2-fc05-4401-8556-c9a22ecead5e}</Project>
+      <Name>XSLTLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

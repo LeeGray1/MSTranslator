@@ -209,9 +209,9 @@ namespace LanguageService
         /// Reads Labels2Translate sorts them and returns them in a list
         /// </summary>
         /// <returns>List of type string</returns>
-        public List<string> GetWords(string connectionString, string containerName)
+        public List<string> GetWords()
         {
-            string labels2Translate = DownloadFileFromBlob("Labels2Translate.txt", connectionString, containerName);
+            string labels2Translate = DownloadFileFromBlob("Labels2Translate.txt");
             string[] originalLines = labels2Translate.Split(
                 new[] { Environment.NewLine },
                 StringSplitOptions.None
@@ -415,7 +415,7 @@ namespace LanguageService
             //string labels2Translate = DownloadFileFromBlob("Labels2Translate.txt", connectionString, containerName);
 
             string getXmlStorageLocation = System.AppDomain.CurrentDomain.BaseDirectory;
-            return DownloadFileFromBlob(Path.Combine(getXmlStorageLocation, ToLanguage + "-" + "TranslatedFile.xml"), _connectionString, _containerName);
+            return DownloadFileFromBlob(Path.Combine(getXmlStorageLocation, ToLanguage + "-" + "TranslatedFile.xml"));
         }
 
         public string GetXslt4Language(string ToLanguage)
@@ -495,18 +495,18 @@ namespace LanguageService
 
         }
 
-        public async Task<string> ConvertXml2Html(string OriginalxmlFile, string ToLanguage, string FileName, string connectionString, string containerName)
+        public async Task<string> ConvertXml2Html(string OriginalxmlFile, string ToLanguage, string FileName)
         {
             string translatedXSLT = "";
-            if (FileExistsInBlob(ToLanguage + "-stylesheet-ubl.xslt", connectionString, containerName))
+            if (FileExistsInBlob(ToLanguage + "-stylesheet-ubl.xslt"))
             {
-                translatedXSLT = DownloadFileFromBlob(ToLanguage + "-stylesheet-ubl.xslt", connectionString, containerName);
+                translatedXSLT = DownloadFileFromBlob(ToLanguage + "-stylesheet-ubl.xslt");
             }
             else
             {
 
-                string originalxsltFile = DownloadFileFromBlob("stylesheet-ubl v2.xslt", connectionString, containerName);
-                string labels2Translate = DownloadFileFromBlob("Labels2Translate.txt", connectionString, containerName);
+                string originalxsltFile = DownloadFileFromBlob("stylesheet-ubl v2.xslt");
+                string labels2Translate = DownloadFileFromBlob("Labels2Translate.txt");
 
                 translatedXSLT = await GetXsltTranslated4Labels(originalxsltFile, ToLanguage, "English", labels2Translate);
                 translatedXSLT = await GetXsltTranslated4CountryID(OriginalxmlFile, translatedXSLT, ToLanguage);
@@ -609,9 +609,9 @@ namespace LanguageService
             blockBlob.Upload(stream, true);
         }
 
-        public string  DownloadFileFromBlob( string fileName, string connectionString, string containerName)
+        public string  DownloadFileFromBlob( string fileName)
         {
-            BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
+            BlobContainerClient container = new BlobContainerClient(_connectionString, _containerName);
             var blobClient = container.GetBlobClient(fileName);
             
             System.IO.MemoryStream stream = new System.IO.MemoryStream();
@@ -624,11 +624,11 @@ namespace LanguageService
        
         }
 
-        public bool FileExistsInBlob(string fileName, string connectionString, string containerName)
+        public bool FileExistsInBlob(string fileName)
         {
             bool foundIt = false;
 
-            BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
+            BlobContainerClient container = new BlobContainerClient(_connectionString, _containerName);
             var blobClient = container.GetBlobClient(fileName);
              foreach (BlobItem blobItem in container.GetBlobs())
             {

@@ -21,6 +21,7 @@ using System.Xml;
 using System.Net;
 using System.IO;
 using System.Net.Http;
+using LanguageService;
 
 namespace MSTranslatorDemo
 {
@@ -28,7 +29,9 @@ namespace MSTranslatorDemo
     /// Interaction logic for PageMain.xaml
     /// </summary>
     public partial class PageMain : Page
-    {        
+    {
+        const string blobConnectionString = "DefaultEndpointsProtocol=https;AccountName=mstranslation;AccountKey=DhlfSrT66vg/I5CwpD0WrpeviWp5jrv/eyPaSTt7Pe8I0rv1PJnD3j8I7gGyc8oP0Jxs1+OpaL0U8Ku7kjFlFQ==;EndpointSuffix=core.windows.net";
+        const string containerName = "xsltstorage";
         public PageMain()
         {
             InitializeComponent();
@@ -40,7 +43,7 @@ namespace MSTranslatorDemo
        
         private void PopulateLanguageCombos()
         {           
-            ToLanguageComboBox.ItemsSource = new LanguageClass().FillLanguages();
+            ToLanguageComboBox.ItemsSource = new LanguageClass(blobConnectionString, containerName).FillLanguages();
             // Set default languages           
             ToLanguageComboBox.SelectedItem = "English";
         }       
@@ -62,7 +65,7 @@ namespace MSTranslatorDemo
                 MessageBox.Show("Please select another language", "Translation not supported", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return;
             }
-            string HTMLstring = await new LanguageClass().ConvertXml2Html(OriginalxmlFile, ToLanguageComboBox.Text, Path.GetFileName(openFileDialog.FileName));
+            string HTMLstring = await new LanguageClass(blobConnectionString, containerName).ConvertXml2Html(OriginalxmlFile, ToLanguageComboBox.Text, Path.GetFileName(openFileDialog.FileName));
 
             File.WriteAllText("eInvoice.html", HTMLstring);
             System.Diagnostics.Process.Start("eInvoice.html");
@@ -98,7 +101,7 @@ namespace MSTranslatorDemo
             dlg.Filter = "XML eInvoice (.xml)|*.xml";
             if (dlg.ShowDialog() == true)
             {
-                string xmlfile = new LanguageClass().GetTranslatedXml(ToLanguageComboBox.Text);
+                string xmlfile = new LanguageClass(blobConnectionString, containerName).GetTranslatedXml(ToLanguageComboBox.Text);
                 File.WriteAllText(dlg.FileName, xmlfile);
             }
         }
@@ -111,7 +114,7 @@ namespace MSTranslatorDemo
             dlg.Filter = "xslt Stylesheet (.xslt)|*.xslt";
             if (dlg.ShowDialog() == true)
             {
-                string xsltfile = new LanguageClass().GetXslt4Language(ToLanguageComboBox.Text);
+                string xsltfile = new LanguageClass(blobConnectionString, containerName).GetXslt4Language(ToLanguageComboBox.Text);
                 File.WriteAllText(dlg.FileName, xsltfile);
             }
         }
