@@ -309,7 +309,7 @@ namespace LanguageService
             return text;
         }
 
-        public async System.Threading.Tasks.Task<string> translate(string textToTranslate, string toLanguage, string fromLanguage)
+        private async System.Threading.Tasks.Task<string> translate(string textToTranslate, string toLanguage, string fromLanguage)
         {
             string fromLanguageCode;
             string translation;

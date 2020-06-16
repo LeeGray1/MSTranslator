@@ -103,9 +103,10 @@ namespace UnitTestProject1
         }
 
         [TestMethod]
-        public void Test()
+        public void TestDetectLanguage()
         {
-
+            string result = new LanguageClass().DetectLanguage("Hello");
+            Assert.AreNotEqual(result, "");
         }
 
     }
