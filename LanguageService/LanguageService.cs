@@ -24,6 +24,14 @@ namespace LanguageService
         const string BING_SPELL_CHECK_API_ENDPOINT = "https://westus.api.cognitive.microsoft.com/bing/v7.0/spellcheck/";
 
         private string[] languageCodes;
+        private string _connectionString;
+        private string _containerName;
+
+        public LanguageClass(string connectionString, string containerName)
+        {
+            this._connectionString = connectionString;
+            this._containerName = containerName;
+        }
 
         //Gets current translated xslt files for page settings
         public List<string> GetTranslatedXsltLanguages()
@@ -197,10 +205,13 @@ namespace LanguageService
 
             return xsltFile;
         }
-
-        public List<string> GetWords()
+        /// <summary>
+        /// Reads Labels2Translate sorts them and returns them in a list
+        /// </summary>
+        /// <returns>List of type string</returns>
+        public List<string> GetWords(string connectionString, string containerName)
         {
-            string labels2Translate = File.ReadAllText("Labels2Translate.txt");
+            string labels2Translate = DownloadFileFromBlob("Labels2Translate.txt", connectionString, containerName);
             string[] originalLines = labels2Translate.Split(
                 new[] { Environment.NewLine },
                 StringSplitOptions.None
@@ -309,7 +320,7 @@ namespace LanguageService
             return text;
         }
 
-        private async System.Threading.Tasks.Task<string> translate(string textToTranslate, string toLanguage, string fromLanguage)
+        public async System.Threading.Tasks.Task<string> translate(string textToTranslate, string toLanguage, string fromLanguage)
         {
             string fromLanguageCode;
             string translation;
@@ -401,8 +412,10 @@ namespace LanguageService
 
         public string GetTranslatedXml(string ToLanguage)
         {
+            //string labels2Translate = DownloadFileFromBlob("Labels2Translate.txt", connectionString, containerName);
+
             string getXmlStorageLocation = System.AppDomain.CurrentDomain.BaseDirectory;
-            return File.ReadAllText(Path.Combine(getXmlStorageLocation, ToLanguage + "-" + "TranslatedFile.xml"));
+            return DownloadFileFromBlob(Path.Combine(getXmlStorageLocation, ToLanguage + "-" + "TranslatedFile.xml"), _connectionString, _containerName);
         }
 
         public string GetXslt4Language(string ToLanguage)
@@ -442,7 +455,7 @@ namespace LanguageService
 
         private async Task<string> GetXmlTranslated4Names(string xmlFile, string ToLanguage, string FromLanguage)
         {
-            string toLanguageCode = new LanguageClass().GetLanguageCode(ToLanguage);
+            string toLanguageCode = new LanguageClass(_connectionString, _containerName).GetLanguageCode(ToLanguage);
 
 
 
@@ -463,7 +476,7 @@ namespace LanguageService
                     if (nameEndPtr != -1)
                     {
                         NameOriginalText = xmlFile.Substring(nameStartPtr + nameStartSearchTxt.Length, nameEndPtr - nameStartPtr - nameStartSearchTxt.Length);
-                        NameTranslatedText = await new LanguageClass().translate(NameOriginalText, ToLanguage, FromLanguage);
+                        NameTranslatedText = await new LanguageClass(_connectionString, _containerName).translate(NameOriginalText, ToLanguage, FromLanguage);
 
 
                         xmlFile = xmlFile.Replace(nameStartSearchTxt + NameOriginalText + nameEndSearchTxt, nameStartSearchTxt + NameTranslatedText + nameEndSearchTxt);
@@ -497,13 +510,13 @@ namespace LanguageService
 
                 translatedXSLT = await GetXsltTranslated4Labels(originalxsltFile, ToLanguage, "English", labels2Translate);
                 translatedXSLT = await GetXsltTranslated4CountryID(OriginalxmlFile, translatedXSLT, ToLanguage);
-                UploadFileToBlob(translatedXSLT, ToLanguage + "-stylesheet-ubl.xslt", connectionString, containerName);
+                UploadFileToBlob(translatedXSLT, ToLanguage + "-stylesheet-ubl.xslt"/*, connectionString, containerName*/);
                 //File.WriteAllText(ToLanguage + "-stylesheet-ubl.xslt", result);
             }
 
             string translatedXmlNote = await GetXmlTranslated4Note(OriginalxmlFile, ToLanguage, "English");
             string translatedXmlNames = await GetXmlTranslated4Names(translatedXmlNote, ToLanguage, "English");
-            UploadFileToBlob(translatedXmlNames, ToLanguage + "TranslatedFile.xml", connectionString, containerName);
+            UploadFileToBlob(translatedXmlNames, ToLanguage + "TranslatedFile.xml"/*, connectionString, containerName*/);
             // File.WriteAllText(ToLanguage + "-" + "TranslatedFile.xml", translatedXmlNames);
 
             
@@ -564,7 +577,7 @@ namespace LanguageService
                                 {
                                     countryOriginalText = xsltFile.Substring(countryXsltStartPtr2 + 11, countryXsltEndPtr - countryXsltStartPtr2 - 11);
                                     //now translate xslt
-                                    countryTranslatedText = await new LanguageClass().translate(countryOriginalText, language, "English");
+                                    countryTranslatedText = await new LanguageClass(_connectionString, _containerName).translate(countryOriginalText, language, "English");
 
                                     countryXsltStartPtr2 = xsltFile.IndexOf("<t id=\"no\">", countryXsltEndPtr);
                                     if (countryXsltStartPtr2 != -1)
@@ -586,9 +599,9 @@ namespace LanguageService
             }
             return xsltFile;
         }
-        public void UploadFileToBlob(string fileContents, string fileName, string connectionString, string containerName)
+        public void UploadFileToBlob(string fileContents, string fileName)
         {
-            BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
+            BlobContainerClient container = new BlobContainerClient(_connectionString, _containerName);
             var blockBlob = container.GetBlobClient(fileName);
             BlobClient blobClient = container.GetBlobClient(fileName);
             byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(fileContents);

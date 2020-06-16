@@ -9,15 +9,17 @@ namespace UnitTestProject1
     [TestClass]
     public class UnitTest1
     {
+        const string blobConnectionString = "DefaultEndpointsProtocol=https;AccountName=mstranslation;AccountKey=DhlfSrT66vg/I5CwpD0WrpeviWp5jrv/eyPaSTt7Pe8I0rv1PJnD3j8I7gGyc8oP0Jxs1+OpaL0U8Ku7kjFlFQ==;EndpointSuffix=core.windows.net";
+        const string containerName = "xsltstorage";
         [TestMethod]
         public void TestUpdateTranslation()
         {
-            string result = new LanguageClass().UpdateTranslation("Address", "german","Adresse");
-            Assert.AreNotEqual(result, "");
+            string result = new LanguageClass(blobConnectionString, containerName).UpdateTranslation("delivery", "German","Evergreens");
+            Assert.AreEqual(result.Substring(0, 5), "<?xml");
         }
 
         [TestMethod]
-        public  void TestDownloadAzure()
+        public void TestDownloadAzure()
         {
             //string connectionString = "DefaultEndpointsProtocol=https;AccountName=translation;AccountKey=89/llb7VuT1vV2XHTQbusAOeau/rFvzilR+REqnMLtMsnqRw7VLc9eSpt3fXRBRxRAyRnLdQ31H7VcsZgmu2zg==;EndpointSuffix=core.windows.net";
             //BlobContainerClient container = new BlobContainerClient(connectionString, "xsltstorage");
@@ -33,12 +35,11 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestUploadFile2Blob()
         {
-            string fileName = "Labels2Translate.txt";
+            string fileName = "cleaning services.xml";
             string filePath = @"..\..\..\MSTranslatordemo\";
             string file = File.ReadAllText(Path.Combine(filePath, fileName));
-            string connectionString = "DefaultEndpointsProtocol=https;AccountName=translation;AccountKey=89/llb7VuT1vV2XHTQbusAOeau/rFvzilR+REqnMLtMsnqRw7VLc9eSpt3fXRBRxRAyRnLdQ31H7VcsZgmu2zg==;EndpointSuffix=core.windows.net";
-            string containerName = "xsltstorage";
-            new LanguageService.LanguageClass().UploadFileToBlob(file, fileName, connectionString, containerName);
+            
+            new LanguageService.LanguageClass(blobConnectionString, containerName).UploadFileToBlob(file, fileName);
             Assert.IsTrue(true);
         }
 
@@ -75,9 +76,7 @@ namespace UnitTestProject1
             string fileName = "Hindi-stylesheet-ubl.xslt";
             //string filePath = @"..\..\..\..\MSTranslatordemo\";
             //string file = File.ReadAllText(Path.Combine(filePath, fileName));
-            string connectionString = "DefaultEndpointsProtocol=https;AccountName=translation;AccountKey=89/llb7VuT1vV2XHTQbusAOeau/rFvzilR+REqnMLtMsnqRw7VLc9eSpt3fXRBRxRAyRnLdQ31H7VcsZgmu2zg==;EndpointSuffix=core.windows.net";
-            string containerName = "xsltstorage";
-            string fileContents = new LanguageService.LanguageClass().DownloadFileFromBlob(fileName, connectionString, containerName);
+            string fileContents = new LanguageService.LanguageClass(blobConnectionString, containerName).DownloadFileFromBlob(fileName, blobConnectionString, containerName);
             Assert.IsTrue(fileContents.Substring(0, 5) == "<?xml");
 
         }
@@ -92,7 +91,7 @@ namespace UnitTestProject1
             string containerName = "xsltstorage";
             string filePath = Path.GetFullPath(OriginalFullPathName);
             string OriginalxmlFile = File.ReadAllText(filePath);
-            Task<string> task = new LanguageService.LanguageClass().ConvertXml2Html(OriginalxmlFile, ToLanguage, filePath, connectionString, containerName);
+            Task<string> task = new LanguageService.LanguageClass(blobConnectionString, containerName).ConvertXml2Html(OriginalxmlFile, ToLanguage, filePath, connectionString, containerName);
             task.Wait();
             string HTMLstring = task.Result;
             File.WriteAllText("eInvoice.html", HTMLstring);
@@ -105,9 +104,9 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestDetectLanguage()
         {
-            string result = new LanguageClass().DetectLanguage("Hello");
+            string result = new LanguageClass(blobConnectionString, containerName).DetectLanguage("Hallo");
             Assert.AreNotEqual(result, "");
-        }
 
+        }
     }
 }
