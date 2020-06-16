@@ -12,7 +12,7 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestUpdateTranslation()
         {
-            string result = new LanguageClass().UpdateTranslation("Address", "German","Adresse");
+            string result = new LanguageClass().UpdateTranslation("Address", "german","Adresse");
             Assert.AreNotEqual(result, "");
         }
 
@@ -99,6 +99,12 @@ namespace UnitTestProject1
             System.Diagnostics.Process.Start("eInvoice.html");
 
             Assert.AreEqual("<html", HTMLstring.Substring(0,5));
+
+        }
+
+        [TestMethod]
+        public void Test()
+        {
 
         }
 
