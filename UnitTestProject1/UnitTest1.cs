@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using LanguageService;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace UnitTestProject1
 {
@@ -12,12 +12,12 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestUpdateTranslation()
         {
-            string result = new LanguageClass().UpdateTranslation("Address", "German", "Adresse");
+            string result = new LanguageClass().UpdateTranslation("Address", "German","Adresse");
             Assert.AreNotEqual(result, "");
         }
 
         [TestMethod]
-        public void TestDownloadAzure()
+        public  void TestDownloadAzure()
         {
             //string connectionString = "DefaultEndpointsProtocol=https;AccountName=translation;AccountKey=89/llb7VuT1vV2XHTQbusAOeau/rFvzilR+REqnMLtMsnqRw7VLc9eSpt3fXRBRxRAyRnLdQ31H7VcsZgmu2zg==;EndpointSuffix=core.windows.net";
             //BlobContainerClient container = new BlobContainerClient(connectionString, "xsltstorage");
@@ -31,51 +31,76 @@ namespace UnitTestProject1
         }
 
         [TestMethod]
-        public void TestUploadAzure()
+        public void TestUploadFile2Blob()
         {
-            string fileName = "Hindi-stylesheet-ubl.xslt";
-            string filePath = @"C:\Users\edmun\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo";
+            string fileName = "Labels2Translate.txt";
+            string filePath = @"..\..\..\MSTranslatordemo\";
             string file = File.ReadAllText(Path.Combine(filePath, fileName));
             string connectionString = "DefaultEndpointsProtocol=https;AccountName=translation;AccountKey=89/llb7VuT1vV2XHTQbusAOeau/rFvzilR+REqnMLtMsnqRw7VLc9eSpt3fXRBRxRAyRnLdQ31H7VcsZgmu2zg==;EndpointSuffix=core.windows.net";
             string containerName = "xsltstorage";
-
-            new LanguageClass().UploadFileToBlob(file, fileName, connectionString, containerName);
+            new LanguageService.LanguageClass().UploadFileToBlob(file, fileName, connectionString, containerName);
             Assert.IsTrue(true);
         }
 
         [TestMethod]
-        public void TestFillLangauges()
+        public void TestSaxonTransform()
         {
-            List<string> result = new LanguageClass().FillLanguages();
-            Assert.AreNotEqual(result, "");
+
+            string xsltFilePath = @"..\..\..\MSTranslatordemo\stylesheet-ubl v2.xslt";
+            string xmlFilePath = @"..\..\..\MSTranslatordemo\cleaning services.xml";
+            MemoryStream xsltStream = new MemoryStream();
+            using (FileStream fileStream = File.OpenRead(xsltFilePath))
+            {
+
+                xsltStream.SetLength(fileStream.Length);
+                fileStream.Read(xsltStream.GetBuffer(), 0, (int)fileStream.Length);
+            }
+            MemoryStream xmlStream = new MemoryStream();
+            using (FileStream fileStream = File.OpenRead(xmlFilePath))
+            {
+
+                xmlStream.SetLength(fileStream.Length);
+                fileStream.Read(xmlStream.GetBuffer(), 0, (int)fileStream.Length);
+            }
+            //string htmlstring = LanguageService.XSLThelper.SaxonTransform(xsltFilePath, xmlFilePath);
+            string htmlstring = new XSLTLibrary.SaxonUtils().Transform(xmlStream, xsltStream);
+
+            Assert.AreEqual("<html", htmlstring.Substring(0, 5));
+
+
+        }
+        [TestMethod]
+        public void TestDownLoadFileFromBlob()
+        {
+            string fileName = "Hindi-stylesheet-ubl.xslt";
+            //string filePath = @"..\..\..\..\MSTranslatordemo\";
+            //string file = File.ReadAllText(Path.Combine(filePath, fileName));
+            string connectionString = "DefaultEndpointsProtocol=https;AccountName=translation;AccountKey=89/llb7VuT1vV2XHTQbusAOeau/rFvzilR+REqnMLtMsnqRw7VLc9eSpt3fXRBRxRAyRnLdQ31H7VcsZgmu2zg==;EndpointSuffix=core.windows.net";
+            string containerName = "xsltstorage";
+            string fileContents = new LanguageService.LanguageClass().DownloadFileFromBlob(fileName, connectionString, containerName);
+            Assert.IsTrue(fileContents.Substring(0, 5) == "<?xml");
+
         }
 
         [TestMethod]
-        public  void TestTranslate2Html()
+        public void TestCreateTranslatedHtmlfromXML()
         {
-            try
-            {
-                string filePath = @"C:\Users\leegr\source\repos\LeeGray1\MSTranslator\MSTranslatorDemo\cleaning services.xml";
-                string OriginalxmlFile = File.ReadAllText(filePath);
-                System.Threading.Tasks.Task<string> result =  new LanguageClass().ConvertXml2Html(OriginalxmlFile, "french", filePath);
-                result.Wait();
-                Assert.IsTrue(false);
-            }
-            catch (Exception e)
-            {
+            string OriginalFullPathName = @"..\..\..\MSTranslatordemo\cleaning services.xml";
+            string ToLanguage = "german";
 
-                throw e;
-            }
-            
+            string connectionString = "DefaultEndpointsProtocol=https;AccountName=translation;AccountKey=89/llb7VuT1vV2XHTQbusAOeau/rFvzilR+REqnMLtMsnqRw7VLc9eSpt3fXRBRxRAyRnLdQ31H7VcsZgmu2zg==;EndpointSuffix=core.windows.net";
+            string containerName = "xsltstorage";
+            string filePath = Path.GetFullPath(OriginalFullPathName);
+            string OriginalxmlFile = File.ReadAllText(filePath);
+            Task<string> task = new LanguageService.LanguageClass().ConvertXml2Html(OriginalxmlFile, ToLanguage, filePath, connectionString, containerName);
+            task.Wait();
+            string HTMLstring = task.Result;
+            File.WriteAllText("eInvoice.html", HTMLstring);
+            System.Diagnostics.Process.Start("eInvoice.html");
+
+            Assert.AreEqual("<html", HTMLstring.Substring(0,5));
+
         }
 
-        [TestMethod]
-        public void TestGetTranslation()
-        {
-            string result = new LanguageClass().GetTranslation("Hello", "french");
-            Assert.AreNotEqual(result, "");
-        }
-
-       
     }
 }

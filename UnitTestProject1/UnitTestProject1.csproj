@@ -83,6 +83,10 @@
       <Project>{b7690533-0ecd-4f24-a88a-be1ab4efe8fe}</Project>
       <Name>LanguageService</Name>
     </ProjectReference>
+    <ProjectReference Include="..\XSLTLibrary\XSLTLibrary.csproj">
+      <Project>{2052dff2-fc05-4401-8556-c9a22ecead5e}</Project>
+      <Name>XSLTLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="stylesheet-ubl v2.xslt">
