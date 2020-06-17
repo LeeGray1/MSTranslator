@@ -22,7 +22,6 @@ namespace LanguageService
         // Endpoints for Translator and Bing Spell Check
         public static readonly string TEXT_TRANSLATION_API_ENDPOINT = "https://api.cognitive.microsofttranslator.com/{0}?api-version=3.0";
         const string BING_SPELL_CHECK_API_ENDPOINT = "https://westus.api.cognitive.microsoft.com/bing/v7.0/spellcheck/";
-
         private string[] languageCodes;
         private string _connectionString;
         private string _containerName;
@@ -162,14 +161,27 @@ namespace LanguageService
             {
                 // Send request to get supported language codes
 
-                var languages = GetLanguagesForTranslate();
-                languageCodes = languages.Keys.ToArray();
-                foreach (var kv in languages)
+                var dictLanguage = GetLanguagesForTranslate();
+                languageCodes = dictLanguage.Keys.ToArray();
+                foreach (var kv in dictLanguage)
                 {
                     languageCodesAndTitles.Add(kv.Value["name"], kv.Key);
                 }
             }
             return languageCodesAndTitles[Language];
+        }
+
+        public string GetLanguageFromCode(string languageCode)
+        {
+            var dictLanguage = GetLanguagesForTranslate();
+
+            foreach (var kv in dictLanguage)
+            {
+                if (kv.Key == languageCode)
+                    return kv.Value["name"];
+                
+            }
+            return "";
         }
 
         public string UpdateTranslation(string SelectedWord, string Language, string NewTranslation)
@@ -328,7 +340,7 @@ namespace LanguageService
             if (textToTranslate == "" || fromLanguage == toLanguage)
             {
                 translation = textToTranslate;
-                return textToTranslate;
+                return translation;
             }
 
             fromLanguageCode = GetLanguageCode(fromLanguage);

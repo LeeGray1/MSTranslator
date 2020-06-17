@@ -54,26 +54,30 @@ namespace MSTranslatorDemo
         private async void TranslateButton_Click(object sender, RoutedEventArgs e)
         {
             string fromLanguage = FromLanguageComboBox.Text;
+
+            LanguageClass languageClass = new LanguageClass(blobConnectionString, containerName);
             
-
-            if (fromLanguage == "Detect")
-            {
-                fromLanguage = new LanguageClass(blobConnectionString, containerName).DetectLanguage(TextToTranslate.Text);
-
-                if (fromLanguage.Contains("Unable to confidently detect input language."))
+                if (fromLanguage == "Detect")
                 {
-                    MessageBox.Show("The source language could not be detected automatically " +
-                        "or is not supported for translation.", "Language detection failed",
-                        MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-            }
-            
-            var toLanguageCode = new LanguageClass(blobConnectionString, containerName).GetLanguageCode(ToLanguageComboBox.SelectedValue.ToString());
+                    string fromLanguageCode = languageClass.DetectLanguage(TextToTranslate.Text);
+                    fromLanguage = languageClass.GetLanguageFromCode(fromLanguageCode);
 
-            var textToTranslate = TextToTranslate.Text.Trim();
-            var translation = await new LanguageClass(blobConnectionString, containerName).translate(textToTranslate, ToLanguageComboBox.Text, fromLanguage);
-            TranslatedTextLabel.Text = translation;
+                    if (fromLanguage.Contains("Unable to confidently detect input language."))
+                    {
+                        MessageBox.Show("The source language could not be detected automatically " +
+                            "or is not supported for translation.", "Language detection failed",
+                            MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                }
+
+                var toLanguageCode = languageClass.GetLanguageCode(ToLanguageComboBox.SelectedValue.ToString());
+
+                var textToTranslate = TextToTranslate.Text.Trim();
+                var translation = await languageClass.translate(textToTranslate, ToLanguageComboBox.Text, fromLanguage);
+
+                TranslatedTextLabel.Text = translation;
+            
         }
     }
 }
