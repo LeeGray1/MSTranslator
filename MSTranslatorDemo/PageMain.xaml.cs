@@ -46,7 +46,7 @@ namespace MSTranslatorDemo
             ToLanguageComboBox.ItemsSource = new LanguageClass(blobConnectionString, containerName).FillLanguages();
             // Set default languages           
             ToLanguageComboBox.SelectedItem = "English";
-        }       
+        }
 
         private async void btnCreateInvoice_Click(object sender, RoutedEventArgs e)
         {
@@ -65,7 +65,7 @@ namespace MSTranslatorDemo
                 MessageBox.Show("Please select another language", "Translation not supported", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return;
             }
-            string HTMLstring = await new LanguageClass(blobConnectionString, containerName).ConvertXml2Html(OriginalxmlFile, ToLanguageComboBox.Text, Path.GetFileName(openFileDialog.FileName));
+            string HTMLstring = await new LanguageClass(blobConnectionString, containerName).ConvertXml2Html(OriginalxmlFile, ToLanguageComboBox.Text/*, Path.GetFileName(openFileDialog.FileName)*/);
 
             File.WriteAllText("eInvoice.html", HTMLstring);
             System.Diagnostics.Process.Start("eInvoice.html");

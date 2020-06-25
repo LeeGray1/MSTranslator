@@ -3,6 +3,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using LanguageService;
 using System.Threading.Tasks;
+using System.Net.Http;
+using System.Text;
 
 namespace UnitTestProject1
 {
@@ -11,6 +13,7 @@ namespace UnitTestProject1
     {
         const string blobConnectionString = "DefaultEndpointsProtocol=https;AccountName=mstranslation;AccountKey=DhlfSrT66vg/I5CwpD0WrpeviWp5jrv/eyPaSTt7Pe8I0rv1PJnD3j8I7gGyc8oP0Jxs1+OpaL0U8Ku7kjFlFQ==;EndpointSuffix=core.windows.net";
         const string containerName = "xsltstorage";
+        const string baseUri = "https://localhost:44330";
         [TestMethod]
         public void TestUpdateTranslation()
         {
@@ -18,24 +21,24 @@ namespace UnitTestProject1
             Assert.AreEqual(result.Substring(0, 5), "<?xml");
         }
 
-        [TestMethod]
-        public void TestDownloadAzure()
-        {
-            //string connectionString = "DefaultEndpointsProtocol=https;AccountName=translation;AccountKey=89/llb7VuT1vV2XHTQbusAOeau/rFvzilR+REqnMLtMsnqRw7VLc9eSpt3fXRBRxRAyRnLdQ31H7VcsZgmu2zg==;EndpointSuffix=core.windows.net";
-            //BlobContainerClient container = new BlobContainerClient(connectionString, "xsltstorage");
-            //var blockBlob = container.GetBlobClient("stylesheet-ubl v2.xslt");
-            //System.IO.MemoryStream ms = new System.IO.MemoryStream();
-            //ms.Position = 0;
-            //blockBlob.DownloadTo(ms);
-            //string file = System.Text.Encoding.ASCII.GetString(ms.ToArray());           
+        //[TestMethod]
+        //public void TestDownloadAzure()
+        //{
+        //    //string connectionString = "DefaultEndpointsProtocol=https;AccountName=translation;AccountKey=89/llb7VuT1vV2XHTQbusAOeau/rFvzilR+REqnMLtMsnqRw7VLc9eSpt3fXRBRxRAyRnLdQ31H7VcsZgmu2zg==;EndpointSuffix=core.windows.net";
+        //    //BlobContainerClient container = new BlobContainerClient(connectionString, "xsltstorage");
+        //    //var blockBlob = container.GetBlobClient("stylesheet-ubl v2.xslt");
+        //    //System.IO.MemoryStream ms = new System.IO.MemoryStream();
+        //    //ms.Position = 0;
+        //    //blockBlob.DownloadTo(ms);
+        //    //string file = System.Text.Encoding.ASCII.GetString(ms.ToArray());           
 
-            //Assert.IsTrue(true);
-        }
+        //    //Assert.IsTrue(true);
+        //}
 
         [TestMethod]
         public void TestUploadFile2Blob()
         {
-            string fileName = "cleaning services.xml";
+            string fileName = "Gujarati-cleaning services.xml";
             string filePath = @"..\..\..\MSTranslatordemo\";
             string file = File.ReadAllText(Path.Combine(filePath, fileName));
             
@@ -87,7 +90,7 @@ namespace UnitTestProject1
 
             string filePath = Path.GetFullPath(OriginalFullPathName);
             string OriginalxmlFile = File.ReadAllText(filePath);
-            Task<string> task = new LanguageService.LanguageClass(blobConnectionString, containerName).ConvertXml2Html(OriginalxmlFile, ToLanguage, filePath);
+            Task<string> task = new LanguageService.LanguageClass(blobConnectionString, containerName).ConvertXml2Html(OriginalxmlFile, ToLanguage);
             task.Wait();
             string HTMLstring = task.Result;
             File.WriteAllText("eInvoice.html", HTMLstring);
@@ -108,8 +111,62 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestGetXslt4Language()
         {
-            string result = new LanguageClass(blobConnectionString, containerName).GetXslt4Language("Hindi");
+            string result = new LanguageClass(blobConnectionString, containerName).GetXslt4Language("French");
             Assert.IsTrue(result.Substring(0, 5) == "<?xml");
         }
+
+        [TestMethod]
+        public void TestTranslate()
+        {
+            string textToTranslate = "Hello world";
+            string toLanguage = "German";
+            string fromLanguage = "English";
+            Task<string> translation = new LanguageClass(blobConnectionString, containerName).translate(textToTranslate, toLanguage, fromLanguage);
+
+            translation.Wait();
+            Assert.AreNotEqual(translation, "");
+        }
+
+        [TestMethod]
+        public void TestGetXml4Language()
+        {
+            string result = new LanguageClass(blobConnectionString, containerName).GetTranslatedXml("Finnish");
+            Assert.AreNotEqual(result, "");
+        }
+        #region Web API unit tests
+        [TestMethod]
+        public void TestDownloadXmlFromWebAPI()
+        {
+            string uri = "https://localhost:44330/api/";
+            string action =  "fileapi/gettranslatedxml/";
+            string parameter = "?language=French";
+            Task<bool> res = new CallWebApi().CallGetWebAPI(uri, action, parameter);
+            res.Wait();
+            Assert.IsTrue(res.Result);
+        }
+
+        [TestMethod]
+        public void TestUploadFileToWebAPI()
+        {
+            string uri = baseUri;
+            string route = "/api/fileapi/postfile/";
+            string requestBody = "{\"FileName\": \"Test2.txt\", \"FileContents\": \"This is another test\"}";
+            Task<bool> res = new CallWebApi().CallPostWebAPI(uri, route, requestBody);
+            res.Wait();
+            Assert.IsTrue(res.Result);
+        }
+
+        [TestMethod]
+        public void TestTranslateFileFromWebAPI()
+        {
+            string uri = baseUri;
+            string route = "/api/translate/";
+            string requestBody = "{\"ToLanguage\": \"French\", \"FromLanguage\": \"English\", \"TextToTranslate\": \"Hello\"}";
+            Task<bool> res = new CallWebApi().CallPostWebAPI(uri, route, requestBody);
+            res.Wait();
+            Assert.IsTrue(res.Result);
+        }
+
+        #endregion
     }
 }

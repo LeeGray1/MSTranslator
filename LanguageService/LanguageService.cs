@@ -18,7 +18,7 @@ namespace LanguageService
 {
     public class LanguageClass
     {
-        const string COGNITIVE_SERVICES_KEY = "7963c13bba1e4e60b4d872662401c746";
+        const string COGNITIVE_SERVICES_KEY = "d0cd93f3986e46ba8e6219e3740bf307";
         // Endpoints for Translator and Bing Spell Check
         public static readonly string TEXT_TRANSLATION_API_ENDPOINT = "https://api.cognitive.microsofttranslator.com/{0}?api-version=3.0";
         const string BING_SPELL_CHECK_API_ENDPOINT = "https://westus.api.cognitive.microsoft.com/bing/v7.0/spellcheck/";
@@ -244,7 +244,7 @@ namespace LanguageService
             // Create request to Detect languages with Translator
             HttpWebRequest detectLanguageWebRequest = (HttpWebRequest)WebRequest.Create(detectUri);
             detectLanguageWebRequest.Headers.Add("Ocp-Apim-Subscription-Key", COGNITIVE_SERVICES_KEY);
-            detectLanguageWebRequest.Headers.Add("Ocp-Apim-Subscription-Region", "westeurope");
+            detectLanguageWebRequest.Headers.Add("Ocp-Apim-Subscription-Region", "northeurope");
             detectLanguageWebRequest.ContentType = "application/json; charset=utf-8";
             detectLanguageWebRequest.Method = "POST";
 
@@ -360,7 +360,7 @@ namespace LanguageService
                 request.RequestUri = new Uri(uri);
                 request.Content = new StringContent(requestBody, Encoding.UTF8, "application/json");
                 request.Headers.Add("Ocp-Apim-Subscription-Key", COGNITIVE_SERVICES_KEY);
-                request.Headers.Add("Ocp-Apim-Subscription-Region", "westeurope");
+                request.Headers.Add("Ocp-Apim-Subscription-Region", "northeurope");
                 request.Headers.Add("X-ClientTraceId", Guid.NewGuid().ToString());
 
                 var response = await client.SendAsync(request);
@@ -427,7 +427,7 @@ namespace LanguageService
             //string labels2Translate = DownloadFileFromBlob("Labels2Translate.txt", connectionString, containerName);
 
             string getXmlStorageLocation = System.AppDomain.CurrentDomain.BaseDirectory;
-            return DownloadFileFromBlob(Path.Combine(getXmlStorageLocation, ToLanguage + "-" + "TranslatedFile.xml"));
+            return File.ReadAllText(Path.Combine(getXmlStorageLocation, ToLanguage + "-" + "TranslatedFile.xml"));
         }
 
         public string GetXslt4Language(string ToLanguage)
@@ -507,7 +507,7 @@ namespace LanguageService
 
         }
 
-        public async Task<string> ConvertXml2Html(string OriginalxmlFile, string ToLanguage, string FileName)
+        public async Task<string> ConvertXml2Html(string OriginalxmlFile, string ToLanguage)
         {
             string translatedXSLT = "";
             if (FileExistsInBlob(ToLanguage + "-stylesheet-ubl.xslt"))
@@ -621,7 +621,7 @@ namespace LanguageService
             blockBlob.Upload(stream, true);
         }
 
-        public string  DownloadFileFromBlob( string fileName)
+        public string DownloadFileFromBlob(string fileName)
         {
             BlobContainerClient container = new BlobContainerClient(_connectionString, _containerName);
             var blobClient = container.GetBlobClient(fileName);
