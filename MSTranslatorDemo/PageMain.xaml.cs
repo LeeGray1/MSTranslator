@@ -65,6 +65,9 @@ namespace MSTranslatorDemo
                 MessageBox.Show("Please select another language", "Translation not supported", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return;
             }
+            ToTranslate toTranslate = new ToTranslate();
+            toTranslate.TextToTranslate = OriginalxmlFile;
+            toTranslate.ToLanguage = ToLanguageComboBox.Text;
             string HTMLstring = await new LanguageClass(blobConnectionString, containerName).ConvertXml2Html(OriginalxmlFile, ToLanguageComboBox.Text/*, Path.GetFileName(openFileDialog.FileName)*/);
 
             File.WriteAllText("eInvoice.html", HTMLstring);
@@ -93,7 +96,7 @@ namespace MSTranslatorDemo
                 XML_File_txtbx.Text = "no file selected";
         }
 
-        private void btnSave_XML_Click(object sender, RoutedEventArgs e)
+        private async void btnSave_XML_Click(object sender, RoutedEventArgs e)
         {          
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.FileName = ToLanguageComboBox.Text + "-" + Path.GetFileName(openFileDialog.FileName);
@@ -101,8 +104,14 @@ namespace MSTranslatorDemo
             dlg.Filter = "XML eInvoice (.xml)|*.xml";
             if (dlg.ShowDialog() == true)
             {
-                string xmlfile = new LanguageClass(blobConnectionString, containerName).GetTranslatedXml(ToLanguageComboBox.Text);
-                File.WriteAllText(dlg.FileName, xmlfile);
+                string uri = "https://localhost:44330/";
+                string route = "api/fileapi/gettranslatedxml/";
+                string parameter = "?language=" + ToLanguageComboBox.Text;
+                string xmlFile = await new WebAPIHandler().GetStringFromWebAPI(uri, route, parameter);
+                //xmlFile.Wait();
+
+                //string xmlfile = new LanguageClass(blobConnectionString, containerName).GetTranslatedXml(ToLanguageComboBox.Text);
+                File.WriteAllText(dlg.FileName, xmlFile);
             }
         }
 

@@ -5,6 +5,7 @@ using LanguageService;
 using System.Threading.Tasks;
 using System.Net.Http;
 using System.Text;
+using System.Collections.Generic;
 
 namespace UnitTestProject1
 {
@@ -133,6 +134,14 @@ namespace UnitTestProject1
             string result = new LanguageClass(blobConnectionString, containerName).GetTranslatedXml("Finnish");
             Assert.AreNotEqual(result, "");
         }
+
+        [TestMethod]
+        public void TestFillLanguages()
+        {
+            List<string> result = new LanguageClass(blobConnectionString, containerName).FillLanguages();
+            Assert.AreNotEqual(result, "");
+            
+        }
         #region Web API unit tests
         [TestMethod]
         public void TestDownloadXmlFromWebAPI()
@@ -140,9 +149,9 @@ namespace UnitTestProject1
             string uri = "https://localhost:44330/api/";
             string action =  "fileapi/gettranslatedxml/";
             string parameter = "?language=French";
-            Task<bool> res = new CallWebApi().CallGetWebAPI(uri, action, parameter);
+            Task<string> res = new CallWebApi().GetStringFromWebAPI(uri, action, parameter);
             res.Wait();
-            Assert.IsTrue(res.Result);
+            Assert.IsTrue(res.Result.Contains("xml"));
         }
 
         [TestMethod]
@@ -165,6 +174,21 @@ namespace UnitTestProject1
             Task<bool> res = new CallWebApi().CallPostWebAPI(uri, route, requestBody);
             res.Wait();
             Assert.IsTrue(res.Result);
+        }
+
+        [TestMethod]
+        public void TestConvertXml2Html()
+        {
+            string uri = baseUri;
+            string route = "/api/convertxml2html";
+
+            string OriginalxmlFile = File.ReadAllText(@"..\..\..\MSTranslatordemo\cleaning services.xml");
+            ToTranslate toTranslate = new ToTranslate();
+            toTranslate.ToLanguage = "Greek";
+            toTranslate.FromLanguage = "English";
+            toTranslate.TextToTranslate = OriginalxmlFile;
+            Task<string> res = new CallWebApi().PostWebAPIToTranslate(uri, route, toTranslate);
+            Assert.AreNotEqual(res, "");
         }
 
         #endregion
