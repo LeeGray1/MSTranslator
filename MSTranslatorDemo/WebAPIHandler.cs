@@ -9,18 +9,23 @@ namespace MSTranslatorDemo
 {
     public class WebAPIHandler
     {
+        private HttpClient _client = new HttpClient();
+        public WebAPIHandler(HttpClient httpClient)
+        {
+            _client = httpClient;
+        }
         public async Task<string> GetStringFromWebAPI(string baseUri, string route, string parameter)
         {
             string uri = baseUri + route + parameter;
 
-            using (var client = new HttpClient())
+            //using (var _client = new HttpClient())
             using (var request = new HttpRequestMessage())
             {
                 request.Method = HttpMethod.Get;
                 request.RequestUri = new Uri(uri);
 
 
-                var response = await client.SendAsync(request);
+                var response = await _client.SendAsync(request);
                 var responseBody = await response.Content.ReadAsStringAsync();
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
@@ -31,10 +36,10 @@ namespace MSTranslatorDemo
             return "";
         }
 
-        public async Task<bool> CallPostWebAPI(string baseUri, string action, string requestBody)
+        public async Task<string> CallPostWebAPI(string baseUri, string action, string requestBody)
         {
             string uri = baseUri + action;
-            using (var client = new HttpClient())
+            //using (var _client = new HttpClient())
             using (var request = new HttpRequestMessage())
             {
 
@@ -43,16 +48,16 @@ namespace MSTranslatorDemo
                 request.Content = new StringContent(requestBody, Encoding.UTF8, "application/json");
 
 
-                var response = await client.SendAsync(request);
+                var response = await _client.SendAsync(request);
                 var responseBody = await response.Content.ReadAsStringAsync();
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
-                    return true;
+                    return responseBody;
                 }
 
 
             }
-            return false;
+            return "";
         }
     }
 }

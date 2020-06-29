@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.Text;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace UnitTestProject1
 {
@@ -187,8 +188,22 @@ namespace UnitTestProject1
             toTranslate.ToLanguage = "Greek";
             toTranslate.FromLanguage = "English";
             toTranslate.TextToTranslate = OriginalxmlFile;
-            Task<string> res = new CallWebApi().PostWebAPIToTranslate(uri, route, toTranslate);
-            Assert.AreNotEqual(res, "");
+            Task<string> res = new CallWebApi().PostWebAPIToTranslate<ToTranslate>(uri, route, toTranslate);
+            res.Wait();
+            File.WriteAllText("eInvoice.html", res.Result);
+            System.Diagnostics.Process.Start("eInvoice.html");
+            Assert.AreNotEqual(res.Result, "");
+        }
+
+        [TestMethod]
+        public void TestDownloadxslt()
+        {           
+            string uri = "https://localhost:44330/api/";
+            string route = "fileapi/xsltfile/";
+            string parameter = "?language=French";
+            Task<string> res = new CallWebApi().CallGetWebAPI(uri, route, parameter);
+            res.Wait();
+            Assert.AreNotEqual(res.Result, "");
         }
 
         #endregion

@@ -32,7 +32,7 @@ namespace UnitTestProject1
             return "";
         }
 
-        public async Task<bool> CallGetWebAPI(string baseUri, string route, string parameter)
+        public async Task<string> CallGetWebAPI(string baseUri, string route, string parameter)
         {
             string uri = baseUri + route + parameter;
 
@@ -47,11 +47,11 @@ namespace UnitTestProject1
                 var responseBody = await response.Content.ReadAsStringAsync();
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
-                    return true;
+                    return responseBody;
                 }
 
             }
-            return false;
+            return "";
         }
 
         public async Task<bool> CallPostWebAPI(string baseUri, string action, string requestBody)
@@ -78,28 +78,29 @@ namespace UnitTestProject1
             return false;
         }
 
-        public async Task<string> PostWebAPIToTranslate(string baseUri, string action, ToTranslate toTranslate)
+        public async Task<string> PostWebAPIToTranslate<T>(string baseUri, string route, T jsonObject)
         {
-            string uri = baseUri + action;
+            string responseBody = null;
+            string uri = baseUri + route;
             using (var client = new HttpClient())
             using (var request = new HttpRequestMessage())
             {
 
                 request.Method = HttpMethod.Post;
                 request.RequestUri = new Uri(uri);
-                request.Content = new StringContent(JsonConvert.SerializeObject(toTranslate), Encoding.UTF8, "application/json");
+                request.Content = new StringContent(JsonConvert.SerializeObject(jsonObject), Encoding.UTF8, "application/json");
 
 
                 var response = await client.SendAsync(request);
-                var responseBody = await response.Content.ReadAsStringAsync();
+                responseBody = await response.Content.ReadAsStringAsync();
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
-                    return responseBody;
+                    return  responseBody;
                 }
 
 
             }
-            return "";
+            return responseBody;
         }
     }
 }

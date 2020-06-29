@@ -32,6 +32,7 @@ namespace MSTranslatorDemo
     {
         const string blobConnectionString = "DefaultEndpointsProtocol=https;AccountName=mstranslation;AccountKey=DhlfSrT66vg/I5CwpD0WrpeviWp5jrv/eyPaSTt7Pe8I0rv1PJnD3j8I7gGyc8oP0Jxs1+OpaL0U8Ku7kjFlFQ==;EndpointSuffix=core.windows.net";
         const string containerName = "xsltstorage";
+        HttpClient httpClient = new HttpClient();
         public PageMain()
         {
             InitializeComponent();
@@ -68,7 +69,7 @@ namespace MSTranslatorDemo
             ToTranslate toTranslate = new ToTranslate();
             toTranslate.TextToTranslate = OriginalxmlFile;
             toTranslate.ToLanguage = ToLanguageComboBox.Text;
-            string HTMLstring = await new LanguageClass(blobConnectionString, containerName).ConvertXml2Html(OriginalxmlFile, ToLanguageComboBox.Text/*, Path.GetFileName(openFileDialog.FileName)*/);
+            string HTMLstring = await new LanguageClass(blobConnectionString, containerName).ConvertXml2Html(OriginalxmlFile, ToLanguageComboBox.Text);
 
             File.WriteAllText("eInvoice.html", HTMLstring);
             System.Diagnostics.Process.Start("eInvoice.html");
@@ -107,7 +108,7 @@ namespace MSTranslatorDemo
                 string uri = "https://localhost:44330/";
                 string route = "api/fileapi/gettranslatedxml/";
                 string parameter = "?language=" + ToLanguageComboBox.Text;
-                string xmlFile = await new WebAPIHandler().GetStringFromWebAPI(uri, route, parameter);
+                string xmlFile = await new WebAPIHandler(httpClient).GetStringFromWebAPI(uri, route, parameter);
                 //xmlFile.Wait();
 
                 //string xmlfile = new LanguageClass(blobConnectionString, containerName).GetTranslatedXml(ToLanguageComboBox.Text);
