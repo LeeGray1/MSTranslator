@@ -206,6 +206,21 @@ namespace UnitTestProject1
             Assert.AreNotEqual(res.Result, "");
         }
 
+        [TestMethod]
+        public void TestGetTranslation()
+        {
+            string uri = baseUri;
+            string route = "/api/gettranslation";
+
+            ToTranslate toTranslate = new ToTranslate();
+            toTranslate.ToLanguage = "german";
+            toTranslate.FromLanguage = "English";
+            toTranslate.TextToTranslate = "Invoice";
+            Task<string> res = new CallWebApi().PostWebAPIToTranslate<ToTranslate>(uri, route, toTranslate);
+            res.Wait();          
+            Assert.AreEqual(res.Result, "Rechnung");
+        }
+
         #endregion
     }
 }

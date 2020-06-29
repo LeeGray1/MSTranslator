@@ -132,7 +132,7 @@ namespace LanguageService
             string xsltFileName = SelectedLanguage + "-stylesheet-ubl.xslt";
 
             string languageCode = GetLanguageCode(SelectedLanguage);
-            string xsltFile = File.ReadAllText(xsltFileName);
+            string xsltFile = DownloadFileFromBlob(xsltFileName);
             int ot, st, et, intLabelStart, intCodeStart;
 
             intLabelStart = xsltFile.IndexOf("<xsl:variable name=\"labels\">");

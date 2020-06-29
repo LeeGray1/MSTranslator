@@ -32,6 +32,7 @@ namespace MSTranslatorDemo
     {
         const string blobConnectionString = "DefaultEndpointsProtocol=https;AccountName=mstranslation;AccountKey=DhlfSrT66vg/I5CwpD0WrpeviWp5jrv/eyPaSTt7Pe8I0rv1PJnD3j8I7gGyc8oP0Jxs1+OpaL0U8Ku7kjFlFQ==;EndpointSuffix=core.windows.net";
         const string containerName = "xsltstorage";
+        const string baseUri = "https://localhost:44330/";
         HttpClient httpClient = new HttpClient();
         public PageMain()
         {
@@ -69,8 +70,10 @@ namespace MSTranslatorDemo
             ToTranslate toTranslate = new ToTranslate();
             toTranslate.TextToTranslate = OriginalxmlFile;
             toTranslate.ToLanguage = ToLanguageComboBox.Text;
-            string HTMLstring = await new LanguageClass(blobConnectionString, containerName).ConvertXml2Html(OriginalxmlFile, ToLanguageComboBox.Text);
-
+            //string HTMLstring = await new LanguageClass(blobConnectionString, containerName).ConvertXml2Html(OriginalxmlFile, ToLanguageComboBox.Text);
+            string uri = baseUri;
+            string route = "/api/convertxml2html";
+            string HTMLstring = await new WebAPIHandler(httpClient).PostWebAPIToTranslate<ToTranslate>(uri, route, toTranslate);
             File.WriteAllText("eInvoice.html", HTMLstring);
             System.Diagnostics.Process.Start("eInvoice.html");
 
@@ -105,7 +108,7 @@ namespace MSTranslatorDemo
             dlg.Filter = "XML eInvoice (.xml)|*.xml";
             if (dlg.ShowDialog() == true)
             {
-                string uri = "https://localhost:44330/";
+                string uri = baseUri;
                 string route = "api/fileapi/gettranslatedxml/";
                 string parameter = "?language=" + ToLanguageComboBox.Text;
                 string xmlFile = await new WebAPIHandler(httpClient).GetStringFromWebAPI(uri, route, parameter);
@@ -116,7 +119,7 @@ namespace MSTranslatorDemo
             }
         }
 
-        private void btnSaveXSLT_Click(object sender, RoutedEventArgs e)
+        private async void btnSaveXSLT_Click(object sender, RoutedEventArgs e)
         {
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.FileName = ToLanguageComboBox.Text + "-stylesheet-ubl.xslt";
@@ -124,8 +127,13 @@ namespace MSTranslatorDemo
             dlg.Filter = "xslt Stylesheet (.xslt)|*.xslt";
             if (dlg.ShowDialog() == true)
             {
-                string xsltfile = new LanguageClass(blobConnectionString, containerName).GetXslt4Language(ToLanguageComboBox.Text);
-                File.WriteAllText(dlg.FileName, xsltfile);
+                string uri = baseUri;
+                string route = "api/fileapi/xsltfile/";
+                string parameter = "?language=French";
+                string xsltFile = await new WebAPIHandler(httpClient).CallGetXsltFromWebAPI(uri, route, parameter);
+                //res.Wait();
+                //string xsltfile = new LanguageClass(blobConnectionString, containerName).GetXslt4Language(ToLanguageComboBox.Text);
+                File.WriteAllText(dlg.FileName, xsltFile);
             }
         }
     }
