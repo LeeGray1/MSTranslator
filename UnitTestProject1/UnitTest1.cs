@@ -19,8 +19,9 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestUpdateTranslation()
         {
-            string result = new LanguageClass(blobConnectionString, containerName).UpdateTranslation("delivery", "German","Evergreens");
-            Assert.AreEqual(result.Substring(0, 5), "<?xml");
+            Task<string> translation = new LanguageClass(blobConnectionString, containerName).UpdateTranslation("delivery", "German","Evergreens");
+            translation.Wait();
+            Assert.AreEqual(translation.Result.Substring(0, 5), "<?xml");
         }
 
         //[TestMethod]
@@ -184,11 +185,11 @@ namespace UnitTestProject1
             string route = "/api/convertxml2html";
 
             string OriginalxmlFile = File.ReadAllText(@"..\..\..\MSTranslatordemo\cleaning services.xml");
-            ToTranslate toTranslate = new ToTranslate();
+            ToTranslateTest toTranslate = new ToTranslateTest();
             toTranslate.ToLanguage = "Greek";
             toTranslate.FromLanguage = "English";
             toTranslate.TextToTranslate = OriginalxmlFile;
-            Task<string> res = new CallWebApi().PostWebAPIToTranslate<ToTranslate>(uri, route, toTranslate);
+            Task<string> res = new CallWebApi().PostWebAPIToTranslate<ToTranslateTest>(uri, route, toTranslate);
             res.Wait();
             File.WriteAllText("eInvoice.html", res.Result);
             System.Diagnostics.Process.Start("eInvoice.html");
@@ -212,13 +213,28 @@ namespace UnitTestProject1
             string uri = baseUri;
             string route = "/api/gettranslation";
 
-            ToTranslate toTranslate = new ToTranslate();
+            ToTranslateTest toTranslate = new ToTranslateTest();
             toTranslate.ToLanguage = "german";
             toTranslate.FromLanguage = "English";
             toTranslate.TextToTranslate = "Invoice";
-            Task<string> res = new CallWebApi().PostWebAPIToTranslate<ToTranslate>(uri, route, toTranslate);
+            Task<string> res = new CallWebApi().PostWebAPIToTranslate<ToTranslateTest>(uri, route, toTranslate);
             res.Wait();          
             Assert.AreEqual(res.Result, "Rechnung");
+        }
+
+        [TestMethod]
+        public void TestUpdateTranslationAPI()
+        {
+            string uri = baseUri;
+            string route = "/api/gettranslation/update";
+
+            UpdateTranslation updateTranslation  = new UpdateTranslation();
+            updateTranslation.Language = "german";
+            updateTranslation.SelectedWord = "Hallo";
+            updateTranslation.TranslatedWord = "Halloo";
+            Task<string> res = new CallWebApi().PostWebAPIToTranslate<UpdateTranslation>(uri, route, updateTranslation);
+            res.Wait();
+            Assert.AreEqual(res.Result, "Halloo");
         }
 
         #endregion

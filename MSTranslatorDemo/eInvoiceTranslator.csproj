@@ -99,7 +99,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ToTranslate.cs" />
     <Compile Include="WebAPIHandler.cs" />
     <Compile Include="PageMain.xaml.cs">
       <DependentUpon>PageMain.xaml</DependentUpon>
@@ -110,7 +109,6 @@
     <Compile Include="PageTest.xaml.cs">
       <DependentUpon>PageTest.xaml</DependentUpon>
     </Compile>
-    <Compile Include="translate.cs" />
     <Compile Include="WindowStart.xaml.cs">
       <DependentUpon>WindowStart.xaml</DependentUpon>
     </Compile>

@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -26,6 +27,8 @@ namespace MSTranslatorDemo
     {
         const string blobConnectionString = "DefaultEndpointsProtocol=https;AccountName=mstranslation;AccountKey=DhlfSrT66vg/I5CwpD0WrpeviWp5jrv/eyPaSTt7Pe8I0rv1PJnD3j8I7gGyc8oP0Jxs1+OpaL0U8Ku7kjFlFQ==;EndpointSuffix=core.windows.net";
         const string containerName = "xsltstorage";
+        const string baseUri = "https://localhost:44330/";
+        HttpClient httpClient = new HttpClient();
         public PageSettings()
         {
             InitializeComponent();
@@ -52,8 +55,15 @@ namespace MSTranslatorDemo
         }
         private void cmbWord_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            txtTranslation.Text = new LanguageClass(blobConnectionString, containerName).GetTranslation((string)cmbWord.SelectedItem, (string)cmbLanguage.SelectedItem);
-            if (txtTranslation.Text == "")
+            string uri = baseUri;
+            string route = "/api/gettranslation";
+            ToTranslate toTranslate = new ToTranslate();
+            toTranslate.ToLanguage = (string)cmbLanguage.SelectedItem;
+            toTranslate.TextToTranslate = (string)cmbWord.SelectedItem;
+           Task<string> txtTranslation = new WebAPIHandler(httpClient).PostWebAPIToTranslate<ToTranslate>(uri, route, toTranslate);
+
+            //txtTranslation.Text = new LanguageClass(blobConnectionString, containerName).GetTranslation((string)cmbWord.SelectedItem, (string)cmbLanguage.SelectedItem);
+            if (txtTranslation == null)
             {
                 btnSave.IsEnabled = false;
             }
@@ -64,14 +74,14 @@ namespace MSTranslatorDemo
         {
             
             string selectedWord = (string)cmbWord.SelectedItem;
-           string result = new LanguageClass(blobConnectionString, containerName).UpdateTranslation(selectedWord, (string)cmbLanguage.SelectedItem, txtTranslation.Text);
+            Task<string> result = new LanguageClass(blobConnectionString, containerName).UpdateTranslation(selectedWord, (string)cmbLanguage.SelectedItem, txtTranslation.Text);
             
-            if (result == "")
+            if (result == null)
             {
                 MessageBox.Show("Missing word to translate", "Not saved", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        private void btnDownload_Click(object sender, RoutedEventArgs e)
+        private async void btnDownload_Click(object sender, RoutedEventArgs e)
         {
 
             SaveFileDialog dlg = new SaveFileDialog();
@@ -80,8 +90,13 @@ namespace MSTranslatorDemo
             dlg.Filter = "xslt Stylesheet (.xslt)|*.xslt";
             if (dlg.ShowDialog() == true)
             {
-                string xsltfile = new LanguageClass(blobConnectionString, containerName).GetXslt4Language(cmbLanguage.Text);
-                File.WriteAllText(dlg.FileName, xsltfile);
+                string uri = baseUri;
+                string route = "api/fileapi/xsltfile/";
+                string parameter = "?language=French";
+                string xsltFile = await new WebAPIHandler(httpClient).CallGetXsltFromWebAPI(uri, route, parameter);
+                //res.Wait();
+                //string xsltfile = new LanguageClass(blobConnectionString, containerName).GetXslt4Language(ToLanguageComboBox.Text);
+                File.WriteAllText(dlg.FileName, xsltFile);
             }
         }
         private void cmbLanguage_SelectionChanged(object sender, SelectionChangedEventArgs e)

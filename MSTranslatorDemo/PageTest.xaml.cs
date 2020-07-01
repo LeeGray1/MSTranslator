@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,6 +24,8 @@ namespace MSTranslatorDemo
     {
         const string blobConnectionString = "DefaultEndpointsProtocol=https;AccountName=mstranslation;AccountKey=DhlfSrT66vg/I5CwpD0WrpeviWp5jrv/eyPaSTt7Pe8I0rv1PJnD3j8I7gGyc8oP0Jxs1+OpaL0U8Ku7kjFlFQ==;EndpointSuffix=core.windows.net";
         const string containerName = "xsltstorage";
+        const string baseUri = "https://localhost:44330/";
+        HttpClient httpClient = new HttpClient();
         const string COGNITIVE_SERVICES_KEY = "7963c13bba1e4e60b4d872662401c746";
         // Endpoints for Translator and Bing Spell Check
         public static readonly string TEXT_TRANSLATION_API_ENDPOINT = "https://api.cognitive.microsofttranslator.com/{0}?api-version=3.0";
@@ -74,8 +77,14 @@ namespace MSTranslatorDemo
                 var toLanguageCode = languageClass.GetLanguageCode(ToLanguageComboBox.SelectedValue.ToString());
 
                 var textToTranslate = TextToTranslate.Text.Trim();
-                var translation = await languageClass.translate(textToTranslate, ToLanguageComboBox.Text, fromLanguage);
-
+               // var translation = await languageClass.translate(textToTranslate, ToLanguageComboBox.Text, fromLanguage);
+                string uri = baseUri;
+                string route = "api/translate";
+                ToTranslate toTranslate = new ToTranslate();
+                toTranslate.ToLanguage = ToLanguageComboBox.Text;
+                toTranslate.TextToTranslate = textToTranslate;
+                toTranslate.FromLanguage = fromLanguage;
+                var translation =await new WebAPIHandler(httpClient).PostWebAPI2TranslateText<ToTranslate>(uri, route, toTranslate);
                 TranslatedTextLabel.Text = translation;
             
         }

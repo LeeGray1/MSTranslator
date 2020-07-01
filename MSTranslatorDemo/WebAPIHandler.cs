@@ -107,5 +107,30 @@ namespace MSTranslatorDemo
             }
             return responseBody;
         }
+
+        public async Task<string> PostWebAPI2TranslateText<T>(string baseUri, string route, T jsonObject)
+        {
+            string responseBody = null;
+            string uri = baseUri + route;
+            using (var client = new HttpClient())
+            using (var request = new HttpRequestMessage())
+            {
+
+                request.Method = HttpMethod.Post;
+                request.RequestUri = new Uri(uri);
+                request.Content = new StringContent(JsonConvert.SerializeObject(jsonObject), Encoding.UTF8, "application/json");
+
+
+                var response = await client.SendAsync(request);
+                responseBody = await response.Content.ReadAsStringAsync();
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    return responseBody;
+                }
+
+
+            }
+            return responseBody;
+        }
     }
 }

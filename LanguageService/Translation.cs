@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace MSTranslatorDemo
+namespace LanguageService
 {
+    public class Translation
+    {
+        public string TranslatedText { get; set; }
+        public string Language { get; set; }
+    }
+
     public class ToTranslate
     {
         public string ToLanguage { get; set; }

@@ -184,7 +184,7 @@ namespace LanguageService
             return "";
         }
 
-        public string UpdateTranslation(string SelectedWord, string Language, string NewTranslation)
+        public async Task<string> UpdateTranslation(string SelectedWord, string Language, string NewTranslation)
         {
             string languageCode = GetLanguageCode(Language);
             string xsltFileName = Language + "-stylesheet-ubl.xslt";
