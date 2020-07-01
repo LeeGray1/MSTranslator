@@ -184,11 +184,11 @@ namespace LanguageService
             return "";
         }
 
-        public async Task<string> UpdateTranslation(string SelectedWord, string Language, string NewTranslation)
+        public string UpdateTranslation(string SelectedWord, string Language, string NewTranslation)
         {
             string languageCode = GetLanguageCode(Language);
             string xsltFileName = Language + "-stylesheet-ubl.xslt";
-            string xsltFile = File.ReadAllText(xsltFileName);
+            string xsltFile = DownloadFileFromBlob(xsltFileName);
             int ot, st, et, intLabelStart, intCodeStart;
             string string2replace, newstring;
 
@@ -211,7 +211,7 @@ namespace LanguageService
                 string2replace = xsltFile.Substring(st, et - st + 4);
                 newstring = "<t id=\"" + languageCode + "\">" + NewTranslation + "</t>";
                 xsltFile = xsltFile.Replace(string2replace, newstring);
-                File.WriteAllText(xsltFileName, xsltFile);
+                UploadFileToBlob(xsltFile, xsltFileName);
 
             }
 

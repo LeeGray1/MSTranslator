@@ -53,29 +53,35 @@ namespace MSTranslatorDemo
                 cmbLanguage.ItemsSource = new LanguageClass(blobConnectionString, containerName).DeleteXsltFile(cmbLanguage.SelectedItem.ToString());
             }
         }
-        private void cmbWord_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void cmbWord_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string uri = baseUri;
             string route = "/api/gettranslation";
             ToTranslate toTranslate = new ToTranslate();
             toTranslate.ToLanguage = (string)cmbLanguage.SelectedItem;
             toTranslate.TextToTranslate = (string)cmbWord.SelectedItem;
-           Task<string> txtTranslation = new WebAPIHandler(httpClient).PostWebAPIToTranslate<ToTranslate>(uri, route, toTranslate);
+            TxtTranslation.Text = await new WebAPIHandler(httpClient).PostWebAPIToTranslate<ToTranslate>(uri, route, toTranslate);
 
             //txtTranslation.Text = new LanguageClass(blobConnectionString, containerName).GetTranslation((string)cmbWord.SelectedItem, (string)cmbLanguage.SelectedItem);
-            if (txtTranslation == null)
+            if (String.IsNullOrEmpty(TxtTranslation.Text))
             {
                 btnSave.IsEnabled = false;
             }
             else
                 btnSave.IsEnabled = true;
         }
-        private void btnSave_Click(object sender, RoutedEventArgs e)
+        private async void btnSave_Click(object sender, RoutedEventArgs e)
         {
             
             string selectedWord = (string)cmbWord.SelectedItem;
-            Task<string> result = new LanguageClass(blobConnectionString, containerName).UpdateTranslation(selectedWord, (string)cmbLanguage.SelectedItem, txtTranslation.Text);
-            
+            string uri = baseUri;
+            string route = "api/updateTranslation";
+            UpdateTranslation updateTranslation = new UpdateTranslation();
+            updateTranslation.SelectedWord = selectedWord;
+            updateTranslation.Language = (string)cmbLanguage.SelectedItem;
+            updateTranslation.TranslatedWord = TxtTranslation.Text;
+            //Task<string> result = new LanguageClass(blobConnectionString, containerName).UpdateTranslation(selectedWord, (string)cmbLanguage.SelectedItem, txtTranslation.Text);
+            string result = await new WebAPIHandler(httpClient).PostWebAPI2TranslateText<UpdateTranslation>(uri, route, updateTranslation);
             if (result == null)
             {
                 MessageBox.Show("Missing word to translate", "Not saved", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -102,7 +108,7 @@ namespace MSTranslatorDemo
         private void cmbLanguage_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             btnSave.IsEnabled = false;
-            txtTranslation.Text = "";
+            TxtTranslation.Text = "";
             btnDownload.IsEnabled = true;
             btnDelete.IsEnabled = true;
         }
