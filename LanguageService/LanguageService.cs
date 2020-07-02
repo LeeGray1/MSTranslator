@@ -35,25 +35,40 @@ namespace LanguageService
         //Gets current translated xslt files for page settings
         public List<string> GetTranslatedXsltLanguages()
         {
+            BlobContainerClient container = new BlobContainerClient(_connectionString, _containerName);
+            var list = container.GetBlobs();
+            var blobs = list.Where(b => Path.GetExtension(b.Name).Equals(".xslt"));
+
             List<string> LanguageList = new List<string>();
-
-            string localFolder = System.AppDomain.CurrentDomain.BaseDirectory;
-            DirectoryInfo dirInfo = new DirectoryInfo(localFolder);
-            FileInfo[] info = dirInfo.GetFiles("*.xslt");
-
             int st;
-            //collects a list of languages
-            foreach (FileInfo f in info)
+            foreach (var f in blobs)
             {
+                string name = f.Name;
                 st = f.Name.IndexOf("-stylesheet");
                 if (st != -1)
                 {
 
                     LanguageList.Add(f.Name.Substring(0, st));
                 }
-
-
             }
+
+            //string localFolder = System.AppDomain.CurrentDomain.BaseDirectory;
+            //DirectoryInfo dirInfo = new DirectoryInfo(localFolder);
+            //FileInfo[] info = dirInfo.GetFiles("*.xslt");
+
+            //int st;
+            ////collects a list of languages
+            //foreach (FileInfo f in info)
+            //{
+            //    st = f.Name.IndexOf("-stylesheet");
+            //    if (st != -1)
+            //    {
+
+            //        LanguageList.Add(f.Name.Substring(0, st));
+            //    }
+
+
+            //}
             //Returns a list of languages
             return LanguageList;
 
@@ -113,14 +128,13 @@ namespace LanguageService
         public List<string> DeleteXsltFile(string Language)
         {
             List<string> list = null;
-            {
-                string fileName2Delete = Language + "-stylesheet-ubl.xslt";
-                string localFolder = System.AppDomain.CurrentDomain.BaseDirectory;
-                string file2Delete = System.IO.Path.Combine(localFolder, fileName2Delete);
-                File.Delete(file2Delete);
-
-
-            }
+            
+            string fileName = Language + "-stylesheet-ubl.xslt";
+            //string localFolder = System.AppDomain.CurrentDomain.BaseDirectory;
+            //string file2Delete = System.IO.Path.Combine(localFolder, fileName);
+            //File.Delete(file2Delete);
+            DeleteFileFromBlob(fileName);                
+            
             list = GetTranslatedXsltLanguages();
             //returns a list of translated xslt files after deleting the chosen file 
             return list;
@@ -636,6 +650,16 @@ namespace LanguageService
        
         }
 
+        public bool DeleteFileFromBlob(string fileName)
+        {
+            BlobContainerClient container = new BlobContainerClient(_connectionString, _containerName);
+            var blobClient = container.GetBlobClient(fileName);            
+
+            bool result = blobClient.DeleteIfExists();
+
+            return result;
+        }
+
         public bool FileExistsInBlob(string fileName)
         {
             bool foundIt = false;
@@ -653,8 +677,6 @@ namespace LanguageService
             }
 
             return foundIt;
-            
-
         }
        
 }

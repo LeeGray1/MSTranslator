@@ -19,9 +19,9 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestUpdateTranslation()
         {
-            Task<string> translation = new LanguageClass(blobConnectionString, containerName).UpdateTranslation("delivery", "German","Evergreens");
-            translation.Wait();
-            Assert.AreEqual(translation.Result.Substring(0, 5), "<?xml");
+            string translation = new LanguageClass(blobConnectionString, containerName).UpdateTranslation("delivery", "German", "Evergreens");
+            //translation.Wait();
+            Assert.AreEqual(translation.Substring(0, 5), "<?xml");
         }
 
         //[TestMethod]
@@ -83,6 +83,21 @@ namespace UnitTestProject1
             string fileContents = new LanguageService.LanguageClass(blobConnectionString, containerName).DownloadFileFromBlob(fileName);
             Assert.IsTrue(fileContents.Substring(0, 5) == "<?xml");
 
+        }
+
+        [TestMethod]
+        public void TestGetTranslatedXsltLanguages()
+        {
+            List<string> languageList = new LanguageClass(blobConnectionString, containerName).GetTranslatedXsltLanguages();
+            Assert.IsTrue(languageList.Count > 0);
+        }
+
+        [TestMethod]
+        public void TestDeleteFile()
+        {
+            string fileName = "german-stylesheet-ubl.xslt";
+            bool result = new LanguageClass(blobConnectionString, containerName).DeleteFileFromBlob(fileName);
+            Assert.AreNotEqual(result, fileName);
         }
 
         [TestMethod]
@@ -151,7 +166,7 @@ namespace UnitTestProject1
             string uri = "https://localhost:44330/api/";
             string action =  "fileapi/gettranslatedxml/";
             string parameter = "?language=French";
-            Task<string> res = new CallWebApi().GetStringFromWebAPI(uri, action, parameter);
+            Task<string> res = new CallWebApi().CallGetWebAPI(uri, action, parameter);
             res.Wait();
             Assert.IsTrue(res.Result.Contains("xml"));
         }
@@ -235,6 +250,17 @@ namespace UnitTestProject1
             Task<string> res = new CallWebApi().PostWebAPIToTranslate<UpdateTranslation>(uri, route, updateTranslation);
             res.Wait();
             Assert.AreEqual(res.Result, "Halloo");
+        }
+
+        [TestMethod]
+        public void TestDeletexsltAPI()
+        {
+            string uri = baseUri;
+            string route = "/api/fileapi/deletexslt";
+            string parameter = "/?language=German";
+            Task<List<string>> list = new CallWebApi().DeleteFromWebAPI<List<string>>(uri, route, parameter);
+            list.Wait();
+            Assert.IsTrue(list.Result.Count > 0);
         }
 
         #endregion

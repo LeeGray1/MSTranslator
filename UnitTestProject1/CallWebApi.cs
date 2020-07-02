@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,26 +11,31 @@ namespace UnitTestProject1
 {
     public class CallWebApi
     {
-        public async Task<string> GetStringFromWebAPI(string baseUri, string route, string parameter)
+        public async Task<T> DeleteFromWebAPI<T>(string baseUri, string route, string parameter)
         {
             string uri = baseUri + route + parameter;
-
+            object jsonObject = null;
             using (var client = new HttpClient())
             using (var request = new HttpRequestMessage())
             {
-                request.Method = HttpMethod.Get;
+                request.Method = HttpMethod.Delete;
                 request.RequestUri = new Uri(uri);
+
+                //request.Content = new StringContent(JsonConvert.SerializeObject(jsonObject), Encoding.UTF8, "application/json");
 
 
                 var response = await client.SendAsync(request);
                 var responseBody = await response.Content.ReadAsStringAsync();
+                T t = JsonConvert.DeserializeObject<T>(responseBody);
+                //T t = (T)Convert.ChangeType(jsonObject, typeof(T));
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
-                    return responseBody;
+                    return t;
                 }
 
+
             }
-            return "";
+            return default(T);
         }
 
         public async Task<string> CallGetWebAPI(string baseUri, string route, string parameter)

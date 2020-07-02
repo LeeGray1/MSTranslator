@@ -15,6 +15,32 @@ namespace MSTranslatorDemo
         {
             _client = httpClient;
         }
+
+        public async Task<T> DeleteFromWebAPI<T>(string baseUri, string route, string parameter)
+        {
+            string uri = baseUri + route + parameter;
+            object jsonObject = null;
+            using (var client = new HttpClient())
+            using (var request = new HttpRequestMessage())
+            {
+                request.Method = HttpMethod.Delete;
+                request.RequestUri = new Uri(uri);
+
+                //request.Content = new StringContent(JsonConvert.SerializeObject(jsonObject), Encoding.UTF8, "application/json");
+
+
+                var response = await client.SendAsync(request);
+                var responseBody = await response.Content.ReadAsStringAsync();
+                T t = JsonConvert.DeserializeObject<T>(responseBody);
+                //T t = (T)Convert.ChangeType(jsonObject, typeof(T));
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    return t;
+                }
+            }
+            return default(T);
+        }
+
         public async Task<string> GetStringFromWebAPI(string baseUri, string route, string parameter)
         {
             string uri = baseUri + route + parameter;
@@ -32,30 +58,6 @@ namespace MSTranslatorDemo
                 {
                     return responseBody;
                 }
-
-            }
-            return "";
-        }
-
-        public async Task<string> CallPostWebAPI(string baseUri, string action, string requestBody)
-        {
-            string uri = baseUri + action;
-            //using (var _client = new HttpClient())
-            using (var request = new HttpRequestMessage())
-            {
-
-                request.Method = HttpMethod.Post;
-                request.RequestUri = new Uri(uri);
-                request.Content = new StringContent(requestBody, Encoding.UTF8, "application/json");
-
-
-                var response = await _client.SendAsync(request);
-                var responseBody = await response.Content.ReadAsStringAsync();
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                {
-                    return responseBody;
-                }
-
 
             }
             return "";

@@ -46,11 +46,15 @@ namespace MSTranslatorDemo
             };
         }
 
-        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        private async void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("are you sure you want to delete this language file", "Delete language", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
             {
-                cmbLanguage.ItemsSource = new LanguageClass(blobConnectionString, containerName).DeleteXsltFile(cmbLanguage.SelectedItem.ToString());
+                string uri = baseUri;
+                string route = "/api/fileapi/deletexslt";
+                string parameter = "/?language=" + cmbLanguage.SelectedItem.ToString();
+                cmbLanguage.ItemsSource = await new WebAPIHandler(httpClient).DeleteFromWebAPI<List<string>>(uri, route, parameter);
+                //cmbLanguage.ItemsSource = new LanguageClass(blobConnectionString, containerName).DeleteXsltFile(cmbLanguage.SelectedItem.ToString());
             }
         }
         private async void cmbWord_SelectionChanged(object sender, SelectionChangedEventArgs e)
